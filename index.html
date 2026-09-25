@@ -65,7 +65,7 @@
         <div>
           <div class="flex items-center gap-2">
             <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
-            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">VIP 2</span>
+            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">غير مفعل</span>
           </div>
           <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
@@ -97,9 +97,9 @@
         <div class="flex justify-between items-start mb-4">
           <div>
             <p class="text-xs text-gray-400">إجمالي الأصول</p>
-            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$100.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$0.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
           </div>
-          <span id="dashboard-vip" class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium">مستوى VIP 2</span>
+          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوي (قم للإيداع)</span>
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-4">
@@ -125,7 +125,7 @@
         <div class="mt-6 bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-3">
           <div class="flex justify-between items-center text-xs text-gray-400 border-b border-gray-800 pb-2">
             <span>مكافأة المستوى اليومية:</span>
-            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">+2.00 USDT</span>
+            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">$0.00 USDT</span>
           </div>
           
           <div class="py-2">
@@ -197,10 +197,6 @@
             <span class="font-bold text-emerald-400">2% عمولة</span>
           </div>
         </div>
-
-        <button onclick="simulateFriendInvite()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg mt-2">
-          <i class="fa-solid fa-user-plus ml-1"></i> تجربة انضمام صديق ورسوب عمولة (تجريبي)
-        </button>
       </div>
     </div>
 
@@ -214,8 +210,20 @@
       </div>
     </div>
 
-    <!-- TAB 6: الملف الشخصي والإعدادات (Profile & Wallet) -->
+    <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
     <div id="tab-profile" class="hidden space-y-4">
+      
+      <!-- لوحة تحكم الإدارة (الأدمن للموافقة على الإيداعات) -->
+      <div class="glass-card p-4 rounded-2xl space-y-3 border-2 border-amber-500/30 bg-amber-500/5">
+        <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
+          <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (مراجعة الإيداعات)
+        </h3>
+        <p class="text-xs text-gray-400">قم بالموافقة على طلبات إيداع الأعضاء لإضافة الرصيد إلى حساباتهم:</p>
+        <div id="admin-pending-list" class="space-y-2 pt-1">
+          <!-- تظهر طلبات الإيداع هنا -->
+        </div>
+      </div>
+
       <div class="glass-card p-4 rounded-2xl space-y-3">
         <h3 class="text-sm font-bold text-white flex items-center gap-2 border-b border-gray-800 pb-2">
           <i class="fa-solid fa-wallet text-emerald-400"></i> إعدادات محفظة السحب
@@ -248,19 +256,6 @@
         <button onclick="changePassword()" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-xs border border-gray-700 transition">
           تحديث كلمة المرور
         </button>
-      </div>
-
-      <div class="glass-card p-4 rounded-2xl space-y-2">
-        <h3 class="text-sm font-bold text-white mb-1"><i class="fa-solid fa-headset text-blue-400 ml-1"></i> الدعم الفني 24/7</h3>
-        <p class="text-xs text-gray-400 mb-3">تواجه مشكلة؟ تواصل مع خدمة العملاء المباشرة</p>
-        <div class="grid grid-cols-2 gap-2">
-          <a href="https://t.me" target="_blank" class="bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold text-xs py-2 rounded-xl text-center block">
-            <i class="fa-brands fa-telegram ml-1"></i> Telegram
-          </a>
-          <a href="https://whatsapp.com" target="_blank" class="bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 font-bold text-xs py-2 rounded-xl text-center block">
-            <i class="fa-brands fa-whatsapp ml-1"></i> WhatsApp
-          </a>
-        </div>
       </div>
     </div>
 
@@ -334,20 +329,21 @@
       </div>
 
       <button onclick="processTransaction()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn text-sm">
-        تأكيد العملية
+        إرسال الطلب
       </button>
     </div>
   </div>
 
   <!-- البرمجة التفاعلية -->
   <script>
-    let currentBalance = 100.00;
+    let currentBalance = 0.00; // يبدأ العضو برصيد 0
     let currentAction = '';
-    let userVipLevel = 2; // يبدأ المستخدم الافتراضي من VIP 2 الآن
+    let userVipLevel = 0; // يبدأ بدون VIP حتى يقوم بالإيداع والترقية
     let totalRefCount = 0;
     let totalRefEarned = 0.00;
     let transactions = [];
-    let currentAuthMode = 'login'; // login or register
+    let pendingDeposits = []; // قائمة طلبات الإيداع التي تنتظر موافقة الأدمن
+    let currentUserEmail = '';
 
     const depositWallets = {
       'TRC20': 'TX89kL90PqR3xZ12345T9xYzE89xQ3Nzp7v12',
@@ -355,7 +351,7 @@
       'ERC20': '0x32Be343B94f860124dC4fEe278FDCBD38C102D88'
     };
 
-    // مصفوفة المستويات المعدلة: تم إزالة VIP 1 وتحديد VIP 2 بسعر 15$ والمستويات حتى VIP 7
+    // مصفوفة المستويات VIP 2 حتى VIP 7
     const vipLevels = [
       { level: 2, name: 'VIP 2', cost: 15, dailyReward: 2.00 },
       { level: 3, name: 'VIP 3', cost: 50, dailyReward: 6.50 },
@@ -365,9 +361,7 @@
       { level: 7, name: 'VIP 7', cost: 2500, dailyReward: 360.00 }
     ];
 
-    // --- إدارة التبديل بين الدخول والتسجيل ---
     function switchAuthMode(mode) {
-      currentAuthMode = mode;
       const btnLogin = document.getElementById('btn-show-login');
       const btnRegister = document.getElementById('btn-show-register');
       const submitLogin = document.getElementById('login-submit-btn');
@@ -389,13 +383,11 @@
       }
     }
 
-    // --- جلب قائمة الأعضاء المحفوظة ---
     function getUsersDB() {
       const users = localStorage.getItem('app_users');
       return users ? JSON.parse(users) : [];
     }
 
-    // --- إنشاء حساب جديد ---
     function register() {
       const email = document.getElementById('email-input').value.trim();
       const pass = document.getElementById('pass-input').value.trim();
@@ -411,24 +403,18 @@
       }
 
       let users = getUsersDB();
-      const userExists = users.find(u => u.email === email);
-
-      if (userExists) {
-        alert('هذا البريد الإلكتروني مسجل بالفعل! يمكنك تسجيل الدخول مباشرة.');
+      if (users.find(u => u.email === email)) {
+        alert('هذا البريد الإلكتروني مسجل بالفعل!');
         switchAuthMode('login');
         return;
       }
 
-      // إضافة العضو الجديد
-      const newUser = { email: email, pass: pass };
-      users.push(newUser);
+      users.push({ email, pass });
       localStorage.setItem('app_users', JSON.stringify(users));
-
-      alert('تم إنشاء الحساب بنجاح! جاري تسجيل دخولك الآن...');
+      alert('تم إنشاء الحساب بنجاح! حسُابك الآن جاهز للإيداع.');
       startUserSession(email);
     }
 
-    // --- تسجيل الدخول ---
     function login() {
       const email = document.getElementById('email-input').value.trim();
       const pass = document.getElementById('pass-input').value.trim();
@@ -444,19 +430,21 @@
       if (user) {
         startUserSession(user.email);
       } else {
-        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة! تأكد من البيانات أو قم بإنشاء حساب جديد.');
+        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة!');
       }
     }
 
-    // --- بدء الجلسة بعد الدخول الناجح ---
     function startUserSession(email) {
+      currentUserEmail = email;
       document.getElementById('user-display').innerText = email.split('@')[0];
       document.getElementById('auth-page').classList.add('hidden');
       document.getElementById('main-app').classList.remove('hidden');
-      renderVipList();
+      
+      updateBalanceUI();
       updateVipUI();
       checkTaskStatus();
       renderTransactions();
+      renderAdminPendingList();
     }
 
     function logout() {
@@ -479,12 +467,13 @@
       alert('تم نسخ عنوان الإيداع بنجاح:\n' + addr);
     }
 
-    function addTransaction(type, amount, isPositive = true) {
+    function addTransaction(type, amount, isPositive = true, status = 'مكتمل') {
       const tx = {
         id: 'TX' + Math.floor(100000 + Math.random() * 900000),
         type: type,
         amount: amount,
         isPositive: isPositive,
+        status: status,
         date: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric' })
       };
       transactions.unshift(tx);
@@ -502,10 +491,12 @@
       transactions.forEach(tx => {
         const item = document.createElement('div');
         item.className = "flex justify-between items-center bg-gray-900/60 p-3 rounded-xl border border-gray-800/80";
+        const isPending = tx.status === 'قيد الانتظار';
+        
         item.innerHTML = `
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full ${tx.isPositive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'} flex items-center justify-center text-xs">
-              <i class="fa-solid ${tx.isPositive ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
+            <div class="w-8 h-8 rounded-full ${isPending ? 'bg-amber-500/20 text-amber-400' : tx.isPositive ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'} flex items-center justify-center text-xs">
+              <i class="fa-solid ${isPending ? 'fa-hourglass-half' : tx.isPositive ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
             </div>
             <div>
               <p class="text-xs font-bold text-white">${tx.type}</p>
@@ -513,10 +504,10 @@
             </div>
           </div>
           <div class="text-left">
-            <p class="text-xs font-mono font-bold ${tx.isPositive ? 'text-emerald-400' : 'text-red-400'}">
+            <p class="text-xs font-mono font-bold ${isPending ? 'text-amber-400' : tx.isPositive ? 'text-emerald-400' : 'text-red-400'}">
               ${tx.isPositive ? '+' : '-'}$${tx.amount.toFixed(2)}
             </p>
-            <span class="text-[9px] text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">مكتمل</span>
+            <span class="text-[9px] ${isPending ? 'text-amber-400 bg-amber-500/10' : 'text-emerald-500 bg-emerald-500/10'} px-1.5 py-0.5 rounded">${tx.status}</span>
           </div>
         `;
         container.appendChild(item);
@@ -561,28 +552,106 @@
       document.getElementById('modal').classList.remove('flex');
     }
 
+    // --- تنفيذ طلب الإيداع أو السحب ---
     function processTransaction() {
       const val = parseFloat(document.getElementById('amount-input').value);
       if (val && val > 0) {
         if (currentAction === 'إيداع') {
           const net = document.getElementById('deposit-network-select').value;
-          currentBalance += val;
-          addTransaction(`إيداع USDT (${net})`, val, true);
+          
+          // إنشاء طلب إيداع معلق وينتظر موافقة الأدمن
+          const depositRequest = {
+            id: 'DEP-' + Math.floor(1000 + Math.random() * 9000),
+            user: currentUserEmail,
+            amount: val,
+            network: net,
+            time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+          };
+          
+          pendingDeposits.push(depositRequest);
+          addTransaction(`طلب إيداع (${net})`, val, true, 'قيد الانتظار');
+          
+          alert('تم إرسال طلب الإيداع بنجاح!\nسيتم إضافة الرصيد إلى حسابك فور مراجعة وتأكيد الإيداع.');
+          renderAdminPendingList();
+
         } else if (currentAction === 'سحب') {
           if (val > currentBalance) {
-            alert('الرصيد غير كافٍ');
+            alert('الرصيد غير كافٍ للقيام بعملية السحب');
             return;
           }
           currentBalance -= val;
-          addTransaction('سحب USDT', val, false);
+          addTransaction('سحب USDT', val, false, 'مكتمل');
+          updateBalanceUI();
+          alert('تم تقديم طلب السحب بنجاح!');
         }
-        updateBalanceUI();
-        alert('تم تنفيذ طلب ' + currentAction + ' بنجاح!');
+
         document.getElementById('amount-input').value = '';
         closeModal();
       } else {
         alert('يرجى إدخال مبلغ صحيح');
       }
+    }
+
+    // --- لوحة الأدمن: الموافقة على الإيداع أو رفضه ---
+    function approveDeposit(reqId) {
+      const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
+      if (reqIndex !== -1) {
+        const req = pendingDeposits[reqIndex];
+        
+        // إضافة المبلغ للرصيد
+        currentBalance += req.amount;
+        
+        // تحديث حالة المعاملة في السجل
+        const tx = transactions.find(t => t.type.includes(req.network) && t.amount === req.amount && t.status === 'قيد الانتظار');
+        if (tx) {
+          tx.status = 'مكتمل';
+        } else {
+          addTransaction(`إيداع مؤكد (${req.network})`, req.amount, true, 'مكتمل');
+        }
+
+        pendingDeposits.splice(reqIndex, 1);
+        updateBalanceUI();
+        renderTransactions();
+        renderAdminPendingList();
+        
+        alert(`تم تأكيد إيداع $${req.amount} USDT بنجاح وحول للرصيد!`);
+      }
+    }
+
+    function rejectDeposit(reqId) {
+      const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
+      if (reqIndex !== -1) {
+        pendingDeposits.splice(reqIndex, 1);
+        renderAdminPendingList();
+        alert('تم رفض طلب الإيداع.');
+      }
+    }
+
+    function renderAdminPendingList() {
+      const container = document.getElementById('admin-pending-list');
+      if (!container) return;
+
+      if (pendingDeposits.length === 0) {
+        container.innerHTML = `<p class="text-[11px] text-gray-500 text-center py-2">لا يوجد طلبات إيداع معلقة حالياً</p>`;
+        return;
+      }
+
+      container.innerHTML = '';
+      pendingDeposits.forEach(req => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-gray-900/90 p-2.5 rounded-xl border border-gray-800 text-xs";
+        item.innerHTML = `
+          <div>
+            <p class="text-white font-bold">$${req.amount.toFixed(2)} USDT <span class="text-[10px] text-emerald-400">(${req.network})</span></p>
+            <p class="text-[10px] text-gray-400">${req.user} • ${req.time}</p>
+          </div>
+          <div class="flex gap-1.5">
+            <button onclick="approveDeposit('${req.id}')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">موافقة</button>
+            <button onclick="rejectDeposit('${req.id}')" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 px-2 py-1 rounded-lg text-[11px]">رفض</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
     }
 
     function updateBalanceUI() {
@@ -611,7 +680,7 @@
           <div>
             ${isCurrent 
               ? '<span class="text-xs text-gray-500 font-bold px-3 py-2 bg-gray-800/50 rounded-xl">مُفعل</span>' 
-              : `<button onclick="upgradeVip(${v.level})" class="bg-amber-500 hover:bg-amber-600 text-gray-950 text-xs font-bold px-4 py-2 rounded-xl transition">ترقية</button>`
+              : `<button onclick="upgradeVip(${v.level})" class="bg-amber-500 hover:bg-amber-600 text-gray-950 text-xs font-bold px-4 py-2 rounded-xl transition">فتح المستوى</button>`
             }
           </div>
         `;
@@ -621,34 +690,50 @@
 
     function upgradeVip(targetLevel) {
       const target = vipLevels.find(v => v.level === targetLevel);
+
       if (userVipLevel >= targetLevel) {
         alert('أنت بالفعل في هذا المستوى أو مستوى أعلى!');
         return;
       }
 
       if (currentBalance < target.cost) {
-        alert(`عذراً، تحتاج إلى $${target.cost} USDT للترقية إلى ${target.name}.`);
+        alert(`عذراً، تحتاج إلى إيداع $${target.cost} USDT لفتح ${target.name}.\nرصيدك الحالي هو $${currentBalance.toFixed(2)} USDT.`);
+        openModal('إيداع');
         return;
       }
 
       currentBalance -= target.cost;
       userVipLevel = targetLevel;
-      addTransaction('ترقية إلى ' + target.name, target.cost, false);
+      addTransaction('ترقية إلى ' + target.name, target.cost, false, 'مكتمل');
       
       updateBalanceUI();
       updateVipUI();
-      alert(`مبروك! تمت ترقيتك بنجاح إلى ${target.name}.`);
+      alert(`مبروك! تم فتح ${target.name} بنجاح.`);
     }
 
     function updateVipUI() {
-      const currentVipObj = vipLevels.find(v => v.level === userVipLevel) || vipLevels[0];
-      document.getElementById('user-vip-badge').innerText = currentVipObj.name;
-      document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
-      document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
+      const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
+      if (currentVipObj) {
+        document.getElementById('user-vip-badge').innerText = currentVipObj.name;
+        document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
+        document.getElementById('dashboard-vip').className = "bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium";
+        document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
+      } else {
+        document.getElementById('user-vip-badge').innerText = "غير مفعل";
+        document.getElementById('dashboard-vip').innerText = "بدون مستوى (قم للإيداع)";
+        document.getElementById('dashboard-vip').className = "bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium";
+        document.getElementById('task-reward-display').innerText = "$0.00 USDT";
+      }
       renderVipList();
     }
 
     function executeTask() {
+      if (userVipLevel === 0) {
+        alert('يجب الإيداع وفتح مستوى VIP2 على الأقل لبدء تنفيذ المهام والربح!');
+        openModal('إيداع');
+        return;
+      }
+
       const nextAvailableTime = localStorage.getItem('nextTaskTime');
       const now = new Date().getTime();
 
@@ -657,9 +742,9 @@
         return;
       }
 
-      const currentVipObj = vipLevels.find(v => v.level === userVipLevel) || vipLevels[0];
+      const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
       currentBalance += currentVipObj.dailyReward;
-      addTransaction('أرباح مهمة كمية', currentVipObj.dailyReward, true);
+      addTransaction('أرباح مهمة كمية', currentVipObj.dailyReward, true, 'مكتمل');
       updateBalanceUI();
 
       const futureTime = now + (24 * 60 * 60 * 1000);
@@ -711,22 +796,6 @@
       const code = document.getElementById('referral-code').innerText;
       navigator.clipboard.writeText(code);
       alert('تم نسخ كود الدعوة بنجاح: ' + code);
-    }
-
-    function simulateFriendInvite() {
-      const upgradeAmount = 15; // محاكاة انضمام صديق في VIP 2 بقيمة 15$
-      const commissionLevel1 = upgradeAmount * 0.10;
-
-      totalRefCount++;
-      totalRefEarned += commissionLevel1;
-      currentBalance += commissionLevel1;
-      addTransaction('عمولة إحالة صديق (VIP 2)', commissionLevel1, true);
-
-      document.getElementById('total-ref-count').innerText = totalRefCount;
-      document.getElementById('total-ref-earned').innerText = '$' + totalRefEarned.toFixed(2);
-      updateBalanceUI();
-
-      alert(`قام صديق بالترقية!\nحصلت على عمولة (10%): +$${commissionLevel1.toFixed(2)} USDT تمت إضافتها لرصيدك وللسجل!`);
     }
 
     function saveWallet() {
