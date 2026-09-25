@@ -10,11 +10,28 @@
     body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; }
     .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
     .glow-btn { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+    
+    /* حركة شريط السحوبات الحية */
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .ticker-container {
+      height: 120px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ticker-content {
+      animation: scroll-up 12s linear infinite;
+    }
+    .ticker-container:hover .ticker-content {
+      animation-play-state: paused;
+    }
   </style>
 </head>
 <body class="text-gray-100 min-h-screen pb-20">
 
-  <!-- ==================== 1. صفحة تسجيل الدخول / إنشاء حساب ==================== -->
+  <!-- ==================== 1. صفحة تسجيل الدخول ==================== -->
   <div id="auth-page" class="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center">
     <div class="text-center mb-8">
       <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-teal-300 rounded-2xl mx-auto flex items-center justify-center text-gray-900 text-2xl font-bold mb-3 shadow-lg">
@@ -39,7 +56,7 @@
     </div>
   </div>
 
-  <!-- ==================== 2. الواجهة الرئيسية (تظهر بعد الدخول) ==================== -->
+  <!-- ==================== 2. الواجهة الرئيسية ==================== -->
   <div id="main-app" class="hidden max-w-md mx-auto p-4 space-y-4">
     
     <!-- الهيدر -->
@@ -58,20 +75,23 @@
       </button>
     </header>
 
-    <!-- اقتباسات حية للأسعار (تتحدث تلقائياً) -->
-    <div class="glass-card p-4 rounded-2xl">
-      <h3 class="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> اقتباسات حية للأسعار
-      </h3>
-      <div class="space-y-3">
-        <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
-          <span class="font-bold text-sm">BTC / USDT</span>
-          <span id="btc-price" class="font-mono text-emerald-400 font-bold">$84,679.00</span>
+    <!-- 1) قسم الإعلان وصورة الشركة -->
+    <div class="glass-card rounded-2xl overflow-hidden border border-emerald-500/20 shadow-lg">
+      <div class="relative h-32 bg-gradient-to-r from-emerald-900/60 to-gray-900 p-4 flex flex-col justify-end">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80" alt="صورة الشركة" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay">
+        <div class="relative z-10 flex items-center space-x-3 space-x-reverse">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500 text-black font-black flex items-center justify-center text-xl shadow-md border border-emerald-300">
+            QUANT
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white">شركة التحديد الكمي الدولية</h2>
+            <p class="text-xs text-emerald-400 font-medium">المنصة الرائدة لتتبع تحليلات السوق والمؤشرات</p>
+          </div>
         </div>
-        <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
-          <span class="font-bold text-sm">ETH / USDT</span>
-          <span id="eth-price" class="font-mono text-emerald-400 font-bold">$2,693.96</span>
-        </div>
+      </div>
+      <div class="p-3 bg-gray-900/90 text-xs text-gray-300 flex justify-between items-center border-t border-gray-800">
+        <span><i class="fa-solid fa-bullhorn text-emerald-400 ml-1"></i> إعلان: انضم لأكثر من 50,000 مستخدم نشط يومياً!</span>
+        <span class="text-emerald-400 font-bold">مُوثق</span>
       </div>
     </div>
 
@@ -85,7 +105,6 @@
         <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full font-medium">نشط</span>
       </div>
 
-      <!-- أزرار تفاعلية تفتح نافذة منبثقة -->
       <div class="grid grid-cols-2 gap-3 mt-4">
         <button onclick="openModal('إيداع')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm transition text-center">
           <i class="fa-solid fa-arrow-down-left ml-1"></i> إيداع
@@ -96,9 +115,73 @@
       </div>
     </div>
 
+    <!-- 2) منبر حي لأشخاص يسحبون الأموال -->
+    <div class="glass-card p-4 rounded-2xl">
+      <div class="flex justify-between items-center mb-3 border-b border-gray-800 pb-2">
+        <h3 class="text-xs font-semibold text-gray-300 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> المنبر الحي للسحوبات المباشرة
+        </h3>
+        <span class="text-[10px] text-gray-400">تحديث مباشر</span>
+      </div>
+      
+      <div class="ticker-container">
+        <div id="ticker-list" class="ticker-content space-y-2">
+          <!-- قائمة الأنشطة الحية -->
+          <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl border border-gray-800/80 text-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <span class="w-7 h-7 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[10px]">A.M</span>
+              <span class="text-gray-300">أحمد M.قام بسحب</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold">+$450.00 USDT</span>
+          </div>
+
+          <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl border border-gray-800/80 text-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <span class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px]">S.K</span>
+              <span class="text-gray-300">سارة K. قامت بسحب</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold">+$1,200.00 USDT</span>
+          </div>
+
+          <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl border border-gray-800/80 text-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <span class="w-7 h-7 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-[10px]">O.T</span>
+              <span class="text-gray-300">عمر T. قام بسحب</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold">+$320.50 USDT</span>
+          </div>
+
+          <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl border border-gray-800/80 text-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <span class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-[10px]">L.H</span>
+              <span class="text-gray-300">ليلى H. قامت بسحب</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold">+$890.00 USDT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- أسعار العملات الحية -->
+    <div class="glass-card p-4 rounded-2xl">
+      <h3 class="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-chart-simple text-emerald-400"></i> اقتباسات حية للأسعار
+      </h3>
+      <div class="space-y-3">
+        <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+          <span class="font-bold text-sm">BTC / USDT</span>
+          <span id="btc-price" class="font-mono text-emerald-400 font-bold">$84,679.00</span>
+        </div>
+        <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+          <span class="font-bold text-sm">ETH / USDT</span>
+          <span id="eth-price" class="font-mono text-emerald-400 font-bold">$2,693.96</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ==================== 3. النافذة المنبثقة التفاعلية ==================== -->
+  <!-- النافذة المنبثقة للعمليات -->
   <div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-3xl w-full max-w-sm space-y-4">
       <div class="flex justify-between items-center">
@@ -115,7 +198,6 @@
     </div>
   </div>
 
-  <!-- البرمجة التفاعلية -->
   <script>
     let currentBalance = 100.00;
     let currentAction = '';
@@ -169,7 +251,7 @@
       }
     }
 
-    // تحديث تفاعلي تلقائي للأسعار كل ثانيتين
+    // تحديث الأسعار تلقائياً
     setInterval(() => {
       const btc = (84600 + Math.random() * 200).toFixed(2);
       const eth = (2690 + Math.random() * 10).toFixed(2);
