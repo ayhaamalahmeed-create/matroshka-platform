@@ -86,7 +86,7 @@
         <div class="flex justify-between items-start mb-4">
           <div>
             <p class="text-xs text-gray-400">إجمالي النقاط الإضافية</p>
-            <p id="balance" class="text-2xl font-extrabold text-white mt-1">100 <span class="text-xs text-gray-400">PTS</span></p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1"><span id="main-pts">0</span> <span class="text-xs text-gray-400">PTS</span></p>
           </div>
           <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full">نشط</span>
         </div>
@@ -103,7 +103,7 @@
         <div class="ticker-container">
           <div class="ticker-content space-y-2">
             <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl text-xs">
-              <span class="text-gray-300">أحمد M. أكمل المهمة اليومية</span>
+              <span class="text-gray-300">أحمد M. أكمل المهمة اليومية (+2 PTS)</span>
               <span class="text-emerald-400 font-bold">مكتمل</span>
             </div>
             <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl text-xs">
@@ -150,7 +150,7 @@
       <!-- قسم مستويات التقدم والخبرة (Level 0 - Level 7) -->
       <div class="space-y-3 pt-2">
         <h3 class="text-xs font-bold text-gray-300 flex items-center gap-2 px-1">
-          <i class="fa-solid fa-layer-group text-emerald-400"></i> مستويات التقدم والخبرة
+          <i class="fa-solid fa-layer-group text-emerald-400"></i> مستويات التقدم ومكافآت المهام
         </h3>
 
         <!-- Level 0 -->
@@ -160,8 +160,9 @@
             <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">الحالي</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 0 نقطة PTS</p>
+            <p>الشرط المطلوب: 0 نقطة PTS</p>
             <p>المهام اليومية: 1 مهمة/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS</p>
           </div>
         </div>
 
@@ -172,8 +173,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 10 نقاط PTS</p>
+            <p>الشرط المطلوب: 10 نقاط PTS</p>
             <p>المهام اليومية: 1 مهمة/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS</p>
           </div>
         </div>
 
@@ -184,8 +186,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 30 نقطة PTS</p>
+            <p>الشرط المطلوب: 30 نقطة PTS</p>
             <p>المهام اليومية: 2 مهمة/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS</p>
           </div>
         </div>
 
@@ -196,8 +199,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 80 نقطة PTS</p>
+            <p>الشرط المطلوب: 80 نقطة PTS</p>
             <p>المهام اليومية: 3 مهام/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS لكل مهمة</p>
           </div>
         </div>
 
@@ -208,8 +212,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 100 نقطة PTS</p>
+            <p>الشرط المطلوب: 100 نقطة PTS</p>
             <p>المهام اليومية: 4 مهام/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS لكل مهمة</p>
           </div>
         </div>
 
@@ -220,8 +225,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 200 نقطة PTS</p>
+            <p>الشرط المطلوب: 200 نقطة PTS</p>
             <p>المهام اليومية: 5 مهام/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS لكل مهمة</p>
           </div>
         </div>
 
@@ -232,8 +238,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 300 نقطة PTS</p>
+            <p>الشرط المطلوب: 300 نقطة PTS</p>
             <p>المهام اليومية: 6 مهام/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS لكل مهمة</p>
           </div>
         </div>
 
@@ -244,8 +251,9 @@
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 800 نقطة PTS</p>
+            <p>الشرط المطلوب: 800 نقطة PTS</p>
             <p>المهام اليومية: 7 مهام/يوم</p>
+            <p class="text-emerald-400 font-semibold">مكافأة المهمة: +2 نقاط PTS لكل مهمة</p>
           </div>
         </div>
 
@@ -283,6 +291,7 @@
   <script>
     let isTaskDone = false;
     let secondsLeft = 86399;
+    let userPoints = 0;
 
     function login() {
       const email = document.getElementById('email-input').value;
@@ -326,6 +335,11 @@
 
       setTimeout(() => {
         isTaskDone = true;
+        userPoints += 2; // إدراج مكافأة 2 نقطة
+        
+        document.getElementById('total-points').innerText = `${userPoints} PTS`;
+        document.getElementById('main-pts').innerText = userPoints;
+        
         btnText.innerText = 'اكتملت المهمة اليومية (1 / 1)';
         btnIcon.className = 'fa-solid fa-circle-check';
         
@@ -333,7 +347,7 @@
         document.getElementById('task-btn').classList.add('bg-gray-800', 'text-emerald-400', 'border', 'border-emerald-500/30');
         
         document.getElementById('today-score').innerText = '1';
-        alert('تم تنفيذ المهمة اليومية بنجاح واكتساب نقاط الخبرة!');
+        alert('تم تنفيذ المهمة اليومية بنجاح! وحصلت على +2 نقاط PTS.');
       }, 1500);
     }
 
