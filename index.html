@@ -3,26 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة ماتروشكا | Matryoshka Platform</title>
+    <title>منصة ماتروشكا الكمية</title>
     <style>
-        body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; text-align: center; padding: 2rem; }
-        .card { background: #1e293b; padding: 1.5rem; margin: 1rem auto; max-width: 500px; border-radius: 12px; border: 1px solid #334155; }
-        h1 { color: #38bdf8; }
-        .badge { background: #22c55e; color: #000; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: bold; }
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #151a23;
+            --accent-green: #00e676;
+            --accent-yellow: #ffc107;
+            --accent-red: #ff5252;
+            --text-main: #ffffff;
+            --text-sub: #8a94a6;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0 0 80px 0;
+            direction: rtl;
+        }
+        .header {
+            background: var(--card-bg);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #222938;
+        }
+        .container {
+            padding: 15px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #1f2736;
+        }
+        .btn-green {
+            background: var(--accent-green);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .stat-box {
+            background: #0b0e14;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .stat-val {
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+        }
+        .crypto-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #1f2736;
+        }
+        .badge-green {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--accent-green);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #1f2736;
+        }
+        .nav-item {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>منصة ماتروشكا (Matryoshka)</h1>
-    <p><span class="badge">النظام يعمل بنجاح</span></p>
-    
-    <div class="card">
-        <h3>📊 التحليل المالي والتداول (Quant Trading)</h3>
-        <p>جاري إعداد المؤشرات والخوارزميات البرمجية...</p>
-    </div>
 
-    <div class="card">
-        <h3>📋 إدارة المهام (Task Management)</h3>
-        <p>لوحة تحكم المهام اليومية والمشاريع.</p>
-    </div>
-</body>
-</html>
+    <div class="header">مركز التحديد الكمي الذكي</div>
+
+    <div class="container">
+        <!-- الرئيسية -->
+        <div id="home" class="page active">
+            <div class="card">
+                <h3>اقتباسات حية للأسعار</h3>
+                <div class="crypto-row">
+                    <span><b>BTC</b> / USDT</span>
+                    <span>84,679</span>
+                    <span class="badge-green">+0.5%</span>
+                </div>
+                <div class="crypto-row">
+                    <span><b>ETH</b> / USDT</span>
+                    <span>2,693.96</span>
+                    <span class="badge-green">+1.28%</span>
+                </div>
+                <div class="crypto-row">
+                    <span><b>BNB</b> / USDT</span>
+                    <span>784.09</span>
+                    <span class="badge-green">+2.52%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- التداول الكمي -->
+        <div id="quant" class="page">
+            <div class="card">
+                <h2>حساب كمي: <span style="color:var(--accent-green)">10.00 USDT</span></h2>
+                <div class="stat-grid">
+                    <div class="stat-box"><div class="stat-val">9.00</div><div class="stat-lbl">إجمالي الإيرادات</div></div>
+                    <div class="stat-box"><div class="stat-val">0</div><div class="stat-lbl">أرباح اليوم</div></div>
+                    <div class="stat-box"><div class="stat-val">0.00</div><div class="stat-lbl">الأصول الربحية</div></div>
+                </div>
+                <button class="btn-green" onclick="alert('جاري التحديد الكمي...')">ابدأ التحديد الكمي 0 / 1</button>
+            </div>
+
+            <div class="card">
+                <h3>مس
