@@ -441,15 +441,6 @@
             font-size: 0.85rem;
         }
 
-        .admin-tag {
-            background-color: #f6465d;
-            color: white;
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-right: 5px;
-        }
-
         .table-responsive {
             overflow-x: auto;
         }
@@ -1009,6 +1000,7 @@
                 saveData();
             }
 
+            // التحقق من حالة تسجيل الدخول واسترجاع الحساب تلقائياً
             if (state.currentUser && state.users[state.currentUser]) {
                 document.getElementById('authScreen').style.display = 'none';
                 updateUI();
