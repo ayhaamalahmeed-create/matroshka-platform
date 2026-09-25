@@ -85,14 +85,14 @@
       <div class="glass-card p-5 rounded-2xl">
         <div class="flex justify-between items-start mb-4">
           <div>
-            <p class="text-xs text-gray-400">إجمالي الأصول</p>
-            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$100.00 <span class="text-xs text-gray-400">USDT</span></p>
+            <p class="text-xs text-gray-400">إجمالي النقاط الإضافية</p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1">100 <span class="text-xs text-gray-400">PTS</span></p>
           </div>
           <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full">نشط</span>
         </div>
         <div class="grid grid-cols-2 gap-3">
-          <button onclick="openModal('إيداع')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm">إيداع</button>
-          <button onclick="openModal('سحب')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-sm border border-gray-700">سحب</button>
+          <button onclick="openModal('إضافة نقاط')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm">شحن نقاط</button>
+          <button onclick="openModal('استبدال نقاط')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-sm border border-gray-700">استبدال</button>
         </div>
       </div>
 
@@ -121,8 +121,8 @@
       <!-- إحصائيات النقاط -->
       <div class="glass-card p-4 rounded-2xl grid grid-cols-3 gap-2 text-center border-emerald-500/20">
         <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
-          <p class="text-[10px] text-gray-400">نقاط الخبرة (XP)</p>
-          <p id="total-points" class="text-base font-bold text-emerald-400 mt-1">10 PTS</p>
+          <p class="text-[10px] text-gray-400">نقاط الخبرة (PTS)</p>
+          <p id="total-points" class="text-base font-bold text-emerald-400 mt-1">0 PTS</p>
         </div>
         <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
           <p class="text-[10px] text-gray-400">إنجاز اليوم</p>
@@ -156,11 +156,11 @@
         <!-- Level 0 -->
         <div class="glass-card p-4 rounded-2xl border-emerald-500/40 relative overflow-hidden">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-emerald-400 text-sm">المستوى 0 (Level 0)</span>
+            <span class="font-bold text-emerald-400 text-sm">Level 0</span>
             <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">الحالي</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط: 0 نقطة خبرة (مستوى البداية)</p>
+            <p>الشرط المطلوبة: 0 نقطة PTS</p>
             <p>المهام اليومية: 1 مهمة/يوم</p>
           </div>
         </div>
@@ -168,84 +168,84 @@
         <!-- Level 1 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 1 (Level 1)</span>
+            <span class="font-bold text-white text-sm">Level 1</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 100 نقطة XP</p>
-            <p>المهام اليومية: 2 مهمة/يوم</p>
+            <p>الشرط المطلوبة: 10 نقاط PTS</p>
+            <p>المهام اليومية: 1 مهمة/يوم</p>
           </div>
         </div>
 
         <!-- Level 2 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 2 (Level 2)</span>
+            <span class="font-bold text-white text-sm">Level 2</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 250 نقطة XP</p>
-            <p>المهام اليومية: 3 مهام/يوم</p>
+            <p>الشرط المطلوبة: 30 نقطة PTS</p>
+            <p>المهام اليومية: 2 مهمة/يوم</p>
           </div>
         </div>
 
         <!-- Level 3 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 3 (Level 3)</span>
+            <span class="font-bold text-white text-sm">Level 3</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 500 نقطة XP</p>
-            <p>المهام اليومية: 4 مهام/يوم</p>
+            <p>الشرط المطلوبة: 80 نقطة PTS</p>
+            <p>المهام اليومية: 3 مهام/يوم</p>
           </div>
         </div>
 
         <!-- Level 4 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-80">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 4 (Level 4)</span>
+            <span class="font-bold text-white text-sm">Level 4</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 1,000 نقطة XP</p>
-            <p>المهام اليومية: 5 مهام/يوم</p>
+            <p>الشرط المطلوبة: 100 نقطة PTS</p>
+            <p>المهام اليومية: 4 مهام/يوم</p>
           </div>
         </div>
 
         <!-- Level 5 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-80">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 5 (Level 5)</span>
+            <span class="font-bold text-white text-sm">Level 5</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 2,500 نقطة XP</p>
-            <p>المهام اليومية: 6 مهام/يوم</p>
+            <p>الشرط المطلوبة: 200 نقطة PTS</p>
+            <p>المهام اليومية: 5 مهام/يوم</p>
           </div>
         </div>
 
         <!-- Level 6 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-70">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 6 (Level 6)</span>
+            <span class="font-bold text-white text-sm">Level 6</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 5,000 نقطة XP</p>
-            <p>المهام اليومية: 7 مهام/يوم</p>
+            <p>الشرط المطلوبة: 300 نقطة PTS</p>
+            <p>المهام اليومية: 6 مهام/يوم</p>
           </div>
         </div>
 
         <!-- Level 7 -->
         <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-70">
           <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-white text-sm">المستوى 7 (Level 7)</span>
+            <span class="font-bold text-white text-sm">Level 7</span>
             <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
-            <p>الشرط المطلوبة: 10,000 نقطة XP (المستوى الأقصى)</p>
-            <p>المهام اليومية: 8 مهام/يوم</p>
+            <p>الشرط المطلوبة: 800 نقطة PTS</p>
+            <p>المهام اليومية: 7 مهام/يوم</p>
           </div>
         </div>
 
@@ -275,7 +275,7 @@
         <h3 id="modal-title" class="text-lg font-bold text-white">إجراء</h3>
         <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <input type="number" id="amount-input" placeholder="المبلغ" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+      <input type="number" id="amount-input" placeholder="عدد النقاط" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
       <button onclick="processTransaction()" class="w-full bg-emerald-500 text-gray-950 font-bold py-3 rounded-xl">تأكيد</button>
     </div>
   </div>
@@ -332,7 +332,7 @@
         document.getElementById('task-btn').classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
         document.getElementById('task-btn').classList.add('bg-gray-800', 'text-emerald-400', 'border', 'border-emerald-500/30');
         
-        document.getElementById('today-score').innerText = '1.00';
+        document.getElementById('today-score').innerText = '1';
         alert('تم تنفيذ المهمة اليومية بنجاح واكتساب نقاط الخبرة!');
       }, 1500);
     }
