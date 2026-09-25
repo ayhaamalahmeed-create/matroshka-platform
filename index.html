@@ -367,3 +367,358 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة تتبع المهام ومستويات التقدم</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; }
+    .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glow-btn { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+    
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .ticker-container { height: 110px; overflow: hidden; position: relative; }
+    .ticker-content { animation: scroll-up 12s linear infinite; }
+    .ticker-container:hover .ticker-content { animation-play-state: paused; }
+  </style>
+</head>
+<body class="text-gray-100 min-h-screen pb-24">
+
+  <!-- ==================== 1. صفحة تسجيل الدخول ==================== -->
+  <div id="auth-page" class="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-teal-300 rounded-2xl mx-auto flex items-center justify-center text-gray-900 text-2xl font-bold mb-3 shadow-lg">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-white">منصة تتبع التحليلات</h1>
+      <p class="text-gray-400 text-sm mt-1">سجل دخولك لبدء متابعة المؤشرات والمهام</p>
+    </div>
+
+    <div class="glass-card p-6 rounded-3xl space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني</label>
+        <input type="email" id="email-input" placeholder="example@mail.com" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
+        <input type="password" id="pass-input" placeholder="••••••••" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <button onclick="login()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2">
+        تسجيل الدخول
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== التطبيق الرئيسي ==================== -->
+  <div id="main-app" class="hidden max-w-md mx-auto p-4 space-y-4">
+    
+    <!-- الهيدر العلوي -->
+    <header class="flex justify-between items-center py-2 px-1">
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400">مرحباً بك</p>
+          <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
+        </div>
+      </div>
+      <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
+        <i class="fa-solid fa-right-from-bracket"></i> خروج
+      </button>
+    </header>
+
+    <!-- TAB 1: الواجهة الرئيسية -->
+    <div id="tab-home" class="space-y-4">
+      <div class="glass-card rounded-2xl overflow-hidden border border-emerald-500/20 shadow-lg">
+        <div class="relative h-28 bg-gradient-to-r from-emerald-900/60 to-gray-900 p-4 flex flex-col justify-end">
+          <div class="relative z-10 flex items-center space-x-3 space-x-reverse">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-black font-black flex items-center justify-center text-lg shadow-md">
+              QUANT
+            </div>
+            <div>
+              <h2 class="text-sm font-bold text-white">منصة التحليل التفاعلية</h2>
+              <p class="text-[11px] text-emerald-400 font-medium">متابعة البيانات اليومية والأنشطة</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-5 rounded-2xl">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <p class="text-xs text-gray-400">إجمالي الأصول</p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$100.00 <span class="text-xs text-gray-400">USDT</span></p>
+          </div>
+          <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full">نشط</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <button onclick="openModal('إيداع')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm">إيداع</button>
+          <button onclick="openModal('سحب')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-sm border border-gray-700">سحب</button>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl">
+        <h3 class="text-xs font-semibold text-gray-300 mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> المنبر الحي للأنشطة
+        </h3>
+        <div class="ticker-container">
+          <div class="ticker-content space-y-2">
+            <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl text-xs">
+              <span class="text-gray-300">أحمد M. أكمل المهمة اليومية</span>
+              <span class="text-emerald-400 font-bold">مكتمل</span>
+            </div>
+            <div class="flex justify-between items-center bg-gray-900/60 p-2.5 rounded-xl text-xs">
+              <span class="text-gray-300">سارة K. وصلت إلى المستوى Level 2</span>
+              <span class="text-emerald-400 font-bold">ترقية</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: صفحة متابعة المهام والمستويات -->
+    <div id="tab-task" class="hidden space-y-4">
+      
+      <!-- إحصائيات النقاط -->
+      <div class="glass-card p-4 rounded-2xl grid grid-cols-3 gap-2 text-center border-emerald-500/20">
+        <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+          <p class="text-[10px] text-gray-400">نقاط الخبرة (XP)</p>
+          <p id="total-points" class="text-base font-bold text-emerald-400 mt-1">10 PTS</p>
+        </div>
+        <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+          <p class="text-[10px] text-gray-400">إنجاز اليوم</p>
+          <p id="today-score" class="text-base font-bold text-white mt-1">0</p>
+        </div>
+        <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+          <p class="text-[10px] text-gray-400">المستوى الحالي</p>
+          <p class="text-base font-bold text-emerald-400 mt-1">Level 0</p>
+        </div>
+      </div>
+
+      <!-- العداد وزر المهمة -->
+      <div class="glass-card p-5 rounded-2xl text-center space-y-4">
+        <div class="flex justify-between items-center bg-gray-900/80 px-4 py-2 rounded-xl border border-gray-800 text-xs">
+          <span class="text-gray-400">وقت إعادة الضبط:</span>
+          <span id="countdown-timer" class="font-mono text-emerald-400 font-bold dir-ltr">23:59:59</span>
+        </div>
+
+        <button id="task-btn" onclick="runDailyTask()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-4 rounded-2xl transition glow-btn text-base flex items-center justify-center gap-2">
+          <i id="btn-icon" class="fa-solid fa-play"></i>
+          <span id="btn-text">ابدأ المهمة اليومية (0 / 1)</span>
+        </button>
+      </div>
+
+      <!-- قسم مستويات التقدم والخبرة (Level 0 - Level 7) -->
+      <div class="space-y-3 pt-2">
+        <h3 class="text-xs font-bold text-gray-300 flex items-center gap-2 px-1">
+          <i class="fa-solid fa-layer-group text-emerald-400"></i> مستويات التقدم والخبرة
+        </h3>
+
+        <!-- Level 0 -->
+        <div class="glass-card p-4 rounded-2xl border-emerald-500/40 relative overflow-hidden">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-emerald-400 text-sm">المستوى 0 (Level 0)</span>
+            <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">الحالي</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط: 0 نقطة خبرة (مستوى البداية)</p>
+            <p>المهام اليومية: 1 مهمة/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 1 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 1 (Level 1)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 100 نقطة XP</p>
+            <p>المهام اليومية: 2 مهمة/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 2 (Level 2)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 250 نقطة XP</p>
+            <p>المهام اليومية: 3 مهام/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-90">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 3 (Level 3)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 500 نقطة XP</p>
+            <p>المهام اليومية: 4 مهام/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 4 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-80">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 4 (Level 4)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 1,000 نقطة XP</p>
+            <p>المهام اليومية: 5 مهام/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 5 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-80">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 5 (Level 5)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 2,500 نقطة XP</p>
+            <p>المهام اليومية: 6 مهام/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 6 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-70">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 6 (Level 6)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 5,000 نقطة XP</p>
+            <p>المهام اليومية: 7 مهام/يوم</p>
+          </div>
+        </div>
+
+        <!-- Level 7 -->
+        <div class="glass-card p-4 rounded-2xl border-gray-800 opacity-70">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-white text-sm">المستوى 7 (Level 7)</span>
+            <span class="text-gray-500 text-[10px]"><i class="fa-solid fa-lock ml-1"></i>مغلق</span>
+          </div>
+          <div class="text-xs text-gray-400 space-y-1">
+            <p>الشرط المطلوبة: 10,000 نقطة XP (المستوى الأقصى)</p>
+            <p>المهام اليومية: 8 مهام/يوم</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-gray-900/90 backdrop-blur-md border-t border-gray-800 px-6 py-3 flex justify-around items-center z-40">
+      <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-1 text-emerald-400">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="text-[10px] font-medium">الرئيسية</span>
+      </button>
+
+      <button onclick="switchTab('task')" id="nav-task" class="flex flex-col items-center gap-1 text-gray-400 hover:text-emerald-400">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span class="text-[10px] font-medium">المهمة اليومية</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- النافذة المنبثقة -->
+  <div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-card p-6 rounded-3xl w-full max-w-sm space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 id="modal-title" class="text-lg font-bold text-white">إجراء</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <input type="number" id="amount-input" placeholder="المبلغ" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+      <button onclick="processTransaction()" class="w-full bg-emerald-500 text-gray-950 font-bold py-3 rounded-xl">تأكيد</button>
+    </div>
+  </div>
+
+  <script>
+    let isTaskDone = false;
+    let secondsLeft = 86399;
+
+    function login() {
+      const email = document.getElementById('email-input').value;
+      if (email) {
+        document.getElementById('user-display').innerText = email.split('@')[0];
+        document.getElementById('auth-page').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+      }
+    }
+
+    function logout() {
+      document.getElementById('main-app').classList.add('hidden');
+      document.getElementById('auth-page').classList.remove('hidden');
+    }
+
+    function switchTab(tabName) {
+      if (tabName === 'home') {
+        document.getElementById('tab-home').classList.remove('hidden');
+        document.getElementById('tab-task').classList.add('hidden');
+        document.getElementById('nav-home').className = "flex flex-col items-center gap-1 text-emerald-400";
+        document.getElementById('nav-task').className = "flex flex-col items-center gap-1 text-gray-400";
+      } else {
+        document.getElementById('tab-home').classList.add('hidden');
+        document.getElementById('tab-task').classList.remove('hidden');
+        document.getElementById('nav-home').className = "flex flex-col items-center gap-1 text-gray-400";
+        document.getElementById('nav-task').className = "flex flex-col items-center gap-1 text-emerald-400";
+      }
+    }
+
+    function runDailyTask() {
+      if (isTaskDone) {
+        alert('لقد أكملت مهمتك لهذا اليوم بالكامل!');
+        return;
+      }
+
+      const btnText = document.getElementById('btn-text');
+      const btnIcon = document.getElementById('btn-icon');
+      
+      btnText.innerText = 'جاري المعالجة...';
+      btnIcon.className = 'fa-solid fa-spinner animate-spin';
+
+      setTimeout(() => {
+        isTaskDone = true;
+        btnText.innerText = 'اكتملت المهمة اليومية (1 / 1)';
+        btnIcon.className = 'fa-solid fa-circle-check';
+        
+        document.getElementById('task-btn').classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+        document.getElementById('task-btn').classList.add('bg-gray-800', 'text-emerald-400', 'border', 'border-emerald-500/30');
+        
+        document.getElementById('today-score').innerText = '1.00';
+        alert('تم تنفيذ المهمة اليومية بنجاح واكتساب نقاط الخبرة!');
+      }, 1500);
+    }
+
+    setInterval(() => {
+      if (secondsLeft > 0) {
+        secondsLeft--;
+        const hrs = String(Math.floor(secondsLeft / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, '0');
+        const secs = String(secondsLeft % 60).padStart(2, '0');
+        document.getElementById('countdown-timer').innerText = `${hrs}:${mins}:${secs}`;
+      }
+    }, 1000);
+
+    function openModal(act) { document.getElementById('modal').classList.remove('hidden'); document.getElementById('modal').classList.add('flex'); }
+    function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('modal').classList.remove('flex'); }
+    function processTransaction() { alert('تم بنجاح'); closeModal(); }
+  </script>
+</body>
+</html>
