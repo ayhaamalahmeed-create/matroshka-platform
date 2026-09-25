@@ -65,7 +65,7 @@
         <div>
           <div class="flex items-center gap-2">
             <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
-            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">VIP 1</span>
+            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">VIP 2</span>
           </div>
           <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
@@ -99,7 +99,7 @@
             <p class="text-xs text-gray-400">إجمالي الأصول</p>
             <p id="balance" class="text-2xl font-extrabold text-white mt-1">$100.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
           </div>
-          <span id="dashboard-vip" class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium">مستوى VIP 1</span>
+          <span id="dashboard-vip" class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium">مستوى VIP 2</span>
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-4">
@@ -125,7 +125,7 @@
         <div class="mt-6 bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-3">
           <div class="flex justify-between items-center text-xs text-gray-400 border-b border-gray-800 pb-2">
             <span>مكافأة المستوى اليومية:</span>
-            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">+5.00 USDT</span>
+            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">+2.00 USDT</span>
           </div>
           
           <div class="py-2">
@@ -343,7 +343,7 @@
   <script>
     let currentBalance = 100.00;
     let currentAction = '';
-    let userVipLevel = 1;
+    let userVipLevel = 2; // يبدأ المستخدم الافتراضي من VIP 2 الآن
     let totalRefCount = 0;
     let totalRefEarned = 0.00;
     let transactions = [];
@@ -355,11 +355,14 @@
       'ERC20': '0x32Be343B94f860124dC4fEe278FDCBD38C102D88'
     };
 
+    // مصفوفة المستويات المعدلة: تم إزالة VIP 1 وتحديد VIP 2 بسعر 15$ والمستويات حتى VIP 7
     const vipLevels = [
-      { level: 1, name: 'VIP 1', cost: 0, dailyReward: 5.00 },
-      { level: 2, name: 'VIP 2', cost: 150, dailyReward: 15.00 },
-      { level: 3, name: 'VIP 3', cost: 500, dailyReward: 50.00 },
-      { level: 4, name: 'VIP 4', cost: 1500, dailyReward: 160.00 }
+      { level: 2, name: 'VIP 2', cost: 15, dailyReward: 2.00 },
+      { level: 3, name: 'VIP 3', cost: 50, dailyReward: 6.50 },
+      { level: 4, name: 'VIP 4', cost: 150, dailyReward: 20.00 },
+      { level: 5, name: 'VIP 5', cost: 400, dailyReward: 55.00 },
+      { level: 6, name: 'VIP 6', cost: 1000, dailyReward: 140.00 },
+      { level: 7, name: 'VIP 7', cost: 2500, dailyReward: 360.00 }
     ];
 
     // --- إدارة التبديل بين الدخول والتسجيل ---
@@ -638,7 +641,7 @@
     }
 
     function updateVipUI() {
-      const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
+      const currentVipObj = vipLevels.find(v => v.level === userVipLevel) || vipLevels[0];
       document.getElementById('user-vip-badge').innerText = currentVipObj.name;
       document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
       document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
@@ -654,7 +657,7 @@
         return;
       }
 
-      const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
+      const currentVipObj = vipLevels.find(v => v.level === userVipLevel) || vipLevels[0];
       currentBalance += currentVipObj.dailyReward;
       addTransaction('أرباح مهمة كمية', currentVipObj.dailyReward, true);
       updateBalanceUI();
@@ -711,7 +714,7 @@
     }
 
     function simulateFriendInvite() {
-      const upgradeAmount = 150;
+      const upgradeAmount = 15; // محاكاة انضمام صديق في VIP 2 بقيمة 15$
       const commissionLevel1 = upgradeAmount * 0.10;
 
       totalRefCount++;
