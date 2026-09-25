@@ -3,1094 +3,800 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التحديد الكمي الذكي</title>
-    <!-- FontAwesome icons -->
+    <title>منصة التحديد الكمي الممتازة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            dark: '#0f172a',
+                            card: '#1e293b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-primary: #0b0e14;
-            --bg-secondary: #151a23;
-            --bg-card: #1c2331;
-            --accent-color: #f0b90b;
-            --accent-hover: #d4a007;
-            --text-primary: #ffffff;
-            --text-secondary: #848e9c;
-            --green: #0ecb81;
-            --red: #f6465d;
-            --border-color: #2b313a;
-            --nav-height: 65px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            padding-bottom: calc(var(--nav-height) + 20px);
-            min-height: 100vh;
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
         }
-
-        /* Container Layout */
-        .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            position: relative;
-            min-height: 100vh;
-            background-color: var(--bg-primary);
+        .gradient-text {
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        /* Top Header */
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), #ff8800);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .vip-badge {
-            background: linear-gradient(45deg, #ffe066, var(--accent-color));
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        /* Views management */
-        .view {
-            display: none;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .view.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Navigation Bar */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            height: var(--nav-height);
-            background-color: var(--bg-secondary);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.75rem;
-            cursor: pointer;
-            width: 20%;
-            transition: 0.2s;
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-        }
-
-        .nav-item.active {
-            color: var(--accent-color);
-        }
-
-        /* Components & Cards */
-        .card {
-            background-color: var(--bg-card);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .balance-card {
-            background: linear-gradient(135deg, #1e2638 0%, #111622 100%);
-            border: 1px solid rgba(240, 185, 11, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .balance-title {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .balance-amount {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border-radius: 10px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .btn-secondary {
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-block {
-            width: 100%;
-        }
-
-        /* Ticker styling */
-        .crypto-ticker {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .crypto-ticker::-webkit-scrollbar {
-            display: none;
-        }
-
-        .ticker-item {
-            background-color: var(--bg-card);
-            padding: 12px 16px;
-            border-radius: 12px;
-            min-width: 130px;
-            border: 1px solid var(--border-color);
-        }
-
-        .ticker-name {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .ticker-price {
-            font-weight: bold;
-            margin: 4px 0;
-        }
-
-        .ticker-change {
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .up { color: var(--green); }
-        .down { color: var(--red); }
-
-        /* VIP Level List */
-        .vip-card {
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .vip-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .vip-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        .vip-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-            background-color: var(--bg-secondary);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
-
-        /* Quantifying Task Area */
-        .quantify-box {
-            text-align: center;
-            padding: 30px 20px;
-        }
-
-        .quantify-circle {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid var(--accent-color);
-            margin: 0 auto 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, rgba(240,185,11,0.05) 0%, transparent 70%);
-            box-shadow: 0 0 20px rgba(240,185,11,0.2);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .quantify-circle:active {
-            transform: scale(0.95);
-        }
-
-        .quantify-circle i {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 8px;
-        }
-
-        /* Modals & Forms */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: #fff;
-            outline: none;
-        }
-
-        .form-control:focus {
-            border-color: var(--accent-color);
-        }
-
-        /* Auth Screen - مخفية افتراضياً لمنع الوميض */
-        .auth-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-primary);
-            z-index: 2000;
-            display: none; 
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-box {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            color: var(--text-secondary);
-            font-weight: bold;
-        }
-
-        .auth-tab.active {
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        /* Notification Toast */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--bg-card);
-            border: 1px solid var(--accent-color);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px;
-            z-index: 3000;
-            display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            font-size: 0.85rem;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            text-align: right;
-        }
-
-        th, td {
-            padding: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            color: var(--text-secondary);
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen pb-20">
 
-    <div id="toast" class="toast">تمت العملية بنجاح</div>
-
-    <!-- Auth System Overlay -->
-    <div id="authScreen" class="auth-container">
-        <div class="auth-box card">
-            <h2 style="text-align: center; margin-bottom: 20px; color: var(--accent-color);">
-                <i class="fa-solid fa-chart-line"></i> التحديد الكمي الذكي
-            </h2>
-            
-            <div class="auth-tabs">
-                <div class="auth-tab active" onclick="switchAuthTab('login')">تسجيل الدخول</div>
-                <div class="auth-tab" onclick="switchAuthTab('register')">إنشاء حساب</div>
-            </div>
-
-            <!-- Login Form -->
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="loginEmail" class="form-control" required placeholder="example@mail.com">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="loginPassword" class="form-control" required placeholder="******">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">دخول</button>
-            </form>
-
-            <!-- Register Form -->
-            <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="regEmail" class="form-control" required placeholder="example@mail.com">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="regPassword" class="form-control" required placeholder="******">
-                </div>
-                <div class="form-group">
-                    <label>رمز الدعوة (اختياري)</label>
-                    <input type="text" id="regInvite" class="form-control" placeholder="ABC123">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">تسجيل جديد</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main Mobile Application Layout -->
-    <div class="app-container">
-
-        <!-- Top Navigation Header -->
-        <header class="top-header">
-            <div class="user-info">
-                <div class="avatar" id="userAvatar">U</div>
-                <div>
-                    <div style="font-size: 0.85rem; font-weight: bold;" id="userEmailDisplay">user@mail.com</div>
-                    <span class="vip-badge" id="userVipBadge">VIP 1</span>
-                </div>
+    <!-- Header / Navbar -->
+    <header class="glass-card sticky top-0 z-50 px-4 py-3 flex justify-between items-center border-b border-slate-800">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="bg-gradient-to-r from-green-500 to-blue-500 p-2 rounded-xl text-white font-bold text-xl">
+                <i class="fa-solid me-1 fa-chart-line"></i>
             </div>
             <div>
-                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;" onclick="logout()">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
+                <h1 class="text-lg font-bold gradient-text leading-tight">المنصة الكمية</h1>
+                <p class="text-xs text-slate-400">التداول والارتقاء الذكي</p>
             </div>
-        </header>
+        </div>
 
-        <!-- View 1: Home Dashboard -->
-        <main id="homeView" class="view active">
-            <!-- Ticker -->
-            <div class="crypto-ticker">
-                <div class="ticker-item">
-                    <div class="ticker-name">BTC/USDT</div>
-                    <div class="ticker-price" id="btcPrice">64,250.00</div>
-                    <div class="ticker-change up">+2.4%</div>
-                </div>
-                <div class="ticker-item">
-                    <div class="ticker-name">ETH/USDT</div>
-                    <div class="ticker-price" id="ethPrice">3,480.50</div>
-                    <div class="ticker-change up">+1.8%</div>
-                </div>
-            </div>
+        <div id="userHeaderActions" class="flex items-center space-x-2 space-x-reverse">
+            <!-- Populated dynamically via JS -->
+        </div>
+    </header>
 
-            <!-- Total Assets Card -->
-            <div class="card balance-card">
-                <div class="balance-title">إجمالي الأصول المقدرة (USDT)</div>
-                <div class="balance-amount" id="totalBalance">0.00</div>
-                <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="showModal('depositModal')">
-                        <i class="fa-solid fa-wallet"></i> إيداع
-                    </button>
-                    <button class="btn btn-secondary" onclick="showModal('withdrawModal')">
-                        <i class="fa-solid fa-money-bill-transfer"></i> سحب
-                    </button>
-                </div>
-            </div>
-        </main>
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 py-6 max-w-lg">
 
-        <!-- View 2: Quantify (Tasks) -->
-        <main id="quantifyView" class="view">
-            <div class="card">
-                <h3 style="margin-bottom: 15px;">مركز التحديد الكمي اليومي</h3>
-                <div class="quantify-box">
-                    <div class="quantify-circle" onclick="startQuantifying()">
-                        <i class="fa-solid fa-microchip" id="quantifyIcon"></i>
-                        <span style="font-size: 0.85rem; font-weight: bold;" id="quantifyBtnText">ابدأ التحديد</span>
-                    </div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                        المهام المتبقية اليوم: <span id="tasksLeft" style="color: var(--accent-color); font-weight: bold;">0</span>
+        <!-- AUTH MODAL / VIEW (IF NOT LOGGED IN) -->
+        <div id="authSection" class="hidden">
+            <div class="glass-card p-6 rounded-2xl shadow-xl border border-slate-800">
+                <div class="flex justify-center mb-6">
+                    <div class="bg-slate-800 p-1 rounded-xl flex w-full">
+                        <button id="tabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all bg-green-500 text-white">تسجيل الدخول</button>
+                        <button id="tabRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all text-slate-400">حساب جديد</button>
                     </div>
                 </div>
+
+                <!-- Form -->
+                <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">اسم المستخدم</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" id="authUsername" required class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 pr-10 pl-3 text-sm focus:outline-none focus:border-green-500 text-white" placeholder="أدخل اسم المستخدم">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">كلمة المرور</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="authPassword" required class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 pr-10 pl-3 text-sm focus:outline-none focus:border-green-500 text-white" placeholder="••••••••">
+                        </div>
+                    </div>
+                    <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 font-bold rounded-xl text-slate-950 shadow-lg shadow-green-500/20 hover:opacity-90 transition-all">
+                        تسجيل الدخول
+                    </button>
+                </form>
             </div>
-        </main>
+        </div>
 
-        <!-- View 3: VIP Levels -->
-        <main id="vipView" class="view">
-            <h3 style="margin-bottom: 15px;">مستويات VIP</h3>
-
-            <div class="card vip-card">
-                <div class="vip-header">
-                    <span class="vip-title">VIP 1</span>
-                    <span class="vip-badge">المستوى الافتراضي</span>
+        <!-- DASHBOARD VIEW (WHEN LOGGED IN) -->
+        <div id="dashboardSection" class="space-y-6 hidden">
+            
+            <!-- User Info & Balance Card -->
+            <div class="glass-card p-5 rounded-2xl relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="text-xs text-slate-400 block mb-1">مرحباً بعودتك،</span>
+                        <h2 id="displayUsername" class="text-xl font-bold text-white">المستخدم</h2>
+                    </div>
+                    <span id="displayVipBadge" class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-bold flex items-center">
+                        <i class="fa-solid fa-crown text-amber-400 me-1"></i> <span id="vipLevelText">VIP 0</span>
+                    </span>
                 </div>
-                <div class="vip-details">
-                    <div>الربح اليومي: <strong>0.00 USDT</strong></div>
-                    <div>عدد المهام: <strong>0/يومياً</strong></div>
+
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80 mb-4">
+                    <span class="text-xs text-slate-400 block mb-1">إجمالي الرصيد المتاح</span>
+                    <div class="flex items-baseline space-x-1 space-x-reverse">
+                        <span id="displayBalance" class="text-3xl font-extrabold text-white">0.00</span>
+                        <span class="text-xs text-green-400 font-semibold">USDT</span>
+                    </div>
                 </div>
-                <button class="btn btn-secondary btn-block" disabled>المستوى الحالي</button>
-            </div>
 
-            <div class="card vip-card">
-                <div class="vip-header">
-                    <span class="vip-title">VIP 2</span>
-                    <span style="font-size:0.8rem; color:var(--accent-color);">موصى به</span>
-                </div>
-                <div class="vip-details">
-                    <div>شروط الفتح: <strong>10 USDT</strong></div>
-                    <div>الربح اليومي: <strong>2.00 USDT</strong></div>
-                </div>
-                <button class="btn btn-primary btn-block" onclick="upgradeVip(2, 10)">ترقية الآن (10 USDT)</button>
-            </div>
-        </main>
-
-        <!-- View 4: Team / Invite -->
-        <main id="teamView" class="view">
-            <h3 style="margin-bottom: 15px;">دعوة الأصدقاء وبناء الفريق</h3>
-            <div class="card" style="text-align: center;">
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">رمز الدعوة الخاص بك</p>
-                <div style="font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 15px;" id="myInviteCode">------</div>
-                <button class="btn btn-primary btn-block" onclick="copyInviteCode()">نسخ كود الدعوة</button>
-            </div>
-        </main>
-
-        <!-- View 5: Profile & Settings -->
-        <main id="profileView" class="view">
-            <div class="card" style="text-align: center;">
-                <div class="avatar" style="width: 60px; height: 60px; font-size: 1.5rem; margin: 0 auto 10px;" id="profileAvatar">U</div>
-                <h3 id="profileEmail">user@mail.com</h3>
-                <span class="vip-badge" id="profileVipBadge" style="display: inline-block; margin-top: 5px;">VIP 1</span>
-            </div>
-
-            <div class="card">
-                <h4 style="font-size: 0.92rem; margin-bottom: 10px;"><i class="fa-solid fa-clock-rotate-left"></i> سجل المعاملات</h4>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>النوع</th>
-                                <th>المبلغ</th>
-                                <th>الحالة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTableBody">
-                            <tr><td colspan="3" style="text-align: center; color: var(--text-secondary);">لا توجد معاملات بعد</td></tr>
-                        </tbody>
-                    </table>
+                <!-- Quick Action Buttons -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="openModal('depositModal')" class="flex items-center justify-center space-x-2 space-x-reverse bg-green-500/20 text-green-400 border border-green-500/30 py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500/30 transition-all">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>إيداع</span>
+                    </button>
+                    <button onclick="openModal('withdrawModal')" class="flex items-center justify-center space-x-2 space-x-reverse bg-blue-500/20 text-blue-400 border border-blue-500/30 py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-500/30 transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>سحب</span>
+                    </button>
                 </div>
             </div>
 
-            <div id="adminAccessBtn" class="card" style="display: none; border-color: var(--red);">
-                <button class="btn btn-secondary btn-block" style="color: var(--red);" onclick="showModal('adminModal')">
-                    <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن
+            <!-- Live Market Prices Ticker -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                <h3 class="text-xs font-bold text-slate-400 mb-3 flex items-center">
+                    <i class="fa-solid fa-arrow-trend-up text-green-400 me-2"></i> أسعار السوق المباشرة
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-400">BTC/USDT</div>
+                        <div class="text-base font-bold text-white mt-1" id="btcPrice">$64,250.00</div>
+                        <div class="text-xs text-green-400 mt-0.5">+2.4%</div>
+                    </div>
+                    <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-400">ETH/USDT</div>
+                        <div class="text-base font-bold text-white mt-1" id="ethPrice">$3,480.00</div>
+                        <div class="text-xs text-green-400 mt-0.5">+1.8%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantitative Trading Action Card -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-800">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="font-bold text-white text-base">التحديد الكمي اليومي</h3>
+                        <p class="text-xs text-slate-400">قم بتنفيذ مهام التداول للحصول على الأرباح</p>
+                    </div>
+                    <i class="fa-solid fa-robot text-2xl text-green-400"></i>
+                </div>
+
+                <div id="quantStatusContainer" class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 text-center mb-4">
+                    <div id="quantTimerText" class="text-xs text-slate-400 mb-1">حالة المهمة اليومية</div>
+                    <div id="quantStatus" class="text-sm font-semibold text-green-400">جاهز للتنفيذ</div>
+                </div>
+
+                <button id="runQuantBtn" onclick="executeQuantTask()" class="w-full py-3.5 bg-gradient-to-r from-green-500 to-emerald-600 text-slate-950 font-bold rounded-xl shadow-lg shadow-green-500/20 hover:opacity-90 transition-all flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>بدء التحديد الكمي الآن</span>
                 </button>
             </div>
 
-            <div class="card">
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="btn btn-secondary btn-block" style="justify-content: flex-start;" onclick="showModal('walletModal')">ربط محفظة السحب</button>
-                    <button class="btn btn-secondary btn-block" style="justify-content: flex-start;" onclick="showModal('passwordModal')">تغيير كلمة المرور</button>
-                    <button class="btn btn-secondary btn-block" style="justify-content: flex-start; color: var(--red);" onclick="logout()">تسجيل الخروج</button>
+            <!-- VIP Levels Overview -->
+            <div class="space-y-3">
+                <h3 class="font-bold text-white text-base flex items-center">
+                    <i class="fa-solid fa-layer-group text-amber-400 me-2"></i> مستويات VIP والأرباح
+                </h3>
+
+                <!-- VIP 2 Card -->
+                <div class="glass-card p-4 rounded-2xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <span class="font-bold text-white">VIP 2</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">الأدنى للإيداع: 10 USDT</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">الربح اليومي: <span class="text-green-400 font-bold">1.20 USDT</span></p>
+                    </div>
+                    <button onclick="upgradeVip(2)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-700 font-bold text-white transition-all">
+                        تفعيل / ترقية
+                    </button>
+                </div>
+
+                <!-- VIP 3 Card -->
+                <div class="glass-card p-4 rounded-2xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <span class="font-bold text-white">VIP 3</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">الأدنى للإيداع: 50 USDT</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">الربح اليومي: <span class="text-green-400 font-bold">6.50 USDT</span></p>
+                    </div>
+                    <button onclick="upgradeVip(3)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-700 font-bold text-white transition-all">
+                        تفعيل / ترقية
+                    </button>
                 </div>
             </div>
-        </main>
 
-        <!-- Bottom Navigation Bar -->
-        <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchView('homeView', this)">
-                <i class="fa-solid fa-house"></i>
-                <span>الرئيسية</span>
-            </div>
-            <div class="nav-item" onclick="switchView('quantifyView', this)">
-                <i class="fa-solid fa-chart-simple"></i>
-                <span>التحديد</span>
-            </div>
-            <div class="nav-item" onclick="switchView('vipView', this)">
-                <i class="fa-solid fa-crown"></i>
-                <span>VIP</span>
-            </div>
-            <div class="nav-item" onclick="switchView('teamView', this)">
-                <i class="fa-solid fa-users"></i>
-                <span>الفريق</span>
-            </div>
-            <div class="nav-item" onclick="switchView('profileView', this)">
-                <i class="fa-solid fa-user"></i>
-                <span>حسابي</span>
-            </div>
-        </nav>
+            <!-- Transaction History Link -->
+            <button onclick="openModal('historyModal')" class="w-full py-3 bg-slate-800/80 hover:bg-slate-800 text-slate-300 border border-slate-700/50 rounded-xl font-semibold text-sm transition-all flex items-center justify-center space-x-2 space-x-reverse">
+                <i class="fa-solid fa-list-check"></i>
+                <span>عرض سجل المعاملات المالية</span>
+            </button>
+        </div>
 
-    </div>
-
-    <!-- Modals -->
-    <div id="depositModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-        <div class="card" style="width: 100%; max-width: 400px; margin: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3>إيداع USDT</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('depositModal')"></i>
-            </div>
-            <form onsubmit="handleDepositSubmit(event)">
-                <div class="form-group">
-                    <label>المبلغ المودع (USDT)</label>
-                    <input type="number" id="depositAmount" class="form-control" step="0.1" required placeholder="مثال: 10">
+        <!-- ADMIN PANEL SECTION (FOR ADMIN USER ONLY) -->
+        <div id="adminSection" class="space-y-6 hidden">
+            <div class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-2xl text-amber-300 mb-4 flex items-center space-x-3 space-x-reverse">
+                <i class="fa-solid fa-user-shield text-2xl"></i>
+                <div>
+                    <h3 class="font-bold text-sm">لوحة الإدارة والتأكيد Manual</h3>
+                    <p class="text-xs text-amber-400/80">إدارة طلبات الإيداع والسحب الخاصة بالمستخدمين</p>
                 </div>
-                <div class="form-group">
-                    <label>رقم معاملة التحويل (TxID)</label>
-                    <input type="text" id="depositTxid" class="form-control" required placeholder="معرف التحويل">
+            </div>
+
+            <!-- Pending Deposits List -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                <h3 class="font-bold text-white text-sm mb-3 flex items-center">
+                    <i class="fa-solid fa-clock text-amber-400 me-2"></i> طلبات الإيداع المعلقة
+                </h3>
+                <div id="adminDepositsList" class="space-y-3">
+                    <!-- Populated dynamically -->
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">تأكيد الإيداع</button>
+            </div>
+
+            <!-- Pending Withdrawals List -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                <h3 class="font-bold text-white text-sm mb-3 flex items-center">
+                    <i class="fa-solid fa-arrow-up-from-bracket text-blue-400 me-2"></i> طلبات السحب المعلقة
+                </h3>
+                <div id="adminWithdrawalsList" class="space-y-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- DEPOSIT MODAL -->
+    <div id="depositModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 relative">
+            <button onclick="closeModal('depositModal')" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="font-bold text-lg text-white mb-4">طلب إيداع جديد</h3>
+
+            <form onsubmit="handleDepositSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">اختر الشبكة</label>
+                    <select id="depositNetwork" onchange="updateDepositAddress()" class="w-full bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-green-500 text-white">
+                        <option value="TRC20">USDT (TRC20)</option>
+                        <option value="BEP20">USDT (BEP20)</option>
+                        <option value="ERC20">USDT (ERC20)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">عنوان المحفظة للإيداع</label>
+                    <div class="flex items-center space-x-2 space-x-reverse bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+                        <span id="depositWalletAddress" class="text-xs text-slate-300 font-mono break-all flex-1">TBBazvxfMw44Y4cg7S731c8gZQjP6bW7Ru</span>
+                        <button type="button" onclick="copyAddress()" class="bg-slate-700 hover:bg-slate-600 text-xs px-2.5 py-1.5 rounded-lg text-white transition-all">نسخ</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">المبلغ المراد إيداعه (USDT)</label>
+                    <input type="number" id="depositAmount" min="1" step="any" required class="w-full bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-green-500 text-white" placeholder="مثال: 50">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">معرف المعاملة (TxID / Hash)</label>
+                    <input type="text" id="depositTxid" required class="w-full bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-green-500 text-white" placeholder="أدخل معرف التحويل لإثبات الإيداع">
+                </div>
+
+                <p class="text-xs text-amber-400 bg-amber-500/10 p-2.5 rounded-lg border border-amber-500/20">
+                    ملاحظة: يتطلب تفعيل المستوى VIP2 إيداع مبلغ معتمد. سيتم إضافة الرصيد لحسابك فور تأكيد المسؤول للطلب.
+                </p>
+
+                <button type="submit" class="w-full py-3 bg-green-500 font-bold rounded-xl text-slate-950 shadow-lg shadow-green-500/20 hover:bg-green-400 transition-all">
+                    تأكيد وإرسال طلب الإيداع
+                </button>
             </form>
         </div>
     </div>
 
-    <div id="withdrawModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-        <div class="card" style="width: 100%; max-width: 400px; margin: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3>سحب الأرباح</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('withdrawModal')"></i>
-            </div>
-            <form onsubmit="handleWithdrawSubmit(event)">
-                <div class="form-group">
-                    <label>المبلغ المراد سحبه (USDT)</label>
-                    <input type="number" id="withdrawAmount" class="form-control" step="0.1" required placeholder="الحد الأدنى 2">
+    <!-- WITHDRAW MODAL -->
+    <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 relative">
+            <button onclick="closeModal('withdrawModal')" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="font-bold text-lg text-white mb-4">طلب سحب الرصيد</h3>
+
+            <form onsubmit="handleWithdrawSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">عنوان محفظتك (USDT TRC20/BEP20/ERC20)</label>
+                    <input type="text" id="withdrawAddress" required class="w-full bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-blue-500 text-white" placeholder="أدخل عنوان محفظتك للتلقي">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">تأكيد السحب</button>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">المبلغ المراد سحبه (USDT)</label>
+                    <input type="number" id="withdrawAmount" min="1" step="any" required class="w-full bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-blue-500 text-white" placeholder="0.00">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-blue-500 font-bold rounded-xl text-white shadow-lg shadow-blue-500/20 hover:bg-blue-400 transition-all">
+                    إرسال طلب السحب
+                </button>
             </form>
         </div>
     </div>
 
-    <div id="walletModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-        <div class="card" style="width: 100%; max-width: 400px; margin: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3>ربط محفظة السحب</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('walletModal')"></i>
-            </div>
-            <form onsubmit="saveWalletAddress(event)">
-                <div class="form-group">
-                    <label>عنوان المحفظة</label>
-                    <input type="text" id="userSavedWallet" class="form-control" required placeholder="عنوان USDT...">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">حفظ</button>
-            </form>
-        </div>
-    </div>
+    <!-- HISTORY MODAL -->
+    <div id="historyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 relative max-h-[80vh] flex flex-col">
+            <button onclick="closeModal('historyModal')" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="font-bold text-lg text-white mb-4">سجل المعاملات</h3>
 
-    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-        <div class="card" style="width: 100%; max-width: 400px; margin: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3>تغيير كلمة المرور</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('passwordModal')"></i>
-            </div>
-            <form onsubmit="handleChangePassword(event)">
-                <div class="form-group">
-                    <label>كلمة المرور الجديدة</label>
-                    <input type="password" id="newPassword" class="form-control" required minlength="6" placeholder="******">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">تحديث</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-        <div class="card" style="width: 100%; max-width: 450px; margin: 0; max-height: 80vh; overflow-y: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: var(--red);"><i class="fa-solid fa-user-shield"></i> لوحة الأدمن</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('adminModal')"></i>
-            </div>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>المستخدم</th>
-                            <th>النوع</th>
-                            <th>المبلغ</th>
-                            <th>إجراء</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminRequestsTable"></tbody>
-                </table>
+            <div id="historyListContainer" class="overflow-y-auto space-y-3 flex-1 pr-1">
+                <!-- Populated dynamically -->
             </div>
         </div>
     </div>
 
     <!-- JavaScript Application Logic -->
     <script>
-        const ADMIN_EMAIL = "admin@quant.com";
-        
-        let state = {
-            users: JSON.parse(localStorage.getItem('quant_users')) || {},
-            currentUser: localStorage.getItem('quant_current_user') || null,
-            transactions: JSON.parse(localStorage.getItem('quant_txs')) || []
+        // Default addresses per network
+        const walletAddresses = {
+            'TRC20': 'TBBazvxfMw44Y4cg7S731c8gZQjP6bW7Ru',
+            'BEP20': '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+            'ERC20': '0x0D4f7aeBCB66Ad8e8A2889C4E32c133234dAA32B'
         };
 
-        const VIP_CONFIG = {
-            1: { cost: 0, dailyProfit: 0, tasks: 0 },
-            2: { cost: 10, dailyProfit: 2.0, tasks: 1 },
-            3: { cost: 50, dailyProfit: 10.0, tasks: 1 }
-        };
+        // App state initialize
+        let currentUser = null;
+        let authMode = 'login'; // 'login' or 'register'
 
-        window.onload = function() {
-            // إنشاء حساب الأدمن الافتراضي إذا لم يكن موجوداً
-            if (!state.users[ADMIN_EMAIL]) {
-                state.users[ADMIN_EMAIL] = {
-                    email: ADMIN_EMAIL,
-                    password: "admin",
-                    balance: 10000,
-                    vip: 3,
-                    wallet: "",
-                    inviteCode: "ADMIN1",
-                    lastTaskDate: null
+        // Load DB from LocalStorage
+        function getUsersDB() {
+            return JSON.parse(localStorage.getItem('quant_users')) || [];
+        }
+        function saveUsersDB(users) {
+            localStorage.setItem('quant_users', JSON.stringify(users));
+        }
+
+        function getTransactionsDB() {
+            return JSON.parse(localStorage.getItem('quant_txs')) || [];
+        }
+        function saveTransactionsDB(txs) {
+            localStorage.setItem('quant_txs', JSON.stringify(txs));
+        }
+
+        // Initialize Application
+        window.addEventListener('DOMContentLoaded', () => {
+            const loggedInUsername = localStorage.getItem('quant_current_user');
+            if (loggedInUsername) {
+                const users = getUsersDB();
+                currentUser = users.find(u => u.username === loggedInUsername);
+            }
+            renderUI();
+            updatePrices();
+            setInterval(updatePrices, 5000); // Live price update simulation
+        });
+
+        // Switch Auth Tabs
+        function switchAuthTab(mode) {
+            authMode = mode;
+            const tabLogin = document.getElementById('tabLogin');
+            const tabRegister = document.getElementById('tabRegister');
+            const submitBtn = document.getElementById('authSubmitBtn');
+
+            if (mode === 'login') {
+                tabLogin.className = "flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all bg-green-500 text-white";
+                tabRegister.className = "flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all text-slate-400";
+                submitBtn.textContent = "تسجيل الدخول";
+            } else {
+                tabRegister.className = "flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all bg-green-500 text-white";
+                tabLogin.className = "flex-1 py-2 text-center rounded-lg font-semibold text-sm transition-all text-slate-400";
+                submitBtn.textContent = "إنشاء حساب جديد";
+            }
+        }
+
+        // Handle Auth Submit
+        function handleAuth(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('authUsername').value.trim();
+            const passwordInput = document.getElementById('authPassword').value;
+
+            if (!usernameInput || !passwordInput) return;
+
+            let users = getUsersDB();
+
+            if (authMode === 'register') {
+                const exists = users.find(u => u.username === usernameInput);
+                if (exists) {
+                    alert('اسم المستخدم هذا مستخدم بالفعل!');
+                    return;
+                }
+
+                // Create new user account with initial balance = 0
+                const newUser = {
+                    username: usernameInput,
+                    password: passwordInput,
+                    balance: 0.00,
+                    vipLevel: 0,
+                    lastQuantTime: null,
+                    isAdmin: usernameInput.toLowerCase() === 'admin'
                 };
-                saveData();
-            }
-
-            const savedUser = localStorage.getItem('quant_current_user');
-            
-            if (savedUser && savedUser !== "null" && savedUser !== "undefined" && state.users[savedUser]) {
-                state.currentUser = savedUser;
-                document.getElementById('authScreen').style.display = 'none';
-                updateUI();
+                users.push(newUser);
+                saveUsersDB(users);
+                currentUser = newUser;
             } else {
-                state.currentUser = null;
-                document.getElementById('authScreen').style.display = 'flex';
+                const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
+                if (!user) {
+                    alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+                    return;
+                }
+                currentUser = user;
             }
 
-            setInterval(simulatePrices, 3000);
-        };
-
-        function saveData() {
-            localStorage.setItem('quant_users', JSON.stringify(state.users));
-            if (state.currentUser) {
-                localStorage.setItem('quant_current_user', state.currentUser);
-            } else {
-                localStorage.removeItem('quant_current_user');
-            }
-            localStorage.setItem('quant_txs', JSON.stringify(state.transactions));
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        }
-
-        function switchView(viewId, element) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            document.getElementById(viewId).classList.add('active');
-            if (element) element.classList.add('active');
-            updateUI();
-        }
-
-        function switchAuthTab(type) {
-            const tabs = document.querySelectorAll('.auth-tab');
-            if (type === 'login') {
-                tabs[0].classList.add('active');
-                tabs[1].classList.remove('active');
-                document.getElementById('loginForm').style.display = 'block';
-                document.getElementById('registerForm').style.display = 'none';
-            } else {
-                tabs[1].classList.add('active');
-                tabs[0].classList.remove('active');
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'block';
-            }
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const pass = document.getElementById('loginPassword').value.trim();
-
-            if (state.users[email] && state.users[email].password === pass) {
-                state.currentUser = email;
-                saveData();
-                document.getElementById('authScreen').style.display = 'none';
-                updateUI();
-                showToast("تم تسجيل الدخول بنجاح");
-            } else {
-                showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة");
-            }
-        }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const email = document.getElementById('regEmail').value.trim();
-            const pass = document.getElementById('regPassword').value.trim();
-
-            if (state.users[email]) {
-                showToast("هذا البريد الإلكتروني مسجل بالفعل");
-                return;
-            }
-
-            const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-            state.users[email] = {
-                email: email,
-                password: pass,
-                balance: 0.0,
-                vip: 1,
-                wallet: "",
-                inviteCode: randomCode,
-                lastTaskDate: null
-            };
-
-            state.currentUser = email;
-            saveData();
-            document.getElementById('authScreen').style.display = 'none';
-            updateUI();
-            showToast("تم إنشاء الحساب بنجاح");
+            localStorage.setItem('quant_current_user', currentUser.username);
+            document.getElementById('authForm').reset();
+            renderUI();
         }
 
         function logout() {
-            state.currentUser = null;
-            saveData();
-            document.getElementById('authScreen').style.display = 'flex';
+            localStorage.removeItem('quant_current_user');
+            currentUser = null;
+            renderUI();
         }
 
-        function updateUI() {
-            if (!state.currentUser || !state.users[state.currentUser]) return;
+        // Render UI based on authentication status
+        function renderUI() {
+            const authSection = document.getElementById('authSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const adminSection = document.getElementById('adminSection');
+            const userHeaderActions = document.getElementById('userHeaderActions');
 
-            const user = state.users[state.currentUser];
-
-            document.getElementById('userEmailDisplay').innerText = user.email;
-            document.getElementById('userAvatar').innerText = user.email[0].toUpperCase();
-            document.getElementById('userVipBadge').innerText = `VIP ${user.vip}`;
-
-            document.getElementById('profileEmail').innerText = user.email;
-            document.getElementById('profileAvatar').innerText = user.email[0].toUpperCase();
-            document.getElementById('profileVipBadge').innerText = `VIP ${user.vip}`;
-            document.getElementById('myInviteCode').innerText = user.inviteCode;
-            document.getElementById('userSavedWallet').value = user.wallet || '';
-
-            if (user.email === ADMIN_EMAIL) {
-                document.getElementById('adminAccessBtn').style.display = 'block';
+            if (!currentUser) {
+                authSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                adminSection.classList.add('hidden');
+                userHeaderActions.innerHTML = '';
             } else {
-                document.getElementById('adminAccessBtn').style.display = 'none';
+                authSection.classList.add('hidden');
+                
+                if (currentUser.isAdmin) {
+                    adminSection.classList.remove('hidden');
+                    dashboardSection.classList.add('hidden');
+                    renderAdminPanel();
+                } else {
+                    dashboardSection.classList.remove('hidden');
+                    adminSection.classList.add('hidden');
+                    renderUserDashboard();
+                }
+
+                userHeaderActions.innerHTML = `
+                    <button onclick="logout()" class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1.5 rounded-lg hover:bg-red-500/20 transition-all font-semibold">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i> خروج
+                    </button>
+                `;
             }
-
-            document.getElementById('totalBalance').innerText = parseFloat(user.balance).toFixed(2);
-
-            const todayStr = new Date().toDateString();
-            const canTask = user.vip > 1 && user.lastTaskDate !== todayStr;
-            document.getElementById('tasksLeft').innerText = (user.vip > 1 ? (canTask ? 1 : 0) : 0);
-            document.getElementById('quantifyBtnText').innerText = canTask ? "ابدأ التحديد" : "اكتملت المهام";
-
-            renderHistoryTable();
-            renderAdminRequestsTable();
         }
 
-        function startQuantifying() {
-            const user = state.users[state.currentUser];
-            const todayStr = new Date().toDateString();
+        // Render User Dashboard Data
+        function renderUserDashboard() {
+            // Fetch updated current user details from DB
+            const users = getUsersDB();
+            currentUser = users.find(u => u.username === currentUser.username) || currentUser;
 
-            if (user.vip === 1) {
-                showToast("يرجى ترقية مستوى VIP للبدء بالمهام");
+            document.getElementById('displayUsername').textContent = currentUser.username;
+            document.getElementById('displayBalance').textContent = currentUser.balance.toFixed(2);
+            document.getElementById('vipLevelText').textContent = `VIP ${currentUser.vipLevel}`;
+
+            // Check Quant Task status
+            const now = new Date().getTime();
+            const lastTask = currentUser.lastQuantTime ? new Date(currentUser.lastQuantTime).getTime() : 0;
+            const diffHours = (now - lastTask) / (1000 * 60 * 60);
+
+            const statusText = document.getElementById('quantStatus');
+            const runBtn = document.getElementById('runQuantBtn');
+
+            if (diffHours < 24) {
+                statusText.textContent = "تم إكمال المهمة اليومية (يرجى الانتظار للمهمة القادمة)";
+                statusText.className = "text-sm font-semibold text-amber-400";
+                runBtn.disabled = true;
+                runBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                statusText.textContent = "جاهز لتنفيذ المهمة اليومية";
+                statusText.className = "text-sm font-semibold text-green-400";
+                runBtn.disabled = false;
+                runBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Execute Quantitative Task
+        function executeQuantTask() {
+            if (!currentUser) return;
+            if (currentUser.vipLevel < 2) {
+                alert('يجب فتح المستوى VIP 2 على الأقل لتنفيذ المهام اليومية! يرجى تقديم طلب إيداع أولاً.');
                 return;
             }
 
-            if (user.lastTaskDate === todayStr) {
-                showToast("لقد أكملت مهمة اليوم بالفعل! عد غداً");
+            const now = new Date().getTime();
+            const lastTask = currentUser.lastQuantTime ? new Date(currentUser.lastQuantTime).getTime() : 0;
+            if ((now - lastTask) / (1000 * 60 * 60) < 24) {
+                alert('لقد قمت بتنفيذ المهمة اليومية بالفعل!');
                 return;
             }
 
-            const icon = document.getElementById('quantifyIcon');
-            icon.classList.add('fa-spin');
-            document.getElementById('quantifyBtnText').innerText = "جاري التحديد...";
+            // Calculate daily reward based on VIP
+            let reward = 0;
+            if (currentUser.vipLevel === 2) reward = 1.20;
+            else if (currentUser.vipLevel >= 3) reward = 6.50;
 
-            setTimeout(() => {
-                icon.classList.remove('fa-spin');
-                const profit = VIP_CONFIG[user.vip].dailyProfit;
-                user.balance += profit;
-                user.lastTaskDate = todayStr;
+            const users = getUsersDB();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            
+            if (userIndex !== -1) {
+                users[userIndex].balance += reward;
+                users[userIndex].lastQuantTime = new Date().toISOString();
+                saveUsersDB(users);
+                
+                // Record transaction
+                addTransaction(currentUser.username, 'quant_reward', reward, 'مكتمل', 'ربح التحديد الكمي اليومي');
 
-                state.transactions.push({
-                    id: Date.now(),
-                    user: user.email,
-                    type: 'أرباح تحديد كمي',
-                    amount: profit,
-                    status: 'مكتمل',
-                    date: new Date().toLocaleTimeString('ar-EG')
-                });
-
-                saveData();
-                updateUI();
-                showToast(`تم التحديد بنجاح! +${profit} USDT`);
-            }, 2000);
-        }
-
-        function upgradeVip(level, cost) {
-            const user = state.users[state.currentUser];
-            if (user.balance < cost) {
-                showToast("رصيدك غير كافي! يرجى الإيداع أولاً");
-                return;
+                alert(`تم تنفيذ المهمة بنجاح! تم إضافة أرباح بقيمة ${reward} USDT إلى رصيدك.`);
+                renderUserDashboard();
             }
-
-            user.balance -= cost;
-            user.vip = level;
-
-            state.transactions.push({
-                id: Date.now(),
-                user: user.email,
-                type: `ترقية VIP ${level}`,
-                amount: -cost,
-                status: 'مكتمل',
-                date: new Date().toLocaleDateString('ar-EG')
-            });
-
-            saveData();
-            updateUI();
-            showToast(`تمت ترقية الحساب إلى VIP ${level}!`);
         }
 
+        // VIP Upgrade logic
+        function upgradeVip(level) {
+            const minDepositRequired = level === 2 ? 10 : 50;
+            alert(`لتفعيل المستوى VIP ${level}، يلزم أن يكون لديك إيداع مؤكد بحد أدنى ${minDepositRequired} USDT.`);
+            openModal('depositModal');
+        }
+
+        // Modals Management
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            if (id === 'historyModal') renderHistoryList();
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Update Deposit Address based on network selection
+        function updateDepositAddress() {
+            const net = document.getElementById('depositNetwork').value;
+            document.getElementById('depositWalletAddress').textContent = walletAddresses[net] || walletAddresses['TRC20'];
+        }
+
+        function copyAddress() {
+            const addr = document.getElementById('depositWalletAddress').textContent;
+            navigator.clipboard.writeText(addr);
+            alert('تم نسخ العنوان بنجاح!');
+        }
+
+        // Handle Deposit Form Submission
         function handleDepositSubmit(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('depositAmount').value);
             const txid = document.getElementById('depositTxid').value.trim();
+            const network = document.getElementById('depositNetwork').value;
 
-            state.transactions.push({
-                id: Date.now(),
-                user: state.currentUser,
-                type: 'إيداع USDT',
-                amount: amount,
-                txid: txid,
-                status: 'قيد الانتظار',
-                date: new Date().toLocaleDateString('ar-EG')
-            });
+            if (!amount || amount <= 0 || !txid) return;
 
-            saveData();
+            addTransaction(currentUser.username, 'deposit', amount, 'قيد الانتظار', `شبكة: ${network} | TxID: ${txid}`);
+            
             closeModal('depositModal');
-            showToast("تم إرسال طلب الإيداع للمراجعة");
-            updateUI();
+            alert('تم إرسال طلب الإيداع بنجاح! سيتطلب ذلك تأكيد المسؤول لإضافة الإيداع وتفعيل المستوى.');
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('depositTxid').value = '';
         }
 
+        // Handle Withdraw Form Submission
         function handleWithdrawSubmit(e) {
             e.preventDefault();
-            const user = state.users[state.currentUser];
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const address = document.getElementById('withdrawAddress').value.trim();
 
-            if (user.balance < amount) {
-                showToast("رصيدك غير كافي");
+            if (!amount || amount <= 0 || !address) return;
+
+            if (currentUser.balance < amount) {
+                alert('رصيدك الحالي غير كافٍ لإتمام السحب!');
                 return;
             }
 
-            user.balance -= amount;
-            state.transactions.push({
-                id: Date.now(),
-                user: state.currentUser,
-                type: 'سحب أرباح',
-                amount: amount,
-                status: 'قيد الانتظار',
-                date: new Date().toLocaleDateString('ar-EG')
-            });
+            // Deduct balance temporarily for pending withdrawal
+            const users = getUsersDB();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            users[userIndex].balance -= amount;
+            saveUsersDB(users);
 
-            saveData();
+            addTransaction(currentUser.username, 'withdraw', amount, 'قيد الانتظار', `المحفظة: ${address}`);
+
             closeModal('withdrawModal');
-            showToast("تم تقديم طلب السحب");
-            updateUI();
+            alert('تم إرسال طلب السحب بنجاح! وهو قيد المراجعة الآن.');
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('withdrawAddress').value = '';
+            renderUserDashboard();
         }
 
-        function saveWalletAddress(e) {
-            e.preventDefault();
-            state.users[state.currentUser].wallet = document.getElementById('userSavedWallet').value.trim();
-            saveData();
-            closeModal('walletModal');
-            showToast("تم حفظ المحفظة");
+        // Add Transaction Helper
+        function addTransaction(username, type, amount, status, details) {
+            const txs = getTransactionsDB();
+            txs.unshift({
+                id: 'TX' + Date.now(),
+                username,
+                type,
+                amount,
+                status,
+                details,
+                date: new Date().toLocaleString('ar-EG')
+            });
+            saveTransactionsDB(txs);
         }
 
-        function handleChangePassword(e) {
-            e.preventDefault();
-            state.users[state.currentUser].password = document.getElementById('newPassword').value.trim();
-            saveData();
-            closeModal('passwordModal');
-            showToast("تم تغيير كلمة المرور");
-        }
+        // Render Transaction History
+        function renderHistoryList() {
+            const txs = getTransactionsDB().filter(t => t.username === currentUser.username);
+            const container = document.getElementById('historyListContainer');
 
-        function copyInviteCode() {
-            navigator.clipboard.writeText(document.getElementById('myInviteCode').innerText);
-            showToast("تم نسخ الكود");
-        }
-
-        function renderHistoryTable() {
-            const tbody = document.getElementById('historyTableBody');
-            const myTxs = state.transactions.filter(t => t.user === state.currentUser);
-
-            if (myTxs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-secondary);">لا توجد معاملات بعد</td></tr>`;
+            if (txs.length === 0) {
+                container.innerHTML = `<p class="text-xs text-center text-slate-500 py-6">لا يوجد معاملات مسجلة حتى الآن.</p>`;
                 return;
             }
 
-            tbody.innerHTML = myTxs.reverse().map(t => `
-                <tr>
-                    <td>${t.type}</td>
-                    <td style="font-weight:bold;">${t.amount > 0 ? '+' : ''}${t.amount} USDT</td>
-                    <td style="color:${t.status === 'مكتمل' ? 'var(--green)' : 'var(--accent-color)'};">${t.status}</td>
-                </tr>
+            container.innerHTML = txs.map(t => `
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50 flex justify-between items-center text-xs">
+                    <div>
+                        <div class="font-bold text-white mb-0.5">
+                            ${t.type === 'deposit' ? 'إيداع' : t.type === 'withdraw' ? 'سحب' : 'أرباح كمية'}
+                        </div>
+                        <div class="text-slate-400 text-[10px]">${t.details}</div>
+                        <div class="text-slate-500 text-[9px] mt-1">${t.date}</div>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-bold ${t.type === 'withdraw' ? 'text-red-400' : 'text-green-400'}">${t.type === 'withdraw' ? '-' : '+'}${t.amount} USDT</div>
+                        <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] ${t.status === 'مكتمل' ? 'bg-green-500/10 text-green-400' : t.status === 'مرفوض' ? 'bg-red-500/10 text-red-400' : 'bg-amber-500/10 text-amber-400'}">${t.status}</span>
+                    </div>
+                </div>
             `).join('');
         }
 
-        function renderAdminRequestsTable() {
-            const tbody = document.getElementById('adminRequestsTable');
-            const pendingTxs = state.transactions.filter(t => t.status === 'قيد الانتظار');
+        // ADMIN PANEL FUNCTIONS
+        function renderAdminPanel() {
+            const txs = getTransactionsDB();
+            const pendingDeposits = txs.filter(t => t.type === 'deposit' && t.status === 'قيد الانتظار');
+            const pendingWithdrawals = txs.filter(t => t.type === 'withdraw' && t.status === 'قيد الانتظار');
 
-            if (pendingTxs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">لا توجد طلبات معلقة</td></tr>`;
-                return;
+            const depContainer = document.getElementById('adminDepositsList');
+            const withContainer = document.getElementById('adminWithdrawalsList');
+
+            // Deposits
+            if (pendingDeposits.length === 0) {
+                depContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-3">لا توجد طلبات إيداع معلقة.</p>`;
+            } else {
+                depContainer.innerHTML = pendingDeposits.map(t => `
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-white">${t.username}</span>
+                            <span class="text-green-400 font-bold">${t.amount} USDT</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 break-all">${t.details}</p>
+                        <div class="flex space-x-2 space-x-reverse pt-1">
+                            <button onclick="approveDeposit('${t.id}')" class="flex-1 py-1.5 bg-green-500/20 hover:bg-green-500/30 text-green-400 border border-green-500/30 rounded-lg text-xs font-bold transition-all">موافقة وتأكيد</button>
+                            <button onclick="rejectTx('${t.id}')" class="flex-1 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold transition-all">رفض</button>
+                        </div>
+                    </div>
+                `).join('');
             }
 
-            tbody.innerHTML = pendingTxs.map(t => `
-                <tr>
-                    <td style="font-size:0.7rem;">${t.user}</td>
-                    <td>${t.type}</td>
-                    <td>${t.amount}</td>
-                    <td>
-                        <button onclick="approveTx(${t.id})" style="background:var(--green); border:none; color:#000; padding:2px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">موافقة</button>
-                        <button onclick="rejectTx(${t.id})" style="background:var(--red); border:none; color:#fff; padding:2px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">رفض</button>
-                    </td>
-                </tr>
-            `).join('');
+            // Withdrawals
+            if (pendingWithdrawals.length === 0) {
+                withContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-3">لا توجد طلبات سحب معلقة.</p>`;
+            } else {
+                withContainer.innerHTML = pendingWithdrawals.map(t => `
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-white">${t.username}</span>
+                            <span class="text-red-400 font-bold">${t.amount} USDT</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 break-all">${t.details}</p>
+                        <div class="flex space-x-2 space-x-reverse pt-1">
+                            <button onclick="approveWithdrawal('${t.id}')" class="flex-1 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-bold transition-all">موافقة على السحب</button>
+                            <button onclick="rejectWithdrawal('${t.id}')" class="flex-1 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold transition-all">رفض وتأكيد الرد</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
 
-        function approveTx(txId) {
-            const tx = state.transactions.find(t => t.id === txId);
-            if (!tx) return;
-            tx.status = 'مكتمل';
-            if (tx.type.includes('إيداع')) state.users[tx.user].balance += tx.amount;
-            saveData();
-            updateUI();
-            showToast("تم القبول وتحديث الرصيد");
+        // Admin Action: Approve Deposit
+        function approveDeposit(txId) {
+            const txs = getTransactionsDB();
+            const txIndex = txs.findIndex(t => t.id === txId);
+            if (txIndex === -1) return;
+
+            const tx = txs[txIndex];
+            const users = getUsersDB();
+            const userIndex = users.findIndex(u => u.username === tx.username);
+
+            if (userIndex !== -1) {
+                // Add balance
+                users[userIndex].balance += tx.amount;
+                
+                // Unlock/Promote to VIP2 if deposit meets requirement
+                if (users[userIndex].vipLevel < 2 && tx.amount >= 10) {
+                    users[userIndex].vipLevel = 2;
+                }
+
+                saveUsersDB(users);
+
+                txs[txIndex].status = 'مكتمل';
+                saveTransactionsDB(txs);
+
+                alert(`تم التأكيد بنجاح! تم إضافة ${tx.amount} USDT لحساب ${tx.username} وتفعيل المستوى VIP.`);
+                renderAdminPanel();
+            }
         }
 
+        // Admin Action: Approve Withdrawal
+        function approveWithdrawal(txId) {
+            const txs = getTransactionsDB();
+            const txIndex = txs.findIndex(t => t.id === txId);
+            if (txIndex === -1) return;
+
+            txs[txIndex].status = 'مكتمل';
+            saveTransactionsDB(txs);
+
+            alert('تم الموافقة على طلب السحب بنجاح.');
+            renderAdminPanel();
+        }
+
+        // Admin Action: Reject Withdrawal (Refund balance)
+        function rejectWithdrawal(txId) {
+            const txs = getTransactionsDB();
+            const txIndex = txs.findIndex(t => t.id === txId);
+            if (txIndex === -1) return;
+
+            const tx = txs[txIndex];
+            const users = getUsersDB();
+            const userIndex = users.findIndex(u => u.username === tx.username);
+
+            if (userIndex !== -1) {
+                // Refund money to user
+                users[userIndex].balance += tx.amount;
+                saveUsersDB(users);
+            }
+
+            txs[txIndex].status = 'مرفوض';
+            saveTransactionsDB(txs);
+
+            alert('تم رفض طلب السحب وإعادة المبلغ لرصيد المستخدم.');
+            renderAdminPanel();
+        }
+
+        // Reject Deposit Transaction
         function rejectTx(txId) {
-            const tx = state.transactions.find(t => t.id === txId);
-            if (!tx) return;
-            tx.status = 'مرفوض';
-            if (tx.type.includes('سحب')) state.users[tx.user].balance += tx.amount;
-            saveData();
-            updateUI();
-            showToast("تم الرفض");
+            const txs = getTransactionsDB();
+            const txIndex = txs.findIndex(t => t.id === txId);
+            if (txIndex === -1) return;
+
+            txs[txIndex].status = 'مرفوض';
+            saveTransactionsDB(txs);
+
+            alert('تم رفض المعاملة.');
+            renderAdminPanel();
         }
 
-        function showModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        function simulatePrices() {
+        // Price Ticker fluctuation simulation
+        function updatePrices() {
             const btcEl = document.getElementById('btcPrice');
-            let btcVal = parseFloat(btcEl.innerText.replace(',', '')) + (Math.random() - 0.48) * 50;
-            btcEl.innerText = btcVal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const ethEl = document.getElementById('ethPrice');
+
+            if (btcEl && ethEl) {
+                const btcVar = (Math.random() * 200 - 100);
+                const ethVar = (Math.random() * 20 - 10);
+
+                btcEl.textContent = '$' + (64250 + btcVar).toLocaleString('en-US', {maximumFractionDigits: 2});
+                ethEl.textContent = '$' + (3480 + ethVar).toLocaleString('en-US', {maximumFractionDigits: 2});
+            }
         }
     </script>
 </body>
