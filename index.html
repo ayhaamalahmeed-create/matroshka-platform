@@ -336,7 +336,7 @@
             border-color: var(--accent-color);
         }
 
-        /* Auth Screen - مخفية افتراضياً لمنع الوميض ومشاكل التحميل */
+        /* Auth Screen - مخفية افتراضياً لمنع الوميض */
         .auth-container {
             position: fixed;
             top: 0;
@@ -374,39 +374,6 @@
         .auth-tab.active {
             color: var(--accent-color);
             border-bottom: 2px solid var(--accent-color);
-        }
-
-        .qr-code {
-            width: 150px;
-            height: 150px;
-            background-color: #fff;
-            margin: 15px auto;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .network-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .network-btn {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            color: var(--text-secondary);
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        .network-btn.active {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            background-color: rgba(240,185,11,0.1);
         }
 
         /* Notification Toast */
@@ -528,11 +495,6 @@
                     <div class="ticker-price" id="ethPrice">3,480.50</div>
                     <div class="ticker-change up">+1.8%</div>
                 </div>
-                <div class="ticker-item">
-                    <div class="ticker-name">SOL/USDT</div>
-                    <div class="ticker-price">145.20</div>
-                    <div class="ticker-change down">-0.5%</div>
-                </div>
             </div>
 
             <!-- Total Assets Card -->
@@ -548,16 +510,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Platform Information -->
-            <div class="card">
-                <h3 style="font-size: 1rem; margin-bottom: 12px; color: var(--accent-color);">
-                    <i class="fa-solid fa-circle-info"></i> حول التحديد الكمي الذكي
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
-                    نظامنا يعتمد على خوارزميات الذكاء الاصطناعي لإجراء عمليات التداول الكمي والفرص الاستثمارية عبر البورصات المختلفة لضمان تحقيق أرباح مستقرة وآمنة يومياً.
-                </p>
-            </div>
         </main>
 
         <!-- View 2: Quantify (Tasks) -->
@@ -570,7 +522,7 @@
                         <span style="font-size: 0.85rem; font-weight: bold;" id="quantifyBtnText">ابدأ التحديد</span>
                     </div>
                     <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                        المهام المتبقية اليوم: <span id="tasksLeft" style="color: var(--accent-color); font-weight: bold;">1</span>
+                        المهام المتبقية اليوم: <span id="tasksLeft" style="color: var(--accent-color); font-weight: bold;">0</span>
                     </div>
                 </div>
             </div>
@@ -601,18 +553,7 @@
                     <div>شروط الفتح: <strong>10 USDT</strong></div>
                     <div>الربح اليومي: <strong>2.00 USDT</strong></div>
                 </div>
-                <button class="btn btn-primary btn-block" id="btnVip2" onclick="upgradeVip(2, 10)">ترقية الآن (10 USDT)</button>
-            </div>
-
-            <div class="card vip-card">
-                <div class="vip-header">
-                    <span class="vip-title">VIP 3</span>
-                </div>
-                <div class="vip-details">
-                    <div>شروط الفتح: <strong>50 USDT</strong></div>
-                    <div>الربح اليومي: <strong>10.00 USDT</strong></div>
-                </div>
-                <button class="btn btn-primary btn-block" id="btnVip3" onclick="upgradeVip(3, 50)">ترقية الآن (50 USDT)</button>
+                <button class="btn btn-primary btn-block" onclick="upgradeVip(2, 10)">ترقية الآن (10 USDT)</button>
             </div>
         </main>
 
@@ -801,7 +742,7 @@
         };
 
         window.onload = function() {
-            // إعداد حساب الأدمن الافتراضي إذا لم يكن موجوداً
+            // إنشاء حساب الأدمن الافتراضي إذا لم يكن موجوداً
             if (!state.users[ADMIN_EMAIL]) {
                 state.users[ADMIN_EMAIL] = {
                     email: ADMIN_EMAIL,
@@ -815,7 +756,6 @@
                 saveData();
             }
 
-            // التحقق الدقيق من الجلسة وحالة المستخدم
             const savedUser = localStorage.getItem('quant_current_user');
             
             if (savedUser && savedUser !== "null" && savedUser !== "undefined" && state.users[savedUser]) {
@@ -1131,7 +1071,7 @@
             if (tx.type.includes('إيداع')) state.users[tx.user].balance += tx.amount;
             saveData();
             updateUI();
-            showToast("تم القبول");
+            showToast("تم القبول وتحديث الرصيد");
         }
 
         function rejectTx(txId) {
