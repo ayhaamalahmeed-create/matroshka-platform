@@ -1,4 +1,380 @@
-function updateVipUI() {
+Ayhm:
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة التحديد الكمي الذكي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; }
+    .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glow-btn { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+    .vip-badge { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  </style>
+</head>
+<body class="text-gray-100 min-h-screen pb-24">
+
+  <!-- ==================== 1. صفحة تسجيل الدخول ==================== -->
+  <div id="auth-page" class="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-teal-300 rounded-2xl mx-auto flex items-center justify-center text-gray-900 text-2xl font-bold mb-3 shadow-lg">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-white">منصة التحديد الكمي</h1>
+      <p class="text-gray-400 text-sm mt-1">سجل دخولك لبدء متابعة المؤشرات</p>
+    </div>
+
+    <div class="glass-card p-6 rounded-3xl space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني</label>
+        <input type="email" id="email-input" placeholder="example@mail.com" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
+        <input type="password" id="pass-input" placeholder="••••••••" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <button onclick="login()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2">
+        تسجيل الدخول
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== 2. الواجهة الرئيسية والتنقل ==================== -->
+  <div id="main-app" class="hidden max-w-md mx-auto p-4 space-y-4">
+    
+    <!-- الهيدر العلوي -->
+    <header class="flex justify-between items-center py-2 px-1">
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
+            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">VIP 1</span>
+          </div>
+          <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
+        </div>
+      </div>
+      <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
+        <i class="fa-solid fa-right-from-bracket"></i> خروج
+      </button>
+    </header>
+
+    <!-- TAB 1: الصفحة الرئيسية (Dashboard) -->
+    <div id="tab-dashboard" class="space-y-4">
+      <div class="glass-card p-4 rounded-2xl">
+        <h3 class="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> اقتباسات حية للأسعار
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+
+<span class="font-bold text-sm">BTC / USDT</span>
+            <span id="btc-price" class="font-mono text-emerald-400 font-bold">$84,679.00</span>
+          </div>
+          <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+            <span class="font-bold text-sm">ETH / USDT</span>
+            <span id="eth-price" class="font-mono text-emerald-400 font-bold">$2,693.96</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-5 rounded-2xl relative overflow-hidden">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <p class="text-xs text-gray-400">إجمالي الأصول</p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$100.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
+          </div>
+          <span id="dashboard-vip" class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium">مستوى VIP 1</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <button onclick="openModal('إيداع')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm transition text-center">
+            <i class="fa-solid fa-arrow-down-left ml-1"></i> إيداع
+          </button>
+          <button onclick="openModal('سحب')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-sm border border-gray-700 transition text-center">
+            <i class="fa-solid fa-arrow-up-right ml-1"></i> سحب
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: صفحة المهام اليومية (Daily Tasks) -->
+    <div id="tab-tasks" class="hidden space-y-4">
+      <div class="glass-card p-5 rounded-2xl text-center">
+        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3 border border-amber-500/30">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white">المهمة الكمية اليومية</h2>
+        <p class="text-xs text-gray-400 mt-1">نفذ عملية التحديد الكمي اليومية للحصول على أرباحك الفورية</p>
+
+        <div class="mt-6 bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-3">
+          <div class="flex justify-between items-center text-xs text-gray-400 border-b border-gray-800 pb-2">
+            <span>مكافأة المستوى اليومية:</span>
+            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">+5.00 USDT</span>
+          </div>
+          
+          <div class="py-2">
+            <p class="text-xs text-gray-400 mb-1">الوقت المتبقي للمهمة القادمة:</p>
+            <p id="task-timer" class="font-mono text-2xl font-extrabold text-amber-400">00:00:00</p>
+          </div>
+
+          <button id="task-btn" onclick="executeTask()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn">
+            بدء التحديد الكمي الآن
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: صفحة مستويات VIP -->
+    <div id="tab-vip" class="hidden space-y-4">
+      <div class="text-center py-2">
+        <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-crown text-amber-400 ml-1"></i> مستويات VIP</h2>
+        <p class="text-xs text-gray-400">قم بترقية مستواك لزيادة الأرباح اليومية</p>
+      </div>
+      <div class="space-y-3" id="vip-list"></div>
+    </div>
+
+    <!-- TAB 4: صفحة دعوة الأصدقاء والعمولات (Referrals) -->
+    <div id="tab-invite" class="hidden space-y-4">
+      <div class="glass-card p-5 rounded-2xl text-center space-y-3">
+        <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl mx-auto flex items-center justify-center text-xl border border-blue-500/30">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white">دعوة الأصدقاء وربح العمولات</h2>
+        <p class="text-xs text-gray-400">احصل على عمولات فورية عند انضمام أصدقائك وترقيتهم لمستويات VIP</p>
+
+<!-- كود ورابط الإحالة -->
+        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
+          <label class="block text-[11px] text-gray-400">كود الدعوة الخاص بك:</label>
+          <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800">
+            <span id="referral-code" class="font-mono text-sm text-emerald-400 font-bold">QUANT8890</span>
+            <button onclick="copyCode()" class="text-xs bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 px-3 py-1 rounded-md transition">نسخ</button>
+          </div>
+        </div>
+
+        <!-- أرباح العمولات الإجمالية -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center">
+            <p class="text-[10px] text-gray-400">إجمالي المدعوين</p>
+            <p id="total-ref-count" class="text-lg font-bold text-white mt-0.5">0</p>
+          </div>
+          <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center">
+            <p class="text-[10px] text-gray-400">عمولات محصلة</p>
+            <p id="total-ref-earned" class="text-lg font-bold text-emerald-400 mt-0.5">$0.00</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- نسب العمولات على المستويات الثلاثة -->
+      <div class="glass-card p-4 rounded-2xl space-y-3">
+        <h3 class="text-xs font-bold text-white flex items-center gap-2 border-b border-gray-800 pb-2">
+          <i class="fa-solid fa-sitemap text-amber-400"></i> نظام العمولات الثلاثي
+        </h3>
+        
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
+            <span class="text-gray-300">المستوى 1 (دعوة مباشرة)</span>
+            <span class="font-bold text-emerald-400">10% عمولة</span>
+          </div>
+          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
+            <span class="text-gray-300">المستوى 2 (دعوة فرعية)</span>
+            <span class="font-bold text-emerald-400">5% عمولة</span>
+          </div>
+          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
+            <span class="text-gray-300">المستوى 3 (دعوة من المستوى 2)</span>
+            <span class="font-bold text-emerald-400">2% عمولة</span>
+          </div>
+        </div>
+
+        <!-- زر تجربة دعوة صديق (للمحاكاة) -->
+        <button onclick="simulateFriendInvite()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg mt-2">
+          <i class="fa-solid fa-user-plus ml-1"></i> تجربة انضمام صديق ورسوب عمولة (تجريبي)
+        </button>
+      </div>
+    </div>
+
+    <!-- شريط التنقل السفلي (Bottom Navigation) -->
+    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-card border-t border-gray-800 p-2 flex justify-around items-center z-40">
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center text-emerald-400 text-xs gap-1">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span>الرئيسية</span>
+      </button>
+      <button onclick="switchTab('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-400 hover:text-white text-xs gap-1">
+        <i class="fa-solid fa-list-check text-lg"></i>
+        <span>المهام (24h)</span>
+      </button>
+      <button onclick="switchTab('vip')" id="nav-vip" class="flex flex-col items-center text-gray-400 hover:text-white text-xs gap-1">
+        <i class="fa-solid fa-crown text-lg"></i>
+        <span>VIP</span>
+      </button>
+      <button onclick="switchTab('invite')" id="nav-invite" class="flex flex-col items-center text-gray-400 hover:text-white text-xs gap-1">
+        <i class="fa-solid fa-users text-lg"></i>
+        <span>الدعوة</span>
+      </button>
+    </div>
+
+  </div>
+
+<!-- ==================== 3. النافذة المنبثقة الإيداع / السحب ==================== -->
+  <div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-card p-6 rounded-3xl w-full max-w-sm space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 id="modal-title" class="text-lg font-bold text-white">عنوان العملية</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">المبلغ (USDT)</label>
+        <input type="number" id="amount-input" placeholder="0.00" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <button onclick="processTransaction()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition">
+        تأكيد الطلب
+      </button>
+    </div>
+  </div>
+
+  <!-- البرمجة التفاعلية -->
+  <script>
+    let currentBalance = 100.00;
+    let currentAction = '';
+    let userVipLevel = 1;
+    let totalRefCount = 0;
+    let totalRefEarned = 0.00;
+
+    const vipLevels = [
+      { level: 1, name: 'VIP 1', cost: 0, dailyReward: 5.00 },
+      { level: 2, name: 'VIP 2', cost: 150, dailyReward: 15.00 },
+      { level: 3, name: 'VIP 3', cost: 500, dailyReward: 50.00 },
+      { level: 4, name: 'VIP 4', cost: 1500, dailyReward: 160.00 }
+    ];
+
+    function login() {
+      const email = document.getElementById('email-input').value;
+      if (email) {
+        document.getElementById('user-display').innerText = email.split('@')[0];
+        document.getElementById('auth-page').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+        renderVipList();
+        updateVipUI();
+        checkTaskStatus();
+      } else {
+        alert('يرجى إدخال البريد الإلكتروني');
+      }
+    }
+
+    function logout() {
+      document.getElementById('main-app').classList.add('hidden');
+      document.getElementById('auth-page').classList.remove('hidden');
+    }
+
+    function switchTab(tab) {
+      const tabs = ['dashboard', 'tasks', 'vip', 'invite'];
+      tabs.forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+        const navBtn = document.getElementById('nav-' + t);
+        if (navBtn) navBtn.className = "flex flex-col items-center text-gray-400 hover:text-white text-xs gap-1";
+      });
+
+      document.getElementById('tab-' + tab).classList.remove('hidden');
+      const activeNav = document.getElementById('nav-' + tab);
+      if (activeNav) {
+        activeNav.className = tab === 'vip' 
+          ? "flex flex-col items-center text-amber-400 text-xs gap-1"
+          : "flex flex-col items-center text-emerald-400 text-xs gap-1";
+      }
+    }
+
+    function openModal(action) {
+      currentAction = action;
+      document.getElementById('modal-title').innerText = 'طلب ' + action;
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+    }
+
+    function processTransaction() {
+      const val = parseFloat(document.getElementById('amount-input').value);
+      if (val && val > 0) {
+        if (currentAction === 'إيداع') {
+          currentBalance += val;
+        } else if (currentAction === 'سحب') {
+          if (val > currentBalance) {
+            alert('الرصيد غير كافٍ');
+            return;
+          }
+          currentBalance -= val;
+        }
+        updateBalanceUI();
+        alert('تم تنفيذ طلب ' + currentAction + ' بنجاح!');
+        document.getElementById('amount-input').value = '';
+        closeModal();
+      } else {
+        alert('يرجى إدخال مبلغ صحيح');
+      }
+    }
+
+function updateBalanceUI() {
+      document.getElementById('balance').innerText = '$' + currentBalance.toFixed(2) + ' USDT';
+      renderVipList();
+    }
+
+    function renderVipList() {
+      const container = document.getElementById('vip-list');
+      container.innerHTML = '';
+
+      vipLevels.forEach(v => {
+        const isCurrent = userVipLevel === v.level;
+        const card = document.createElement('div');
+        card.className = glass-card p-4 rounded-2xl flex justify-between items-center ${isCurrent ? 'border-amber-500/50 bg-amber-500/5' : ''};
+        
+        card.innerHTML = 
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-sm">${v.name}</span>
+              ${isCurrent ? '<span class="bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/30">مستواك الحالي</span>' : ''}
+            </div>
+            <p class="text-xs text-gray-400">الربح اليومي: <span class="text-emerald-400 font-bold">$${v.dailyReward.toFixed(2)} USDT</span></p>
+            <p class="text-[11px] text-gray-500">تكلفة الترقية: $${v.cost} USDT</p>
+          </div>
+          <div>
+            ${isCurrent 
+              ? '<span class="text-xs text-gray-500 font-bold px-3 py-2 bg-gray-800/50 rounded-xl">مُفعل</span>' 
+              : <button onclick="upgradeVip(${v.level})" class="bg-amber-500 hover:bg-amber-600 text-gray-950 text-xs font-bold px-4 py-2 rounded-xl transition">ترقية</button>
+            }
+          </div>
+        ;
+        container.appendChild(card);
+      });
+    }
+
+    function upgradeVip(targetLevel) {
+      const target = vipLevels.find(v => v.level === targetLevel);
+      if (userVipLevel >= targetLevel) {
+        alert('أنت بالفعل في هذا المستوى أو مستوى أعلى!');
+        return;
+      }
+
+      if (currentBalance < target.cost) {
+        alert(عذراً، تحتاج إلى $${target.cost} USDT على الأقل للترقية إلى ${target.name}. يرجى إيداع المتبقي!);
+        return;
+      }
+
+      currentBalance -= target.cost;
+      userVipLevel = targetLevel;
+      
+      updateBalanceUI();
+      updateVipUI();
+      alert(مبروك! تمت ترقيتك بنجاح إلى ${target.name}. أرباحك اليومية الجديدة هي $${target.dailyReward.toFixed(2)} USDT!);
+    }
+
+    function updateVipUI() {
       const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
       document.getElementById('user-vip-badge').innerText = currentVipObj.name;
       document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
@@ -6,7 +382,6 @@ function updateVipUI() {
       renderVipList();
     }
 
-    // 5. نظام المهمة التلقائي كل 24 ساعة
     function executeTask() {
       const nextAvailableTime = localStorage.getItem('nextTaskTime');
       const now = new Date().getTime();
@@ -16,12 +391,10 @@ function updateVipUI() {
         return;
       }
 
-      // إضافة المكافأة بناءً على المستوى الحالي
       const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
       currentBalance += currentVipObj.dailyReward;
       updateBalanceUI();
 
-      // تحديد الموعد القادم بعد 24 ساعة
       const futureTime = now + (24 * 60 * 60 * 1000);
       localStorage.setItem('nextTaskTime', futureTime);
 
@@ -45,7 +418,7 @@ function updateVipUI() {
         const now = new Date().getTime();
         const diff = parseInt(nextAvailableTime) - now;
 
-        if (diff <= 0) {
+if (diff <= 0) {
           clearInterval(timerInterval);
           localStorage.removeItem('nextTaskTime');
           document.getElementById('task-timer').innerText = "00:00:00";
@@ -67,7 +440,29 @@ function updateVipUI() {
       }, 1000);
     }
 
-    // 6. تحديث أسعار حية تلقائية
+    // 5. وظائف نظام الإحالات والعمولات
+    function copyCode() {
+      const code = document.getElementById('referral-code').innerText;
+      navigator.clipboard.writeText(code);
+      alert('تم نسخ كود الدعوة بنجاح: ' + code);
+    }
+
+    function simulateFriendInvite() {
+      // محاكاة قام صديق بالترقية إلى VIP 2 ($150)
+      const upgradeAmount = 150;
+      const commissionLevel1 = upgradeAmount * 0.10; // 10% عمولة = 15$
+
+      totalRefCount++;
+      totalRefEarned += commissionLevel1;
+      currentBalance += commissionLevel1;
+
+      document.getElementById('total-ref-count').innerText = totalRefCount;
+      document.getElementById('total-ref-earned').innerText = '$' + totalRefEarned.toFixed(2);
+      updateBalanceUI();
+
+      alert(تهانينا! قام صديق مدعو بالترقية إلى VIP 2 ($150 USDT).\nحصلت على عمولة المستوى الأول (10%): +$${commissionLevel1.toFixed(2)} USDT تمت إضافتها لرصيدك مباشرة!);
+    }
+
     setInterval(() => {
       const btc = (84600 + Math.random() * 200).toFixed(2);
       const eth = (2690 + Math.random() * 10).toFixed(2);
