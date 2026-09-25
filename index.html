@@ -63,9 +63,12 @@
           <i class="fa-solid fa-user"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
             <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
-            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">غير مفعل</span>
+            <!-- استبدال شارة غير مفعل بعلامة التوثيق الزرقاء -->
+            <span id="user-vip-badge" class="flex items-center">
+              <i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>
+            </span>
           </div>
           <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
@@ -106,7 +109,7 @@
             <p class="text-xs text-gray-400">إجمالي الأصول</p>
             <p id="balance" class="text-2xl font-extrabold text-white mt-1">$0.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
           </div>
-          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوي (قم للإيداع)</span>
+          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوى (قم للإيداع)</span>
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-4">
@@ -119,9 +122,8 @@
         </div>
       </div>
 
-      <!-- ==================== إضافة: قسم الصورة المتحركة والإعلان عن موثوقية وعمل الشركة ==================== -->
+      <!-- قسم الصورة المتحركة والإعلان عن موثوقية وعمل الشركة -->
       <div class="glass-card p-4 rounded-2xl space-y-3 border border-emerald-500/30 bg-gradient-to-b from-gray-900/90 to-emerald-950/20">
-        <!-- الصورة المتحركة للشركة (يمكنك استبدال رابط GIF بأي صورة متحركة خاصة بشركتك) -->
         <div class="relative w-full h-40 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
           <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80" alt="شركة التحديد الكمي" class="w-full h-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent flex items-end p-3">
@@ -131,10 +133,9 @@
           </div>
         </div>
 
-        <!-- الإعلان التعريفي وموثوقية الشركة -->
         <div class="space-y-2">
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-building-columns text-emerald-400"></i> كيف تعمل منطومة التحديد الكمي؟
+            <i class="fa-solid fa-building-columns text-emerald-400"></i> كيف تعمل منظومة التحديد الكمي؟
           </h3>
           <p class="text-xs text-gray-300 leading-relaxed">
             تعتمد منصتنا على خوارزميات ذكاء اصطناعي عالية السرعة لالتقاط فروق الأسعار (Arbitrage) بين كبرى البورصات العالمية بشكل آلي في أجزاء من الثانية، مما يضمن تحقيق عوائد يومية ثابتة وآمنة للمستثمرين.
@@ -158,7 +159,6 @@
           </div>
         </div>
       </div>
-      <!-- ==================== نهاية القسم المضاف ==================== -->
 
     </div>
 
@@ -402,7 +402,7 @@
         </div>
       </div>
 
-      <!-- قسم السحب (شبكة وعنوان المحفظة) -->
+      <!-- قسم السحب -->
       <div id="withdraw-section" class="space-y-3 hidden">
         <div>
           <label class="block text-xs text-gray-400 mb-1">اختر شبكة السحب (USDT)</label>
@@ -454,7 +454,6 @@
       { level: 7, name: 'VIP 7', cost: 2500, dailyReward: 360.00 }
     ];
 
-    // ==================== 1. جلب وحفظ البيانات من LOCALSTORAGE ====================
     function loadStoredData() {
       if (!currentUserEmail) return;
 
@@ -483,7 +482,6 @@
       localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
     }
 
-    // ==================== 2. الفحص التلقائي وتفعيل الجلسة ====================
     window.addEventListener('DOMContentLoaded', () => {
       const activeUser = localStorage.getItem('app_active_user');
       if (activeUser) {
@@ -603,7 +601,6 @@
       alert('تم نسخ عنوان الإيداع بنجاح:\n' + addr);
     }
 
-    // ==================== 3. إضافة وحفظ سجل المعاملات ====================
     function addTransaction(type, amount, isPositive = true, status = 'مكتمل', reqId = null) {
       const tx = {
         id: reqId || ('TX' + Math.floor(100000 + Math.random() * 900000)),
@@ -993,13 +990,17 @@
 
     function updateVipUI() {
       const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
+      const userVipBadge = document.getElementById('user-vip-badge');
+
       if (currentVipObj) {
-        document.getElementById('user-vip-badge').innerText = currentVipObj.name;
+        // إذا قام بالمستويات يظهر مستوى VIP مع أيقونة التوثيق
+        userVipBadge.innerHTML = `<span class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${currentVipObj.name}</span> <i class="fa-solid fa-circle-check text-sky-400 text-sm"></i>`;
         document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
         document.getElementById('dashboard-vip').className = "bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium";
         document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
       } else {
-        document.getElementById('user-vip-badge').innerText = "غير مفعل";
+        // إزالة كلمة غير مفعل والإبقاء فقط على شارة التوثيق الزرقاء
+        userVipBadge.innerHTML = `<i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>`;
         document.getElementById('dashboard-vip').innerText = "بدون مستوى (قم للإيداع)";
         document.getElementById('dashboard-vip').className = "bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium";
         document.getElementById('task-reward-display').innerText = "$0.00 USDT";
