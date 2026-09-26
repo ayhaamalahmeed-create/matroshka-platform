@@ -3,33 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة التحديد الكمي الذكي</title>
+  <title>منصة التعدين السحابي والستيكينغ الذكي</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; }
-    .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-    .glow-btn { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
-    .vip-badge { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    body { background-color: #030712; font-family: system-ui, -apple-system, sans-serif; }
+    .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .glow-blue { box-shadow: 0 0 25px rgba(59, 130, 246, 0.2); }
   </style>
 </head>
 <body class="text-gray-100 min-h-screen pb-24">
 
-  <!-- ==================== 1. صفحة التسجيل والدخول ==================== -->
-  <div id="auth-page" class="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center">
-    <div class="text-center mb-6">
-      <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-teal-300 rounded-2xl mx-auto flex items-center justify-center text-gray-900 text-2xl font-bold mb-3 shadow-lg">
-        <i class="fa-solid fa-chart-line"></i>
+  <div class="max-w-md mx-auto p-4 space-y-4">
+    
+    <!-- هيدر المنصة -->
+    <header class="flex justify-between items-center py-2">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg">
+          <i class="fa-solid fa-cube text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-sm font-black text-white">CloudMining Pro</h1>
+          <p class="text-[10px] text-gray-400">شبكة التعدين والربح السحابي</p>
+        </div>
       </div>
-      <h1 class="text-2xl font-bold text-white">منصة التحديد الكمي</h1>
-      <p id="auth-subtitle" class="text-gray-400 text-sm mt-1">سجل دخولك لبدء متابعة المؤشرات</p>
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-[11px] text-emerald-400 font-mono font-bold">متصل</span>
+      </div>
+    </header>
+
+    <!-- محفظة الأصول -->
+    <div class="glass p-5 rounded-3xl space-y-4 bg-gradient-to-br from-slate-900 via-blue-950/20 to-slate-900">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs text-gray-400">إجمالي الأرباح المتاحة</p>
+          <h2 id="total-balance" class="text-3xl font-black text-white mt-1">0.00 <span class="text-xs font-normal text-blue-400">USDT</span></h2>
+        </div>
+        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">المحفظة النشطة</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <button onclick="openModal('deposit')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-2xl text-xs transition glow-blue flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus-circle"></i> إيداع سريع
+        </button>
+        <button onclick="openModal('withdraw')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-2xl text-xs border border-slate-700 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-arrow-up-from-bracket"></i> سحب الأرباح
+        </button>
+      </div>
     </div>
 
-    <div class="flex bg-gray-900/80 p-1 rounded-xl mb-4 border border-gray-800">
-      <button id="btn-show-login" onclick="switchAuthMode('login')" class="w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition">تسجيل الدخول</button>
-      <button id="btn-show-register" onclick="switchAuthMode('register')" class="w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition">إنشاء حساب جديد</button>
+    <!-- قسم التنقل بين الأقسام -->
+    <div class="flex bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800">
+      <button onclick="switchTab('mining')" id="tab-mining-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white transition">التعدين</button>
+      <button onclick="switchTab('plans')" id="tab-plans-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition">الخطط</button>
+      <button onclick="switchTab('history')" id="tab-history-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition">العمليات</button>
     </div>
 
-    <div class="glass-card p-6 rounded-3xl space-y-4">
+    <!-- TAB 1: التعدين السحابي -->
+    <div id="section-mining" class="space-y-4">
+      <div class="glass p-6 rounded-3xl text-center space-y-4">
+        <div class="w-20 h-20 bg-blue-500/10 text-blue-400 rounded-full mx-auto flex items-center justify-center text-3xl border border-blue-500/20 shadow-inner animate-pulse">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">محطة التعدين اليومية</h3>
+          <p class="text-xs text-gray-400 mt-1">ابدأ جلسة التعدين لتحصيل مكافأتك التلقائية</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800/80 space-y-2">
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-400">حالة الخادم:</span>
+            <span class="text-emerald-400 font-bold">جاهز للتشغيل</span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-400">العائد المتوقع:</span>
+            <span class="text-blue-400 font-bold">+1.50 USDT</span>
+          </div>
+        </div>
+
+        <button onclick="startMiningSession()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-2xl text-xs transition shadow-lg">
+          تشغيل جلسة التعدين الآن
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: خطط الاستثمار -->
+    <div id="section-plans" class="hidden space-y-3">
+      <div class="text-center py-1">
+        <h2 class="text-sm font-bold text-white">خطط الستيكينغ الحصرية</h2>
+        <p class="text-[11px] text-gray-400">احصل على عوائد مضمونة بفتح الحزم المتقدمة</p>
+      </div>
+
+      <div class="glass p-4 rounded-3xl space-y-3 border-l-4 border-blue-500">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-white text-sm">الباقة البرونزية</span>
+          <span class="text-xs text-blue-400 font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg">5% يومياً</span>
+        </div>
+        <p class="text-xs text-gray-400">الحد الأدنى: 10 USDT - المدة: 30 يوم</p>
+        <button onclick="investPlan(10, 1.5)" class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">تفعيل الباقة (10 USDT)</button>
+      </div>
+
+      <div class="glass p-4 rounded-3xl space-y-3 border-l-4 border-indigo-500">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-white text-sm">الباقة الذهبية</span>
+          <span class="text-xs text-indigo-400 font-bold bg-indigo-500/10 px-2.5 py-1 rounded-lg">8% يومياً</span>
+        </div>
+        <p class="text-xs text-gray-400">الحد الأدنى: 50 USDT - المدة: 45 يوم</p>
+        <button onclick="investPlan(50, 4.0)" class="w-full bg-slate-800 hover:bg-slate-700 text-indigo-400 font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">تفعيل الباقة (50 USDT)</button>
+      </div>
+    </div>
+
+    <!-- TAB 3: سجل المعاملات -->
+    <div id="section-history" class="hidden space-y-3">
+      <div class="glass p-4 rounded-3xl space-y-3">
+        <h2 class="text-sm font-bold text-white border-b border-slate-800 pb-2">سجل العمليات المالية</h2>
+        <div id="history-box" class="space-y-2 max-h-[300px] overflow-y-auto">
+          <p class="text-center text-xs text-gray-500 py-4">لا توجد عمليات مسجلة حتى الآن</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- نافذة النوافذ المنبثقة (Modal) -->
+  <div id="action-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass p-6 rounded-3xl w-full max-w-sm space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 id="modal-title" class="text-sm font-bold text-white">إيداع رصيد</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
       <div>
-        <label class="block text-xs text-gray-400 mb-1">البر
+        <label class="block text-xs text-gray-400 mb-1">المبلغ المطلوب (USDT)</label>
+        <input type="number" id="modal-amount" placeholder="0.00" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+      </div>
+      <button onclick="confirmAction()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-xs transition">تنفيذ العملية</button>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0.00;
+    let history = [];
+    let currentMode = '';
+
+    function switchTab(tab) {
+      ['mining', 'plans', 'history'].forEach(t => {
+        document.getElementById('section-' + t).classList.add('hidden');
+        document.getElementById(`tab-${t}-btn`).className = "w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition";
+      });
+      document.getElementById('section-' + tab).classList.remove('hidden');
+      document.getElementById(`tab-${tab}-btn`).className = "w-1/3 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white transition";
+    }
+
+    function openModal(mode) {
+      currentMode = mode;
+      document.getElementById('modal-title').innerText = mode === 'deposit' ? 'إيداع رصيد جديد' : 'سحب الأرباح';
+      document.getElementById('action-modal').classList.remove('hidden');
+      document.getElementById('action-modal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('action-modal').classList.add('hidden');
+      document.getElementById('action-modal').classList.remove('flex');
+    }
+
+    function confirmAction() {
+      const amt = parseFloat(document.getElementById('modal-amount').value);
+      if (!amt || amt <= 0) {
+        alert('يرجى إدخال مبلغ صحيح');
+        return;
+      }
+
+      if (currentMode === 'deposit') {
+        balance += amt;
+        addHistory('إيداع ناجح', amt);
+        alert(`تم إيداع $${amt} بنجاح!`);
+      } else {
+        if (amt > balance) {
+          alert('عذراً، رصيدك غير كافٍ!');
+          return;
+        }
+        balance -= amt;
+        addHistory('طلب سحب', amt);
+        alert(`تم سحب $${amt} بنجاح!`);
+      }
+
+      updateUI();
+      closeModal();
+    }
+
+    function startMiningSession() {
+      const reward = 1.50;
+      balance += reward;
+      addHistory('مكافأة تعدين', reward);
+      updateUI();
+      alert(`تم الانتهاء من جلسة التعدين بنجاح وإضافة +$${reward} USDT إلى رصيدك!`);
+    }
+
+    function investPlan(cost, dailyReturn) {
+      if (balance < cost) {
+        alert('رصيدك الحالي لا يكفي لتفعيل هذه الباقة. يرجى الإيداع أولاً!');
+        openModal('deposit');
+        return;
+      }
+      balance -= cost;
+      addHistory('شراء باقة ستيكينغ', cost);
+      updateUI();
+      alert(`تم تفعيل الباقة بنجاح وخصم $${cost} من رصيدك.`);
+    }
+
+    function addHistory(type, amt) {
+      history.unshift({ type, amt, time: new Date().toLocaleTimeString('ar-EG') });
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const box = document.getElementById('history-box');
+      if (history.length === 0) return;
+      box.innerHTML = '';
+      history.forEach(h => {
+        box.innerHTML += `
+          <div class="bg-slate-950/60 p-3 rounded-2xl border border-slate-800/60 flex justify-between items-center text-xs">
+            <div><p class="font-bold text-white">${h.type}</p><p class="text-[10px] text-gray-400">${h.time}</p></div>
+            <span class="font-mono font-bold text-blue-400">+$${h.amt.toFixed(2)}</span>
+          </div>`;
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('total-balance').innerHTML = `${balance.toFixed(2)} <span class="text-xs font-normal text-blue-400">USDT</span>`;
+    }
+  </script>
+</body>
+</html>
