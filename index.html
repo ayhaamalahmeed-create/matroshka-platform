@@ -63,26 +63,16 @@
           <i class="fa-solid fa-user"></i>
         </div>
         <div>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-2">
             <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
-            <!-- استبدال شارة غير مفعل بعلامة التوثيق الزرقاء -->
-            <span id="user-vip-badge" class="flex items-center">
-              <i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>
-            </span>
+            <span id="user-vip-badge" class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">غير مفعل</span>
           </div>
           <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
       </div>
-      
-      <div class="flex items-center gap-2">
-        <!-- زر خدمة العملاء تلجرام في الهيدر -->
-        <a href="https://t.me/your_telegram_support" target="_blank" class="text-sky-400 hover:text-sky-300 bg-sky-500/10 border border-sky-500/20 p-2 rounded-xl text-xs flex items-center gap-1 font-bold">
-          <i class="fa-brands fa-telegram text-base"></i>
-        </a>
-        <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </div>
+      <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
+        <i class="fa-solid fa-right-from-bracket"></i> خروج
+      </button>
     </header>
 
     <!-- TAB 1: الصفحة الرئيسية (Dashboard) -->
@@ -109,7 +99,7 @@
             <p class="text-xs text-gray-400">إجمالي الأصول</p>
             <p id="balance" class="text-2xl font-extrabold text-white mt-1">$0.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
           </div>
-          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوى (قم للإيداع)</span>
+          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوي (قم للإيداع)</span>
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-4">
@@ -121,45 +111,6 @@
           </button>
         </div>
       </div>
-
-      <!-- قسم الصورة المتحركة والإعلان عن موثوقية وعمل الشركة -->
-      <div class="glass-card p-4 rounded-2xl space-y-3 border border-emerald-500/30 bg-gradient-to-b from-gray-900/90 to-emerald-950/20">
-        <div class="relative w-full h-40 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
-          <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80" alt="شركة التحديد الكمي" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent flex items-end p-3">
-            <span class="bg-emerald-500/90 text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-md flex items-center gap-1">
-              <i class="fa-solid fa-shield-halved"></i> منصة موثوقة ومحمية
-            </span>
-          </div>
-        </div>
-
-        <div class="space-y-2">
-          <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-building-columns text-emerald-400"></i> كيف تعمل منظومة التحديد الكمي؟
-          </h3>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            تعتمد منصتنا على خوارزميات ذكاء اصطناعي عالية السرعة لالتقاط فروق الأسعار (Arbitrage) بين كبرى البورصات العالمية بشكل آلي في أجزاء من الثانية، مما يضمن تحقيق عوائد يومية ثابتة وآمنة للمستثمرين.
-          </p>
-
-          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-800/80">
-            <div class="bg-gray-900/70 p-2.5 rounded-xl border border-gray-800 flex items-center gap-2">
-              <i class="fa-solid fa-lock text-emerald-400 text-base"></i>
-              <div>
-                <p class="text-[11px] font-bold text-white">حماية البيانات</p>
-                <p class="text-[9px] text-gray-400">تشفير عالي الأمان</p>
-              </div>
-            </div>
-            <div class="bg-gray-900/70 p-2.5 rounded-xl border border-gray-800 flex items-center gap-2">
-              <i class="fa-solid fa-bolt text-amber-400 text-base"></i>
-              <div>
-                <p class="text-[11px] font-bold text-white">تنفيذ آلي</p>
-                <p class="text-[9px] text-gray-400">صفقات فورية 24/7</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
     <!-- TAB 2: صفحة المهام اليومية (Daily Tasks) -->
@@ -252,12 +203,9 @@
     <!-- TAB 5: سجل المعاملات (History) -->
     <div id="tab-history" class="hidden space-y-4">
       <div class="glass-card p-4 rounded-2xl">
-        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
-          <h2 class="text-base font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> سجل المعاملات المالية
-          </h2>
-          <button onclick="clearTransactions()" class="text-[10px] text-red-400 hover:text-red-300 bg-red-500/10 px-2 py-1 rounded-lg">مسح السجل</button>
-        </div>
+        <h2 class="text-base font-bold text-white flex items-center gap-2 border-b border-gray-800 pb-3 mb-3">
+          <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> سجل المعاملات المالية
+        </h2>
         <div id="transactions-list" class="space-y-2.5 max-h-[400px] overflow-y-auto pr-1"></div>
       </div>
     </div>
@@ -265,22 +213,6 @@
     <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
     <div id="tab-profile" class="hidden space-y-4">
       
-      <!-- قسم خدمة العملاء عبر تلجرام -->
-      <div class="glass-card p-4 rounded-2xl flex justify-between items-center bg-gradient-to-r from-sky-950/40 to-gray-900 border border-sky-500/30">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl border border-sky-500/30">
-            <i class="fa-brands fa-telegram"></i>
-          </div>
-          <div>
-            <h4 class="text-xs font-bold text-white">خدمة العملاء الرسمية</h4>
-            <p class="text-[10px] text-gray-400">متواجدون على مدار 24 ساعة للإجابة عن أسئلتكم</p>
-          </div>
-        </div>
-        <a href="https://t.me/your_telegram_support" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1">
-          تواصل معنا
-        </a>
-      </div>
-
       <!-- لوحة تحكم الإدارة (الأدمن للموافقة على الإيداعات والسحوبات) -->
       <div class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5">
         <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
@@ -402,7 +334,7 @@
         </div>
       </div>
 
-      <!-- قسم السحب -->
+      <!-- قسم السحب (شبكة وعنوان المحفظة) -->
       <div id="withdraw-section" class="space-y-3 hidden">
         <div>
           <label class="block text-xs text-gray-400 mb-1">اختر شبكة السحب (USDT)</label>
@@ -434,6 +366,8 @@
     let currentBalance = 0.00;
     let currentAction = '';
     let userVipLevel = 0;
+    let totalRefCount = 0;
+    let totalRefEarned = 0.00;
     let transactions = [];
     let pendingDeposits = [];
     let pendingWithdrawals = [];
@@ -454,34 +388,7 @@
       { level: 7, name: 'VIP 7', cost: 2500, dailyReward: 360.00 }
     ];
 
-    function loadStoredData() {
-      if (!currentUserEmail) return;
-
-      const balanceVal = localStorage.getItem(`balance_${currentUserEmail}`);
-      currentBalance = balanceVal ? parseFloat(balanceVal) : 0.00;
-
-      const vipVal = localStorage.getItem(`vip_${currentUserEmail}`);
-      userVipLevel = vipVal ? parseInt(vipVal) : 0;
-
-      const savedTx = localStorage.getItem(`tx_${currentUserEmail}`);
-      transactions = savedTx ? JSON.parse(savedTx) : [];
-
-      const savedDep = localStorage.getItem('global_pending_deposits');
-      pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
-
-      const savedWth = localStorage.getItem('global_pending_withdrawals');
-      pendingWithdrawals = savedWth ? JSON.parse(savedWth) : [];
-    }
-
-    function saveUserData() {
-      if (!currentUserEmail) return;
-      localStorage.setItem(`balance_${currentUserEmail}`, currentBalance);
-      localStorage.setItem(`vip_${currentUserEmail}`, userVipLevel);
-      localStorage.setItem(`tx_${currentUserEmail}`, JSON.stringify(transactions));
-      localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
-      localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
-    }
-
+    // ==================== الفحص التلقائي للحساب عند تحديث الصفحة ====================
     window.addEventListener('DOMContentLoaded', () => {
       const activeUser = localStorage.getItem('app_active_user');
       if (activeUser) {
@@ -539,7 +446,7 @@
 
       users.push({ email, pass });
       localStorage.setItem('app_users', JSON.stringify(users));
-      alert('تم إنشاء الحساب بنجاح!');
+      alert('تم إنشاء الحساب بنجاح! حسابك الآن جاهز للإيداع.');
       startUserSession(email);
     }
 
@@ -564,9 +471,8 @@
 
     function startUserSession(email) {
       currentUserEmail = email;
+      // حفظ المستخدم الحالي لمنع الخروج عند تحديث الصفحة
       localStorage.setItem('app_active_user', email);
-
-      loadStoredData();
 
       document.getElementById('user-display').innerText = email.split('@')[0];
       document.getElementById('auth-page').classList.add('hidden');
@@ -581,7 +487,9 @@
     }
 
     function logout() {
+      // مسح المستخدم النشط من LocalStorage عند الخروج
       localStorage.removeItem('app_active_user');
+      
       document.getElementById('main-app').classList.add('hidden');
       document.getElementById('auth-page').classList.remove('hidden');
       document.getElementById('email-input').value = '';
@@ -611,7 +519,6 @@
         date: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric' })
       };
       transactions.unshift(tx);
-      saveUserData();
       renderTransactions();
       return tx;
     }
@@ -649,14 +556,6 @@
         `;
         container.appendChild(item);
       });
-    }
-
-    function clearTransactions() {
-      if (confirm("هل أنت تأكد من مسح كافة بيانات سجل المعاملات المالية؟")) {
-        transactions = [];
-        saveUserData();
-        renderTransactions();
-      }
     }
 
     function switchTab(tab) {
@@ -760,7 +659,6 @@
           renderAdminPendingWithdrawalsList();
         }
 
-        saveUserData();
         document.getElementById('amount-input').value = '';
         closeModal();
       } else {
@@ -772,25 +670,12 @@
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
+        currentBalance += req.amount;
         
-        let userBal = parseFloat(localStorage.getItem(`balance_${req.user}`) || '0');
-        userBal += req.amount;
-        localStorage.setItem(`balance_${req.user}`, userBal);
-
-        if (req.user === currentUserEmail) {
-          currentBalance = userBal;
-        }
-
-        let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
-        let tx = userTx.find(t => t.id === reqId);
+        const tx = transactions.find(t => t.id === reqId);
         if (tx) tx.status = 'مكتمل';
-        localStorage.setItem(`tx_${req.user}`, JSON.stringify(userTx));
-
-        if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
-        saveUserData();
-        
         updateBalanceUI();
         renderTransactions();
         renderAdminPendingList();
@@ -802,18 +687,10 @@
     function rejectDeposit(reqId) {
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
-        const req = pendingDeposits[reqIndex];
-        
-        let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
-        let tx = userTx.find(t => t.id === reqId);
+        const tx = transactions.find(t => t.id === reqId);
         if (tx) tx.status = 'مرفوض';
-        localStorage.setItem(`tx_${req.user}`, JSON.stringify(userTx));
-
-        if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
-        saveUserData();
-
         renderTransactions();
         renderAdminPendingList();
         alert('تم رفض طلب الإيداع.');
@@ -823,18 +700,10 @@
     function approveWithdrawal(reqId) {
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
-        const req = pendingWithdrawals[reqIndex];
-
-        let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
-        let tx = userTx.find(t => t.id === reqId);
+        const tx = transactions.find(t => t.id === reqId);
         if (tx) tx.status = 'مكتمل';
-        localStorage.setItem(`tx_${req.user}`, JSON.stringify(userTx));
-
-        if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
-        saveUserData();
-
         renderTransactions();
         renderAdminPendingWithdrawalsList();
         
@@ -847,23 +716,13 @@
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
         
-        let userBal = parseFloat(localStorage.getItem(`balance_${req.user}`) || '0');
-        userBal += req.amount;
-        localStorage.setItem(`balance_${req.user}`, userBal);
+        currentBalance += req.amount;
+        updateBalanceUI();
 
-        if (req.user === currentUserEmail) currentBalance = userBal;
-
-        let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
-        let tx = userTx.find(t => t.id === reqId);
+        const tx = transactions.find(t => t.id === reqId);
         if (tx) tx.status = 'مرفوض';
-        localStorage.setItem(`tx_${req.user}`, JSON.stringify(userTx));
-
-        if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
-        saveUserData();
-
-        updateBalanceUI();
         renderTransactions();
         renderAdminPendingWithdrawalsList();
         
@@ -982,7 +841,6 @@
       userVipLevel = targetLevel;
       addTransaction('ترقية إلى ' + target.name, target.cost, false, 'مكتمل');
       
-      saveUserData();
       updateBalanceUI();
       updateVipUI();
       alert(`مبروك! تم فتح ${target.name} بنجاح.`);
@@ -990,17 +848,13 @@
 
     function updateVipUI() {
       const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
-      const userVipBadge = document.getElementById('user-vip-badge');
-
       if (currentVipObj) {
-        // إذا قام بالمستويات يظهر مستوى VIP مع أيقونة التوثيق
-        userVipBadge.innerHTML = `<span class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${currentVipObj.name}</span> <i class="fa-solid fa-circle-check text-sky-400 text-sm"></i>`;
+        document.getElementById('user-vip-badge').innerText = currentVipObj.name;
         document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
         document.getElementById('dashboard-vip').className = "bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium";
         document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
       } else {
-        // إزالة كلمة غير مفعل والإبقاء فقط على شارة التوثيق الزرقاء
-        userVipBadge.innerHTML = `<i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>`;
+        document.getElementById('user-vip-badge').innerText = "غير مفعل";
         document.getElementById('dashboard-vip').innerText = "بدون مستوى (قم للإيداع)";
         document.getElementById('dashboard-vip').className = "bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium";
         document.getElementById('task-reward-display').innerText = "$0.00 USDT";
@@ -1015,7 +869,7 @@
         return;
       }
 
-      const nextAvailableTime = localStorage.getItem(`nextTaskTime_${currentUserEmail}`);
+      const nextAvailableTime = localStorage.getItem('nextTaskTime');
       const now = new Date().getTime();
 
       if (nextAvailableTime && now < parseInt(nextAvailableTime)) {
@@ -1026,19 +880,17 @@
       const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
       currentBalance += currentVipObj.dailyReward;
       addTransaction('أرباح مهمة كمية', currentVipObj.dailyReward, true, 'مكتمل');
-      
-      saveUserData();
       updateBalanceUI();
 
       const futureTime = now + (24 * 60 * 60 * 1000);
-      localStorage.setItem(`nextTaskTime_${currentUserEmail}`, futureTime);
+      localStorage.setItem('nextTaskTime', futureTime);
 
       alert(`تم إكمال المهمة بنجاح!\nتمت إضافة +$${currentVipObj.dailyReward.toFixed(2)} USDT إلى حسابك.`);
       checkTaskStatus();
     }
 
     function checkTaskStatus() {
-      const nextAvailableTime = localStorage.getItem(`nextTaskTime_${currentUserEmail}`);
+      const nextAvailableTime = localStorage.getItem('nextTaskTime');
       const taskBtn = document.getElementById('task-btn');
 
       if (!nextAvailableTime) {
@@ -1055,7 +907,7 @@
 
         if (diff <= 0) {
           clearInterval(timerInterval);
-          localStorage.removeItem(`nextTaskTime_${currentUserEmail}`);
+          localStorage.removeItem('nextTaskTime');
           document.getElementById('task-timer').innerText = "00:00:00";
           taskBtn.disabled = false;
           taskBtn.innerText = "بدء التحديد الكمي الآن";
