@@ -40,6 +40,12 @@
         <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
         <input type="password" id="pass-input" placeholder="••••••••" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
       </div>
+      
+      <!-- حقل كود الدعوة عند التسجيل (يظهر فقط في حالة إنشاء حساب جديد) -->
+      <div id="register-ref-container" class="hidden">
+        <label class="block text-xs text-gray-400 mb-1">كود الدعوة (اختياري)</label>
+        <input type="text" id="ref-input" placeholder="أدخل كود الدعوة إن وجد..." class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white font-mono">
+      </div>
 
       <!-- زر تسجيل الدخول -->
       <button id="login-submit-btn" onclick="login()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2">
@@ -65,7 +71,6 @@
         <div>
           <div class="flex items-center gap-1.5">
             <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
-            <!-- استبدال شارة غير مفعل بعلامة التوثيق الزرقاء -->
             <span id="user-vip-badge" class="flex items-center">
               <i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>
             </span>
@@ -75,9 +80,8 @@
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- زر خدمة العملاء تلجرام في الهيدر -->
         <a href="https://t.me/+_UHaO6Sx_u0xNWE0" target="_blank" class="text-sky-400 hover:text-sky-300 bg-sky-500/10 border border-sky-500/20 p-2 rounded-xl text-xs flex items-center gap-1 font-bold">
-          <i class="https://t.me/+_UHaO6Sx_u0xNWE0"></i>
+          <i class="fa-brands fa-telegram"></i>
         </a>
         <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
           <i class="fa-solid fa-right-from-bracket"></i>
@@ -140,23 +144,6 @@
           <p class="text-xs text-gray-300 leading-relaxed">
             تعتمد منصتنا على خوارزميات ذكاء اصطناعي عالية السرعة لالتقاط فروق الأسعار (Arbitrage) بين كبرى البورصات العالمية بشكل آلي في أجزاء من الثانية، مما يضمن تحقيق عوائد يومية ثابتة وآمنة للمستثمرين.
           </p>
-
-          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-800/80">
-            <div class="bg-gray-900/70 p-2.5 rounded-xl border border-gray-800 flex items-center gap-2">
-              <i class="fa-solid fa-lock text-emerald-400 text-base"></i>
-              <div>
-                <p class="text-[11px] font-bold text-white">حماية البيانات</p>
-                <p class="text-[9px] text-gray-400">تشفير عالي الأمان</p>
-              </div>
-            </div>
-            <div class="bg-gray-900/70 p-2.5 rounded-xl border border-gray-800 flex items-center gap-2">
-              <i class="fa-solid fa-bolt text-amber-400 text-base"></i>
-              <div>
-                <p class="text-[11px] font-bold text-white">تنفيذ آلي</p>
-                <p class="text-[9px] text-gray-400">صفقات فورية 24/7</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -207,11 +194,23 @@
         <h2 class="text-lg font-bold text-white">دعوة الأصدقاء وربح العمولات</h2>
         <p class="text-xs text-gray-400">احصل على عمولات فورية عند انضمام أصدقائك وترقيتهم لمستويات VIP</p>
 
+        <!-- كود الدعوة -->
         <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
           <label class="block text-[11px] text-gray-400">كود الدعوة الخاص بك:</label>
           <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800">
             <span id="referral-code" class="font-mono text-sm text-emerald-400 font-bold">QUANT8890</span>
-            <button onclick="copyCode()" class="text-xs bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 px-3 py-1 rounded-md transition">نسخ</button>
+            <button onclick="copyCode()" class="text-xs bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 px-3 py-1 rounded-md transition">نسخ الكود</button>
+          </div>
+        </div>
+
+        <!-- رابط الإحالة الجديد -->
+        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
+          <label class="block text-[11px] text-gray-400">رابط دعوة التسجيل المباشر:</label>
+          <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800 gap-2">
+            <span id="referral-link" class="font-mono text-[11px] text-sky-400 truncate font-bold">https://example.com/?ref=QUANT8890</span>
+            <button onclick="copyLink()" class="text-xs bg-sky-500 text-gray-950 hover:bg-sky-400 font-bold px-3 py-1.5 rounded-lg transition shrink-0">
+              <i class="fa-solid fa-copy ml-1"></i>نسخ الرابط
+            </button>
           </div>
         </div>
 
@@ -223,27 +222,6 @@
           <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center">
             <p class="text-[10px] text-gray-400">عمولات محصلة</p>
             <p id="total-ref-earned" class="text-lg font-bold text-emerald-400 mt-0.5">$0.00</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card p-4 rounded-2xl space-y-3">
-        <h3 class="text-xs font-bold text-white flex items-center gap-2 border-b border-gray-800 pb-2">
-          <i class="fa-solid fa-sitemap text-amber-400"></i> نظام العمولات الثلاثي
-        </h3>
-        
-        <div class="space-y-2 text-xs">
-          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
-            <span class="text-gray-300">المستوى 1 (دعوة مباشرة)</span>
-            <span class="font-bold text-emerald-400">10% عمولة</span>
-          </div>
-          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
-            <span class="text-gray-300">المستوى 2 (دعوة فرعية)</span>
-            <span class="font-bold text-emerald-400">5% عمولة</span>
-          </div>
-          <div class="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-xl border border-gray-800">
-            <span class="text-gray-300">المستوى 3 (دعوة من المستوى 2)</span>
-            <span class="font-bold text-emerald-400">2% عمولة</span>
           </div>
         </div>
       </div>
@@ -265,29 +243,12 @@
     <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
     <div id="tab-profile" class="hidden space-y-4">
       
-      <!-- قسم خدمة العملاء عبر تلجرام -->
-      <div class="glass-card p-4 rounded-2xl flex justify-between items-center bg-gradient-to-r from-sky-950/40 to-gray-900 border border-sky-500/30">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl border border-sky-500/30">
-            <i class="fa-brands fa-telegram"></i>
-          </div>
-          <div>
-            <h4 class="text-xs font-bold text-white">خدمة العملاء الرسمية</h4>
-            <p class="text-[10px] text-gray-400">متواجدون على مدار 24 ساعة للإجابة عن أسئلتكم</p>
-          </div>
-        </div>
-        <a href="https://t.me/+_UHaO6Sx_u0xNWE0" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1">
-          تواصل معنا
-        </a>
-      </div>
-
-      <!-- لوحة تحكم الإدارة (الأدمن للموافقة على الإيداعات والسحوبات) -->
+      <!-- لوحة تحكم الإدارة -->
       <div class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5">
         <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
           <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (طلبات الأعضاء)
         </h3>
         
-        <!-- قسم طلبات الإيداع -->
         <div>
           <h4 class="text-xs font-bold text-emerald-400 mb-2"><i class="fa-solid fa-arrow-down-left ml-1"></i> طلبات الإيداع المعلقة</h4>
           <div id="admin-pending-list" class="space-y-2"></div>
@@ -295,7 +256,6 @@
 
         <hr class="border-gray-800">
 
-        <!-- قسم طلبات السحب -->
         <div>
           <h4 class="text-xs font-bold text-red-400 mb-2"><i class="fa-solid fa-arrow-up-right ml-1"></i> طلبات السحب المعلقة</h4>
           <div id="admin-pending-withdrawals-list" class="space-y-2"></div>
@@ -337,7 +297,7 @@
       </div>
     </div>
 
-    <!-- شريط التنقل السفلي (Bottom Navigation) -->
+    <!-- شريط التنقل السفلي -->
     <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-card border-t border-gray-800 p-2 flex justify-around items-center z-40">
       <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center text-emerald-400 text-[11px] gap-1">
         <i class="fa-solid fa-house text-base"></i>
@@ -367,7 +327,7 @@
 
   </div>
 
-  <!-- ==================== 3. النافذة المنبثقة الإيداع / السحب ==================== -->
+  <!-- النافذة المنبثقة الإيداع / السحب -->
   <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-3xl w-full max-w-sm space-y-4 border border-gray-700/60 shadow-2xl">
       <div class="flex justify-between items-center border-b border-gray-800 pb-3">
@@ -375,7 +335,6 @@
         <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
-      <!-- قسم الإيداع -->
       <div id="deposit-section" class="space-y-3">
         <div>
           <label class="block text-xs text-gray-400 mb-1">اختر شبكة الإيداع (USDT)</label>
@@ -402,7 +361,6 @@
         </div>
       </div>
 
-      <!-- قسم السحب -->
       <div id="withdraw-section" class="space-y-3 hidden">
         <div>
           <label class="block text-xs text-gray-400 mb-1">اختر شبكة السحب (USDT)</label>
@@ -438,6 +396,7 @@
     let pendingDeposits = [];
     let pendingWithdrawals = [];
     let currentUserEmail = '';
+    let userReferralCode = '';
 
     const depositWallets = {
       'TRC20': 'TBBazvxfMw44Y4cg7S731c8gZQjP6bW7Ru',
@@ -466,6 +425,19 @@
       const savedTx = localStorage.getItem(`tx_${currentUserEmail}`);
       transactions = savedTx ? JSON.parse(savedTx) : [];
 
+      const refCodeVal = localStorage.getItem(`refcode_${currentUserEmail}`);
+      if (refCodeVal) {
+        userReferralCode = refCodeVal;
+      } else {
+        userReferralCode = 'Q' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        localStorage.setItem(`refcode_${currentUserEmail}`, userReferralCode);
+      }
+
+      // تحديث واجهة الدعوات
+      document.getElementById('referral-code').innerText = userReferralCode;
+      const fullRefLink = window.location.origin + window.location.pathname + '?ref=' + userReferralCode;
+      document.getElementById('referral-link').innerText = fullRefLink;
+
       const savedDep = localStorage.getItem('global_pending_deposits');
       pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
 
@@ -483,6 +455,14 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      // فحص إذا كان هناك كود دعوة في الرابط لتعبئته تلقائياً عند الدخول للتسجيل
+      const urlParams = new URLSearchParams(window.location.search);
+      const refParam = urlParams.get('ref');
+      if (refParam) {
+        switchAuthMode('register');
+        document.getElementById('ref-input').value = refParam;
+      }
+
       const activeUser = localStorage.getItem('app_active_user');
       if (activeUser) {
         startUserSession(activeUser);
@@ -495,18 +475,21 @@
       const submitLogin = document.getElementById('login-submit-btn');
       const submitRegister = document.getElementById('register-submit-btn');
       const subtitle = document.getElementById('auth-subtitle');
+      const refContainer = document.getElementById('register-ref-container');
 
       if (mode === 'login') {
         btnLogin.className = "w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition";
         btnRegister.className = "w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
         submitLogin.classList.remove('hidden');
         submitRegister.classList.add('hidden');
+        refContainer.classList.add('hidden');
         subtitle.innerText = "سجل دخولك لبدء متابعة المؤشرات";
       } else {
         btnRegister.className = "w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition";
         btnLogin.className = "w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
         submitRegister.classList.remove('hidden');
         submitLogin.classList.add('hidden');
+        refContainer.classList.remove('hidden');
         subtitle.innerText = "قم بإنشاء حساب جديد للانضمام للمنصة";
       }
     }
@@ -519,6 +502,7 @@
     function register() {
       const email = document.getElementById('email-input').value.trim();
       const pass = document.getElementById('pass-input').value.trim();
+      const refCode = document.getElementById('ref-input').value.trim();
 
       if (!email || !pass) {
         alert('يرجى كتابة البريد الإلكتروني وكلمة المرور');
@@ -537,7 +521,7 @@
         return;
       }
 
-      users.push({ email, pass });
+      users.push({ email, pass, referredBy: refCode || null });
       localStorage.setItem('app_users', JSON.stringify(users));
       alert('تم إنشاء الحساب بنجاح!');
       startUserSession(email);
@@ -993,13 +977,11 @@
       const userVipBadge = document.getElementById('user-vip-badge');
 
       if (currentVipObj) {
-        // إذا قام بالمستويات يظهر مستوى VIP مع أيقونة التوثيق
         userVipBadge.innerHTML = `<span class="vip-badge text-gray-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${currentVipObj.name}</span> <i class="fa-solid fa-circle-check text-sky-400 text-sm"></i>`;
         document.getElementById('dashboard-vip').innerText = 'مستوى ' + currentVipObj.name;
         document.getElementById('dashboard-vip').className = "bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-medium";
         document.getElementById('task-reward-display').innerText = '+' + currentVipObj.dailyReward.toFixed(2) + ' USDT';
       } else {
-        // إزالة كلمة غير مفعل والإبقاء فقط على شارة التوثيق الزرقاء
         userVipBadge.innerHTML = `<i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>`;
         document.getElementById('dashboard-vip').innerText = "بدون مستوى (قم للإيداع)";
         document.getElementById('dashboard-vip').className = "bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium";
@@ -1079,6 +1061,12 @@
       const code = document.getElementById('referral-code').innerText;
       navigator.clipboard.writeText(code);
       alert('تم نسخ كود الدعوة بنجاح: ' + code);
+    }
+
+    function copyLink() {
+      const link = document.getElementById('referral-link').innerText;
+      navigator.clipboard.writeText(link);
+      alert('تم نسخ رابط الدعوة بنجاح:\n' + link);
     }
 
     function saveWallet() {
