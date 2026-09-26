@@ -243,8 +243,8 @@
     <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
     <div id="tab-profile" class="hidden space-y-4">
       
-      <!-- لوحة تحكم الإدارة -->
-      <div class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5">
+      <!-- لوحة تحكم الإدارة (تظهر فقط للأدمن nnnnaaatttnanooo@gmail.com) -->
+      <div id="admin-panel-container" class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5 hidden">
         <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
           <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (طلبات الأعضاء)
         </h3>
@@ -389,6 +389,8 @@
 
   <!-- البرمجة التفاعلية -->
   <script>
+    const ADMIN_EMAIL = "nnnnaaatttnanooo@gmail.com";
+
     let currentBalance = 0.00;
     let currentAction = '';
     let userVipLevel = 0;
@@ -433,7 +435,6 @@
         localStorage.setItem(`refcode_${currentUserEmail}`, userReferralCode);
       }
 
-      // تحديث واجهة الدعوات
       document.getElementById('referral-code').innerText = userReferralCode;
       const fullRefLink = window.location.origin + window.location.pathname + '?ref=' + userReferralCode;
       document.getElementById('referral-link').innerText = fullRefLink;
@@ -455,7 +456,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      // فحص إذا كان هناك كود دعوة في الرابط لتعبئته تلقائياً عند الدخول للتسجيل
       const urlParams = new URLSearchParams(window.location.search);
       const refParam = urlParams.get('ref');
       if (refParam) {
@@ -500,7 +500,7 @@
     }
 
     function register() {
-      const email = document.getElementById('email-input').value.trim();
+      const email = document.getElementById('email-input').value.trim().toLowerCase();
       const pass = document.getElementById('pass-input').value.trim();
       const refCode = document.getElementById('ref-input').value.trim();
 
@@ -528,7 +528,7 @@
     }
 
     function login() {
-      const email = document.getElementById('email-input').value.trim();
+      const email = document.getElementById('email-input').value.trim().toLowerCase();
       const pass = document.getElementById('pass-input').value.trim();
 
       if (!email || !pass) {
@@ -547,12 +547,12 @@
     }
 
     function startUserSession(email) {
-      currentUserEmail = email;
-      localStorage.setItem('app_active_user', email);
+      currentUserEmail = email.toLowerCase();
+      localStorage.setItem('app_active_user', currentUserEmail);
 
       loadStoredData();
 
-      document.getElementById('user-display').innerText = email.split('@')[0];
+      document.getElementById('user-display').innerText = currentUserEmail.split('@')[0];
       document.getElementById('auth-page').classList.add('hidden');
       document.getElementById('main-app').classList.remove('hidden');
       
@@ -560,8 +560,16 @@
       updateVipUI();
       checkTaskStatus();
       renderTransactions();
-      renderAdminPendingList();
-      renderAdminPendingWithdrawalsList();
+
+      // إظهار لوحة التحكم للأدمن فقط وإخفاؤها تماماً عن باقي الأعضاء
+      const adminPanel = document.getElementById('admin-panel-container');
+      if (currentUserEmail === ADMIN_EMAIL) {
+        adminPanel.classList.remove('hidden');
+        renderAdminPendingList();
+        renderAdminPendingWithdrawalsList();
+      } else {
+        adminPanel.classList.add('hidden');
+      }
     }
 
     function logout() {
@@ -708,7 +716,7 @@
           addTransaction(`طلب إيداع (${net})`, val, true, 'قيد الانتظار', reqId);
           
           alert('تم إرسال طلب الإيداع بنجاح!\nسيتم إضافة الرصيد بعد التأكيد من الأدمن.');
-          renderAdminPendingList();
+          if (currentUserEmail === ADMIN_EMAIL) renderAdminPendingList();
 
         } else if (currentAction === 'سحب') {
           const net = document.getElementById('withdraw-network-select').value;
@@ -741,7 +749,7 @@
           addTransaction(`طلب سحب (${net})`, val, false, 'قيد الانتظار', reqId);
 
           alert('تم إرسال طلب السحب بنجاح وهو قيد المراجعة حالياً من قبل الإدارة.');
-          renderAdminPendingWithdrawalsList();
+          if (currentUserEmail === ADMIN_EMAIL) renderAdminPendingWithdrawalsList();
         }
 
         saveUserData();
@@ -753,6 +761,11 @@
     }
 
     function approveDeposit(reqId) {
+      if (currentUserEmail !== ADMIN_EMAIL) {
+        alert('عذراً، هذه الصلاحية للأدمن فقط!');
+        return;
+      }
+
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
@@ -784,6 +797,11 @@
     }
 
     function rejectDeposit(reqId) {
+      if (currentUserEmail !== ADMIN_EMAIL) {
+        alert('عذراً، هذه الصلاحية للأدمن فقط!');
+        return;
+      }
+
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
@@ -805,6 +823,11 @@
     }
 
     function approveWithdrawal(reqId) {
+      if (currentUserEmail !== ADMIN_EMAIL) {
+        alert('عذراً، هذه الصلاحية للأدمن فقط!');
+        return;
+      }
+
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
@@ -827,6 +850,11 @@
     }
 
     function rejectWithdrawal(reqId) {
+      if (currentUserEmail !== ADMIN_EMAIL) {
+        alert('عذراً، هذه الصلاحية للأدمن فقط!');
+        return;
+      }
+
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
@@ -856,6 +884,7 @@
     }
 
     function renderAdminPendingList() {
+      if (currentUserEmail !== ADMIN_EMAIL) return;
       const container = document.getElementById('admin-pending-list');
       if (!container) return;
 
@@ -883,6 +912,7 @@
     }
 
     function renderAdminPendingWithdrawalsList() {
+      if (currentUserEmail !== ADMIN_EMAIL) return;
       const container = document.getElementById('admin-pending-withdrawals-list');
       if (!container) return;
 
