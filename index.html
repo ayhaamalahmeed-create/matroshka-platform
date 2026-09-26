@@ -56,6 +56,11 @@
       <button id="register-submit-btn" onclick="register()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2 hidden">
         إنشاء الحساب الآن
       </button>
+
+      <!-- زر إصلاح ومسح الذاكرة في حال حدوث خطأ -->
+      <button onclick="factoryReset()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-bold py-2 rounded-xl text-xs transition mt-4">
+        <i class="fa-solid fa-triangle-exclamation ml-1"></i> إعادة ضبط البيانات وتفريغ الذاكرة
+      </button>
     </div>
   </div>
 
@@ -359,6 +364,14 @@
       { level: 7, name: 'VIP 7', cost: 2500, dailyReward: 360.00 }
     ];
 
+    function factoryReset() {
+      if (confirm("هل أنت متأكد من مسح كافة بيانات التطبيق وحذف الحسابات السابقة للبدء تماماً على نظافة؟")) {
+        localStorage.clear();
+        alert("تم تفريغ الذاكرة بنجاح! سيتم إعادة تحميل الصفحة.");
+        location.reload();
+      }
+    }
+
     function loadStoredData() {
       if (!currentUserEmail) return;
 
@@ -383,7 +396,6 @@
       const fullRefLink = window.location.origin + window.location.pathname + '?ref=' + userReferralCode;
       document.getElementById('referral-link').innerText = fullRefLink;
 
-      // الطلبات المعلقة أصبحت تُقرأ من مصفوفة عامة تخص الأدمن فقط ولا تتداخل
       const savedDep = localStorage.getItem('global_pending_deposits');
       pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
 
@@ -876,7 +888,6 @@
         taskBtn.innerText = "بدء التحديد الكمي الآن";
         return;
       }
-      // تفعيل العد التنازلي البسيط
       const diff = parseInt(nextTime) - new Date().getTime();
       if (diff <= 0) {
         localStorage.removeItem(`nextTaskTime_${currentUserEmail}`);
