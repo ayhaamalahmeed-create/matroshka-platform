@@ -204,17 +204,6 @@
             </button>
           </div>
         </div>
-
-        <div class="grid grid-cols-2 gap-3 pt-2">
-          <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center">
-            <p class="text-[10px] text-gray-400">إجمالي المدعوين</p>
-            <p id="total-ref-count" class="text-lg font-bold text-white mt-0.5">0</p>
-          </div>
-          <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center">
-            <p class="text-[10px] text-gray-400">عمولات محصلة</p>
-            <p id="total-ref-earned" class="text-lg font-bold text-emerald-400 mt-0.5">$0.00</p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -439,11 +428,22 @@
     }
 
     function loadAdminData() {
-      const savedDep = localStorage.getItem('global_pending_deposits');
+      // استخدام التخزين العام الموحد لضمان رؤية الأدمن للطلبات القادمة من اي مستخدم
+      const savedDep = localStorage.getItem('master_global_pending_deposits');
       pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
 
-      const savedWth = localStorage.getItem('global_pending_withdrawals');
+      const savedWth = localStorage.getItem('master_global_pending_withdrawals');
       pendingWithdrawals = savedWth ? JSON.parse(savedWth) : [];
+
+      if (currentUserEmail === ADMIN_EMAIL) {
+        renderAdminPendingList();
+        renderAdminPendingWithdrawalsList();
+      }
+    }
+
+    function saveAdminData() {
+      localStorage.setItem('master_global_pending_deposits', JSON.stringify(pendingDeposits));
+      localStorage.setItem('master_global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
     }
 
     function saveUserData() {
@@ -451,8 +451,7 @@
       localStorage.setItem(`balance_${currentUserEmail}`, currentBalance);
       localStorage.setItem(`vip_${currentUserEmail}`, userVipLevel);
       localStorage.setItem(`tx_${currentUserEmail}`, JSON.stringify(transactions));
-      localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
-      localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+      saveAdminData();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -564,8 +563,7 @@
       const adminPanel = document.getElementById('admin-panel-container');
       if (currentUserEmail === ADMIN_EMAIL) {
         adminPanel.classList.remove('hidden');
-        renderAdminPendingList();
-        renderAdminPendingWithdrawalsList();
+        loadAdminData();
       } else {
         adminPanel.classList.add('hidden');
       }
@@ -668,8 +666,6 @@
 
       if (tab === 'profile' && currentUserEmail === ADMIN_EMAIL) {
         loadAdminData();
-        renderAdminPendingList();
-        renderAdminPendingWithdrawalsList();
       }
     }
 
@@ -705,7 +701,7 @@
     function processTransaction() {
       const val = parseFloat(document.getElementById('amount-input').value);
       if (val && val > 0) {
-        loadAdminData(); // جلب أحدث بيانات الطلبات المعلقة أولاً
+        loadAdminData(); // جلب أحدث الطلبات
 
         if (currentAction === 'إيداع') {
           const net = document.getElementById('deposit-network-select').value;
@@ -720,11 +716,10 @@
           };
           
           pendingDeposits.push(depositRequest);
-          localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
+          saveAdminData();
           
           addTransaction(`طلب إيداع (${net})`, val, true, 'قيد الانتظار', reqId);
-          
-          alert('تم إرسال طلب الإيداع بنجاح!\nسيتم إضافة الرصيد بعد التأكيد من الأدمن.');
+          alert('تم إرسال طلب الإيداع بنجاح!\nسيظهر فوراً في لوحة الأدمن للموافقة عليه.');
 
         } else if (currentAction === 'سحب') {
           const net = document.getElementById('withdraw-network-select').value;
@@ -754,11 +749,10 @@
           };
 
           pendingWithdrawals.push(withdrawRequest);
-          localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+          saveAdminData();
 
           addTransaction(`طلب سحب (${net})`, val, false, 'قيد الانتظار', reqId);
-
-          alert('تم إرسال طلب السحب بنجاح وهو قيد المراجعة حالياً من قبل الإدارة.');
+          alert('تم إرسال طلب السحب بنجاح وهو قيد المراجعة في لوحة الأدمن.');
         }
 
         saveUserData();
@@ -770,10 +764,7 @@
     }
 
     function approveDeposit(reqId) {
-      if (currentUserEmail !== ADMIN_EMAIL) {
-        alert('عذراً، هذه الصلاحية للأدمن فقط!');
-        return;
-      }
+      if (currentUserEmail !== ADMIN_EMAIL) return;
 
       loadAdminData();
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
@@ -784,9 +775,7 @@
         userBal += req.amount;
         localStorage.setItem(`balance_${req.user}`, userBal);
 
-        if (req.user === currentUserEmail) {
-          currentBalance = userBal;
-        }
+        if (req.user === currentUserEmail) currentBalance = userBal;
 
         let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
         let tx = userTx.find(t => t.id === reqId);
@@ -796,22 +785,19 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
-        localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
+        saveAdminData();
         saveUserData();
         
         updateBalanceUI();
         renderTransactions();
         renderAdminPendingList();
         
-        alert(`تمت الموافقة على إيداع $${req.amount} USDT ونُقلت للرصيد!`);
+        alert(`تمت الموافقة على إيداع $${req.amount} ونُقلت لرصيد المستخدم!`);
       }
     }
 
     function rejectDeposit(reqId) {
-      if (currentUserEmail !== ADMIN_EMAIL) {
-        alert('عذراً، هذه الصلاحية للأدمن فقط!');
-        return;
-      }
+      if (currentUserEmail !== ADMIN_EMAIL) return;
 
       loadAdminData();
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
@@ -826,7 +812,7 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
-        localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
+        saveAdminData();
         saveUserData();
 
         renderTransactions();
@@ -836,10 +822,7 @@
     }
 
     function approveWithdrawal(reqId) {
-      if (currentUserEmail !== ADMIN_EMAIL) {
-        alert('عذراً، هذه الصلاحية للأدمن فقط!');
-        return;
-      }
+      if (currentUserEmail !== ADMIN_EMAIL) return;
 
       loadAdminData();
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
@@ -854,21 +837,17 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
-        localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+        saveAdminData();
         saveUserData();
 
         renderTransactions();
         renderAdminPendingWithdrawalsList();
-        
-        alert(`تمت الموافقة على عملية السحب وإرسال الأموال للمستلم.`);
+        alert(`تمت الموافقة على عملية السحب.`);
       }
     }
 
     function rejectWithdrawal(reqId) {
-      if (currentUserEmail !== ADMIN_EMAIL) {
-        alert('عذراً، هذه الصلاحية للأدمن فقط!');
-        return;
-      }
+      if (currentUserEmail !== ADMIN_EMAIL) return;
 
       loadAdminData();
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
@@ -889,14 +868,13 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
-        localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+        saveAdminData();
         saveUserData();
 
         updateBalanceUI();
         renderTransactions();
         renderAdminPendingWithdrawalsList();
-        
-        alert(`تم رفض طلب السحب وإعادة $${req.amount} USDT إلى رصيد المستخدم.`);
+        alert(`تم رفض طلب السحب وإعادة المبلغ لحساب المستخدم.`);
       }
     }
 
@@ -1088,7 +1066,7 @@
           clearInterval(timerInterval);
           localStorage.removeItem(`nextTaskTime_${currentUserEmail}`);
           document.getElementById('task-timer').innerText = "00:00:00";
-          taskBtn.disabled = false;
+          taskBtn.disabled, taskBtn.disabled = false;
           taskBtn.innerText = "بدء التحديد الكمي الآن";
           taskBtn.className = "w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn";
         } else {
@@ -1144,6 +1122,11 @@
       const eth = (2690 + Math.random() * 10).toFixed(2);
       document.getElementById('btc-price').innerText = '$' + btc;
       document.getElementById('eth-price').innerText = '$' + eth;
+      
+      // التحديث التلقائي لطلبات الأدمن في حال كانت اللوحة مفتوحة
+      if (currentUserEmail === ADMIN_EMAIL) {
+        loadAdminData();
+      }
     }, 2000);
   </script>
 </body>
