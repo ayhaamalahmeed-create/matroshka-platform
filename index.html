@@ -3,236 +3,636 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة التعدين السحابي والستيكينغ الذكي</title>
+  <title>منصة التحديد الكمي الذكي</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body { background-color: #030712; font-family: system-ui, -apple-system, sans-serif; }
-    .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-    .glow-blue { box-shadow: 0 0 25px rgba(59, 130, 246, 0.2); }
+    body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; }
+    .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glow-btn { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+    .vip-badge { background: linear-gradient(135deg, #f59e0b, #d97706); }
   </style>
 </head>
 <body class="text-gray-100 min-h-screen pb-24">
 
-  <div class="max-w-md mx-auto p-4 space-y-4">
+  <!-- ==================== 1. صفحة التسجيل والدخول ==================== -->
+  <div id="auth-page" class="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-teal-300 rounded-2xl mx-auto flex items-center justify-center text-gray-900 text-2xl font-bold mb-3 shadow-lg">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-white">منصة التحديد الكمي</h1>
+      <p id="auth-subtitle" class="text-gray-400 text-sm mt-1">سجل دخولك لبدء متابعة المؤشرات</p>
+    </div>
+
+    <!-- تنبيه إذا دخل عبر رابط دعوة -->
+    <div id="ref-alert-box" class="hidden mb-4 bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-center text-xs text-emerald-400 font-medium">
+      <i class="fa-solid fa-gift ml-1"></i> أنت تسجل عبر رابط دعوة صديق! انضم الآن وابدأ العمل.
+    </div>
+
+    <!-- تبويب الاختيار بين الدخول وإنشاء حساب -->
+    <div class="flex bg-gray-900/80 p-1 rounded-xl mb-4 border border-gray-800">
+      <button id="btn-show-login" onclick="switchAuthMode('login')" class="w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition">تسجيل الدخول</button>
+      <button id="btn-show-register" onclick="switchAuthMode('register')" class="w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition">إنشاء حساب جديد</button>
+    </div>
+
+    <div class="glass-card p-6 rounded-3xl space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني</label>
+        <input type="email" id="email-input" placeholder="example@mail.com" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
+        <input type="password" id="pass-input" placeholder="••••••••" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
+      </div>
+
+      <!-- زر تسجيل الدخول -->
+      <button id="login-submit-btn" onclick="login()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2">
+        تسجيل الدخول
+      </button>
+
+      <!-- زر إنشاء حساب جديد -->
+      <button id="register-submit-btn" onclick="register()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2 hidden">
+        إنشاء الحساب الآن
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== 2. الواجهة الرئيسية والتنقل ==================== -->
+  <div id="main-app" class="hidden max-w-md mx-auto p-4 space-y-4">
     
-    <!-- هيدر المنصة -->
-    <header class="flex justify-between items-center py-2">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg">
-          <i class="fa-solid fa-cube text-lg"></i>
+    <!-- الهيدر العلوي -->
+    <header class="flex justify-between items-center py-2 px-1">
+      <div class="flex items-center space-x-3 space-x-reverse">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+          <i class="fa-solid fa-user"></i>
         </div>
         <div>
-          <h1 class="text-sm font-black text-white">CloudMining Pro</h1>
-          <p class="text-[10px] text-gray-400">شبكة التعدين والربح السحابي</p>
+          <div class="flex items-center gap-1.5">
+            <p id="user-display" class="text-sm font-bold text-white">المستخدم</p>
+            <span id="user-vip-badge" class="flex items-center">
+              <i class="fa-solid fa-circle-check text-sky-400 text-sm" title="حساب موثق"></i>
+            </span>
+          </div>
+          <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
       </div>
+      
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="text-[11px] text-emerald-400 font-mono font-bold">متصل</span>
+        <a href="https://t.me/+_UHaO6Sx_u0xNWE0" target="_blank" class="text-sky-400 hover:text-sky-300 bg-sky-500/10 border border-sky-500/20 p-2 rounded-xl text-xs flex items-center gap-1 font-bold">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </header>
 
-    <!-- محفظة الأصول -->
-    <div class="glass p-5 rounded-3xl space-y-4 bg-gradient-to-br from-slate-900 via-blue-950/20 to-slate-900">
-      <div class="flex justify-between items-start">
-        <div>
-          <p class="text-xs text-gray-400">إجمالي الأرباح المتاحة</p>
-          <h2 id="total-balance" class="text-3xl font-black text-white mt-1">0.00 <span class="text-xs font-normal text-blue-400">USDT</span></h2>
-        </div>
-        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">المحفظة النشطة</span>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3 pt-2">
-        <button onclick="openModal('deposit')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-2xl text-xs transition glow-blue flex items-center justify-center gap-2">
-          <i class="fa-solid fa-plus-circle"></i> إيداع سريع
-        </button>
-        <button onclick="openModal('withdraw')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-2xl text-xs border border-slate-700 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-arrow-up-from-bracket"></i> سحب الأرباح
-        </button>
-      </div>
-    </div>
-
-    <!-- قسم التنقل بين الأقسام -->
-    <div class="flex bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800">
-      <button onclick="switchTab('mining')" id="tab-mining-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white transition">التعدين</button>
-      <button onclick="switchTab('plans')" id="tab-plans-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition">الخطط</button>
-      <button onclick="switchTab('history')" id="tab-history-btn" class="w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition">العمليات</button>
-    </div>
-
-    <!-- TAB 1: التعدين السحابي -->
-    <div id="section-mining" class="space-y-4">
-      <div class="glass p-6 rounded-3xl text-center space-y-4">
-        <div class="w-20 h-20 bg-blue-500/10 text-blue-400 rounded-full mx-auto flex items-center justify-center text-3xl border border-blue-500/20 shadow-inner animate-pulse">
-          <i class="fa-solid fa-microchip"></i>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-white">محطة التعدين اليومية</h3>
-          <p class="text-xs text-gray-400 mt-1">ابدأ جلسة التعدين لتحصيل مكافأتك التلقائية</p>
-        </div>
-
-        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800/80 space-y-2">
-          <div class="flex justify-between text-xs">
-            <span class="text-gray-400">حالة الخادم:</span>
-            <span class="text-emerald-400 font-bold">جاهز للتشغيل</span>
+    <!-- TAB 1: الصفحة الرئيسية (Dashboard) -->
+    <div id="tab-dashboard" class="space-y-4">
+      <div class="glass-card p-4 rounded-2xl">
+        <h3 class="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> اقتباسات حية للأسعار
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+            <span class="font-bold text-sm">BTC / USDT</span>
+            <span id="btc-price" class="font-mono text-emerald-400 font-bold">$84,679.00</span>
           </div>
-          <div class="flex justify-between text-xs">
-            <span class="text-gray-400">العائد المتوقع:</span>
-            <span class="text-blue-400 font-bold">+1.50 USDT</span>
+          <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded-xl border border-gray-800">
+            <span class="font-bold text-sm">ETH / USDT</span>
+            <span id="eth-price" class="font-mono text-emerald-400 font-bold">$2,693.96</span>
           </div>
         </div>
-
-        <button onclick="startMiningSession()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-2xl text-xs transition shadow-lg">
-          تشغيل جلسة التعدين الآن
-        </button>
-      </div>
-    </div>
-
-    <!-- TAB 2: خطط الاستثمار -->
-    <div id="section-plans" class="hidden space-y-3">
-      <div class="text-center py-1">
-        <h2 class="text-sm font-bold text-white">خطط الستيكينغ الحصرية</h2>
-        <p class="text-[11px] text-gray-400">احصل على عوائد مضمونة بفتح الحزم المتقدمة</p>
       </div>
 
-      <div class="glass p-4 rounded-3xl space-y-3 border-l-4 border-blue-500">
-        <div class="flex justify-between items-center">
-          <span class="font-bold text-white text-sm">الباقة البرونزية</span>
-          <span class="text-xs text-blue-400 font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg">5% يومياً</span>
+      <div class="glass-card p-5 rounded-2xl relative overflow-hidden">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <p class="text-xs text-gray-400">إجمالي الأصول</p>
+            <p id="balance" class="text-2xl font-extrabold text-white mt-1">$0.00 <span class="text-xs text-gray-400 font-normal">USDT</span></p>
+          </div>
+          <span id="dashboard-vip" class="bg-gray-800 text-gray-400 border border-gray-700 text-xs px-2.5 py-1 rounded-full font-medium">بدون مستوى (قم للإيداع)</span>
         </div>
-        <p class="text-xs text-gray-400">الحد الأدنى: 10 USDT - المدة: 30 يوم</p>
-        <button onclick="investPlan(10, 1.5)" class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">تفعيل الباقة (10 USDT)</button>
-      </div>
 
-      <div class="glass p-4 rounded-3xl space-y-3 border-l-4 border-indigo-500">
-        <div class="flex justify-between items-center">
-          <span class="font-bold text-white text-sm">الباقة الذهبية</span>
-          <span class="text-xs text-indigo-400 font-bold bg-indigo-500/10 px-2.5 py-1 rounded-lg">8% يومياً</span>
-        </div>
-        <p class="text-xs text-gray-400">الحد الأدنى: 50 USDT - المدة: 45 يوم</p>
-        <button onclick="investPlan(50, 4.0)" class="w-full bg-slate-800 hover:bg-slate-700 text-indigo-400 font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">تفعيل الباقة (50 USDT)</button>
-      </div>
-    </div>
-
-    <!-- TAB 3: سجل المعاملات -->
-    <div id="section-history" class="hidden space-y-3">
-      <div class="glass p-4 rounded-3xl space-y-3">
-        <h2 class="text-sm font-bold text-white border-b border-slate-800 pb-2">سجل العمليات المالية</h2>
-        <div id="history-box" class="space-y-2 max-h-[300px] overflow-y-auto">
-          <p class="text-center text-xs text-gray-500 py-4">لا توجد عمليات مسجلة حتى الآن</p>
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <button onclick="openModal('إيداع')" class="bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-2.5 rounded-xl text-sm transition text-center">
+            <i class="fa-solid fa-arrow-down-left ml-1"></i> إيداع
+          </button>
+          <button onclick="openModal('سحب')" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-xl text-sm border border-gray-700 transition text-center">
+            <i class="fa-solid fa-arrow-up-right ml-1"></i> سحب
+          </button>
         </div>
       </div>
     </div>
 
+    <!-- TAB 2: صفحة المهام اليومية (Daily Tasks) -->
+    <div id="tab-tasks" class="hidden space-y-4">
+      <div class="glass-card p-5 rounded-2xl text-center">
+        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3 border border-amber-500/30">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white">المهمة الكمية اليومية</h2>
+        <p class="text-xs text-gray-400 mt-1">نفذ عملية التحديد الكمي اليومية للحصول على أرباحك الفورية</p>
+
+        <div class="mt-6 bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-3">
+          <div class="flex justify-between items-center text-xs text-gray-400 border-b border-gray-800 pb-2">
+            <span>مكافأة المستوى اليومية:</span>
+            <span id="task-reward-display" class="text-emerald-400 font-bold text-sm">$0.00 USDT</span>
+          </div>
+          <button id="task-btn" onclick="executeTask()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn">
+            بدء التحديد الكمي الآن
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: صفحة مستويات VIP -->
+    <div id="tab-vip" class="hidden space-y-4">
+      <div class="text-center py-2">
+        <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-crown text-amber-400 ml-1"></i> مستويات VIP</h2>
+        <p class="text-xs text-gray-400">قم بترقية مستواك لزيادة الأرباح اليومية</p>
+      </div>
+      <div class="space-y-3" id="vip-list"></div>
+    </div>
+
+    <!-- TAB 4: دعوة الأصدقاء -->
+    <div id="tab-invite" class="hidden space-y-4">
+      <div class="glass-card p-5 rounded-2xl text-center space-y-3">
+        <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl mx-auto flex items-center justify-center text-xl border border-blue-500/30">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white">دعوة الأصدقاء وربح العمولات</h2>
+        <p class="text-xs text-gray-400">احصل على عمولات فورية عند انضمام أصدقائك وترقيتهم لمستويات VIP</p>
+
+        <!-- كود الدعوة -->
+        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
+          <label class="block text-[11px] text-gray-400">كود الدعوة الخاص بك:</label>
+          <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800">
+            <span id="referral-code" class="font-mono text-sm text-emerald-400 font-bold">...</span>
+            <button onclick="copyCode()" class="text-xs bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 px-3 py-1 rounded-md transition">نسخ الكود</button>
+          </div>
+        </div>
+
+        <!-- رابط الدعوة المخصص -->
+        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right mt-3">
+          <label class="block text-[11px] text-gray-400">رابط الدعوة الخاص بك:</label>
+          <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800 gap-2">
+            <span id="referral-link" class="font-mono text-[10px] text-emerald-400 truncate w-full text-left" dir="ltr">...</span>
+            <button onclick="copyLink()" class="text-xs bg-emerald-500 text-gray-950 font-bold hover:bg-emerald-400 px-3 py-1 rounded-md transition shrink-0">نسخ الرابط</button>
+          </div>
+        </div>
+
+        <!-- إحصائيات الدعوات -->
+        <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl text-center mt-3">
+          <p class="text-[10px] text-gray-400">إجمالي الأشخاص الذين دعيتهم:</p>
+          <p id="total-ref-count" class="text-lg font-bold text-emerald-400 mt-0.5">0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: سجل المعاملات -->
+    <div id="tab-history" class="hidden space-y-4">
+      <div class="glass-card p-4 rounded-2xl">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
+          <h2 class="text-base font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> سجل المعاملات المالية
+          </h2>
+          <button onclick="clearTransactions()" class="text-[10px] text-red-400 hover:text-red-300 bg-red-500/10 px-2 py-1 rounded-lg">مسح السجل</button>
+        </div>
+        <div id="transactions-list" class="space-y-2.5 max-h-[400px] overflow-y-auto pr-1"></div>
+      </div>
+    </div>
+
+    <!-- TAB 6: الملف الشخصي ولوحة الأدمن -->
+    <div id="tab-profile" class="hidden space-y-4">
+      <div class="glass-card p-4 rounded-2xl flex justify-between items-center bg-gradient-to-r from-sky-950/40 to-gray-900 border border-sky-500/30">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl border border-sky-500/30">
+            <i class="fa-brands fa-telegram"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">خدمة العملاء الرسمية</h4>
+            <p class="text-[10px] text-gray-400">متواجدون على مدار 24 ساعة للإجابة عن أسئلتكم</p>
+          </div>
+        </div>
+        <a href="https://t.me/+_UHaO6Sx_u0xNWE0" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1">
+          تواصل معنا
+        </a>
+      </div>
+
+      <!-- لوحة تحكم الأدمن -->
+      <div class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5">
+        <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
+          <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (طلبات الأعضاء)
+        </h3>
+        <div>
+          <h4 class="text-xs font-bold text-emerald-400 mb-2"><i class="fa-solid fa-arrow-down-left ml-1"></i> طلبات الإيداع المعلقة</h4>
+          <div id="admin-pending-list" class="space-y-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-card border-t border-gray-800 p-2 flex justify-around items-center z-40">
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center text-emerald-400 text-[11px] gap-1">
+        <i class="fa-solid fa-house text-base"></i><span>الرئيسية</span>
+      </button>
+      <button onclick="switchTab('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-400 hover:text-white text-[11px] gap-1">
+        <i class="fa-solid fa-list-check text-base"></i><span>المهام</span>
+      </button>
+      <button onclick="switchTab('vip')" id="nav-vip" class="flex flex-col items-center text-gray-400 hover:text-white text-[11px] gap-1">
+        <i class="fa-solid fa-crown text-base"></i><span>VIP</span>
+      </button>
+      <button onclick="switchTab('invite')" id="nav-invite" class="flex flex-col items-center text-gray-400 hover:text-white text-[11px] gap-1">
+        <i class="fa-solid fa-users text-base"></i><span>الدعوة</span>
+      </button>
+      <button onclick="switchTab('history')" id="nav-history" class="flex flex-col items-center text-gray-400 hover:text-white text-[11px] gap-1">
+        <i class="fa-solid fa-clock-rotate-left text-base"></i><span>السجل</span>
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-gray-400 hover:text-white text-[11px] gap-1">
+        <i class="fa-solid fa-user-gear text-base"></i><span>حسابي</span>
+      </button>
+    </div>
   </div>
 
-  <!-- نافذة النوافذ المنبثقة (Modal) -->
-  <div id="action-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-    <div class="glass p-6 rounded-3xl w-full max-w-sm space-y-4">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h3 id="modal-title" class="text-sm font-bold text-white">إيداع رصيد</h3>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+  <!-- النافذة المنبثقة للإيداع -->
+  <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+    <div class="glass-card p-6 rounded-3xl w-full max-w-sm space-y-4 border border-gray-700/60 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+        <h3 id="modal-title" class="text-base font-bold text-white">طلب الإيداع</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
+
+      <div id="deposit-section" class="space-y-3">
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">اختر شبكة الإيداع (USDT)</label>
+          <select id="deposit-network-select" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-emerald-400 font-bold">
+            <option value="TRC20">USDT - TRC20 (Tron)</option>
+            <option value="BEP20">USDT - BEP20 (BNB Smart Chain)</option>
+          </select>
+        </div>
+        <div class="text-center py-2 bg-gray-950/70 p-3 rounded-2xl border border-gray-800">
+          <img id="deposit-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=TX89kL90PqR3xZ12345T9xYzE89xQ3Nzp7v12" alt="QR Code" class="mx-auto rounded-lg border-2 border-emerald-500/40 p-1 bg-white">
+        </div>
+        <div>
+          <label class="block text-[11px] text-gray-400 mb-1">عنوان محفظة الإيداع الرسمية:</label>
+          <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-xl border border-gray-800 gap-2">
+            <span id="deposit-address-display" class="font-mono text-[11px] text-emerald-400 truncate font-bold">TBBazvxfMw44Y4cg7S731c8gZQjP6bW7Ru</span>
+            <button onclick="copyDepositAddress()" class="text-xs bg-emerald-500 text-gray-950 font-bold hover:bg-emerald-400 px-3 py-1.5 rounded-lg transition shrink-0">نسخ</button>
+          </div>
+        </div>
+      </div>
+
       <div>
-        <label class="block text-xs text-gray-400 mb-1">المبلغ المطلوب (USDT)</label>
-        <input type="number" id="modal-amount" placeholder="0.00" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+        <label class="block text-xs text-gray-400 mb-1">المبلغ المراد (USDT)</label>
+        <input type="number" id="amount-input" placeholder="0.00" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white">
       </div>
-      <button onclick="confirmAction()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-xs transition">تنفيذ العملية</button>
+
+      <button onclick="processTransaction()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn text-sm">
+        إرسال الطلب
+      </button>
     </div>
   </div>
 
   <script>
-    let balance = 0.00;
-    let history = [];
-    let currentMode = '';
+    let currentBalance = 0.00;
+    let currentAction = '';
+    let userVipLevel = 0;
+    let transactions = [];
+    let pendingDeposits = [];
+    let currentUserEmail = '';
 
-    function switchTab(tab) {
-      ['mining', 'plans', 'history'].forEach(t => {
-        document.getElementById('section-' + t).classList.add('hidden');
-        document.getElementById(`tab-${t}-btn`).className = "w-1/3 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition";
-      });
-      document.getElementById('section-' + tab).classList.remove('hidden');
-      document.getElementById(`tab-${tab}-btn`).className = "w-1/3 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white transition";
+    const depositWallets = {
+      'TRC20': 'TBBazvxfMw44Y4cg7S731c8gZQjP6bW7Ru',
+      'BEP20': '0x0D4f7aeBCB66Ad8e8A2889C4E32c133234dAA32B'
+    };
+
+    const vipLevels = [
+      { level: 2, name: 'VIP 2', cost: 15, dailyReward: 2.00 },
+      { level: 3, name: 'VIP 3', cost: 50, dailyReward: 6.50 },
+      { level: 4, name: 'VIP 4', cost: 150, dailyReward: 20.00 }
+    ];
+
+    // التحقق عند فتح الصفحة إذا دخل المستخدم عبر رابط دعوة
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      if (refCode) {
+        localStorage.setItem('pending_ref_code', refCode);
+        document.getElementById('ref-alert-box').classList.remove('hidden');
+      }
+
+      const activeUser = localStorage.getItem('app_active_user');
+      if (activeUser) startUserSession(activeUser);
+    });
+
+    function switchAuthMode(mode) {
+      const btnLogin = document.getElementById('btn-show-login');
+      const btnRegister = document.getElementById('btn-show-register');
+      const submitLogin = document.getElementById('login-submit-btn');
+      const submitRegister = document.getElementById('register-submit-btn');
+      const subtitle = document.getElementById('auth-subtitle');
+
+      if (mode === 'login') {
+        btnLogin.className = "w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition";
+        btnRegister.className = "w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
+        submitLogin.classList.remove('hidden');
+        submitRegister.classList.add('hidden');
+        subtitle.innerText = "سجل دخولك لبدء متابعة المؤشرات";
+      } else {
+        btnRegister.className = "w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition";
+        btnLogin.className = "w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition";
+        submitRegister.classList.remove('hidden');
+        submitLogin.classList.add('hidden');
+        subtitle.innerText = "قم بإنشاء حساب جديد للانضمام للمنصة";
+      }
     }
 
-    function openModal(mode) {
-      currentMode = mode;
-      document.getElementById('modal-title').innerText = mode === 'deposit' ? 'إيداع رصيد جديد' : 'سحب الأرباح';
-      document.getElementById('action-modal').classList.remove('hidden');
-      document.getElementById('action-modal').classList.add('flex');
+    function getUsersDB() {
+      const users = localStorage.getItem('app_users');
+      return users ? JSON.parse(users) : [];
+    }
+
+    function register() {
+      const email = document.getElementById('email-input').value.trim();
+      const pass = document.getElementById('pass-input').value.trim();
+
+      if (!email || !pass) {
+        alert('يرجى كتابة البريد الإلكتروني وكلمة المرور');
+        return;
+      }
+
+      let users = getUsersDB();
+      if (users.find(u => u.email === email)) {
+        alert('هذا البريد الإلكتروني مسجل بالفعل!');
+        switchAuthMode('login');
+        return;
+      }
+
+      users.push({ email, pass });
+      localStorage.setItem('app_users', JSON.stringify(users));
+      
+      // إعداد بيانات الحساب الجديد
+      localStorage.setItem(`balance_${email}`, '0.00');
+      localStorage.setItem(`vip_${email}`, '0');
+
+      // معالجة رابط الدعوة وتسجيله للمُحيل إن وجد
+      const pendingRef = localStorage.getItem('pending_ref_code');
+      if (pendingRef) {
+        localStorage.setItem(`referred_by_${email}`, pendingRef);
+        
+        // زيادة عدد الدعوات لصاحب الرابط
+        let refCounts = JSON.parse(localStorage.getItem(`ref_count_${pendingRef}`) || '0');
+        refCounts++;
+        localStorage.setItem(`ref_count_${pendingRef}`, refCounts);
+        
+        localStorage.removeItem('pending_ref_code');
+      }
+
+      alert('تم إنشاء الحساب بنجاح برصيد 0!');
+      startUserSession(email);
+    }
+
+    function login() {
+      const email = document.getElementById('email-input').value.trim();
+      const pass = document.getElementById('pass-input').value.trim();
+      let users = getUsersDB();
+      const user = users.find(u => u.email === email && u.pass === pass);
+
+      if (user) {
+        startUserSession(user.email);
+      } else {
+        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة!');
+      }
+    }
+
+    function startUserSession(email) {
+      currentUserEmail = email;
+      localStorage.setItem('app_active_user', email);
+      loadStoredData();
+
+      const username = email.split('@')[0];
+      document.getElementById('user-display').innerText = username;
+
+      // توليد كود الدعوة ورابط الدعوة الخاص بالمستخدم
+      const uniqueCode = username.toUpperCase() + "99";
+      document.getElementById('referral-code').innerText = uniqueCode;
+
+      const currentUrl = window.location.origin + window.location.pathname;
+      document.getElementById('referral-link').innerText = currentUrl + "?ref=" + uniqueCode;
+
+      // جلب عدد الأشخاص المدعوين لهذا المستخدم
+      const totalRefs = localStorage.getItem(`ref_count_${uniqueCode}`) || '0';
+      document.getElementById('total-ref-count').innerText = totalRefs;
+
+      document.getElementById('auth-page').classList.add('hidden');
+      document.getElementById('main-app').classList.remove('hidden');
+      
+      updateBalanceUI();
+      updateVipUI();
+      renderTransactions();
+      renderAdminPendingList();
+    }
+
+    function logout() {
+      localStorage.removeItem('app_active_user');
+      document.getElementById('main-app').classList.add('hidden');
+      document.getElementById('auth-page').classList.remove('hidden');
+    }
+
+    function loadStoredData() {
+      if (!currentUserEmail) return;
+      const balanceVal = localStorage.getItem(`balance_${currentUserEmail}`);
+      currentBalance = balanceVal ? parseFloat(balanceVal) : 0.00;
+
+      const vipVal = localStorage.getItem(`vip_${currentUserEmail}`);
+      userVipLevel = vipVal ? parseInt(vipVal) : 0;
+
+      const savedTx = localStorage.getItem(`tx_${currentUserEmail}`);
+      transactions = savedTx ? JSON.parse(savedTx) : [];
+
+      const savedDep = localStorage.getItem('global_pending_deposits');
+      pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
+    }
+
+    function saveUserData() {
+      if (!currentUserEmail) return;
+      localStorage.setItem(`balance_${currentUserEmail}`, currentBalance);
+      localStorage.setItem(`vip_${currentUserEmail}`, userVipLevel);
+      localStorage.setItem(`tx_${currentUserEmail}`, JSON.stringify(transactions));
+      localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
+    }
+
+    function copyCode() {
+      const code = document.getElementById('referral-code').innerText;
+      navigator.clipboard.writeText(code);
+      alert('تم نسخ كود الدعوة: ' + code);
+    }
+
+    function copyLink() {
+      const link = document.getElementById('referral-link').innerText;
+      navigator.clipboard.writeText(link);
+      alert('تم نسخ رابط الدعوة الخاص بك بنجاح!');
+    }
+
+    function switchTab(tab) {
+      ['dashboard', 'tasks', 'vip', 'invite', 'history', 'profile'].forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+      });
+      document.getElementById('tab-' + tab).classList.remove('hidden');
+    }
+
+    function openModal(action) {
+      currentAction = action;
+      document.getElementById('modal-title').innerText = 'طلب ' + action;
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
     }
 
     function closeModal() {
-      document.getElementById('action-modal').classList.add('hidden');
-      document.getElementById('action-modal').classList.remove('flex');
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
     }
 
-    function confirmAction() {
-      const amt = parseFloat(document.getElementById('modal-amount').value);
-      if (!amt || amt <= 0) {
-        alert('يرجى إدخال مبلغ صحيح');
+    function processTransaction() {
+      const val = parseFloat(document.getElementById('amount-input').value);
+      if (val && val > 0) {
+        const reqId = 'DEP-' + Math.floor(1000 + Math.random() * 9000);
+        pendingDeposits.push({ id: reqId, user: currentUserEmail, amount: val, time: new Date().toLocaleTimeString('ar-EG') });
+        addTransaction('طلب إيداع', val, true, 'قيد الانتظار', reqId);
+        alert('تم إرسال طلب الإيداع بانتظار موافقة الأدمن.');
+        saveUserData();
+        closeModal();
+        renderAdminPendingList();
+      }
+    }
+
+    function addTransaction(type, amount, isPositive = true, status = 'مكتمل', reqId = null) {
+      const tx = {
+        id: reqId || ('TX' + Math.floor(100000 + Math.random() * 900000)),
+        type: type,
+        amount: amount,
+        isPositive: isPositive,
+        status: status,
+        date: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+      };
+      transactions.unshift(tx);
+      saveUserData();
+      renderTransactions();
+    }
+
+    function renderTransactions() {
+      const container = document.getElementById('transactions-list');
+      if (transactions.length === 0) {
+        container.innerHTML = `<p class="text-center text-xs text-gray-500 py-6">لا يوجد معاملات مالية</p>`;
         return;
       }
-
-      if (currentMode === 'deposit') {
-        balance += amt;
-        addHistory('إيداع ناجح', amt);
-        alert(`تم إيداع $${amt} بنجاح!`);
-      } else {
-        if (amt > balance) {
-          alert('عذراً، رصيدك غير كافٍ!');
-          return;
-        }
-        balance -= amt;
-        addHistory('طلب سحب', amt);
-        alert(`تم سحب $${amt} بنجاح!`);
-      }
-
-      updateUI();
-      closeModal();
-    }
-
-    function startMiningSession() {
-      const reward = 1.50;
-      balance += reward;
-      addHistory('مكافأة تعدين', reward);
-      updateUI();
-      alert(`تم الانتهاء من جلسة التعدين بنجاح وإضافة +$${reward} USDT إلى رصيدك!`);
-    }
-
-    function investPlan(cost, dailyReturn) {
-      if (balance < cost) {
-        alert('رصيدك الحالي لا يكفي لتفعيل هذه الباقة. يرجى الإيداع أولاً!');
-        openModal('deposit');
-        return;
-      }
-      balance -= cost;
-      addHistory('شراء باقة ستيكينغ', cost);
-      updateUI();
-      alert(`تم تفعيل الباقة بنجاح وخصم $${cost} من رصيدك.`);
-    }
-
-    function addHistory(type, amt) {
-      history.unshift({ type, amt, time: new Date().toLocaleTimeString('ar-EG') });
-      renderHistory();
-    }
-
-    function renderHistory() {
-      const box = document.getElementById('history-box');
-      if (history.length === 0) return;
-      box.innerHTML = '';
-      history.forEach(h => {
-        box.innerHTML += `
-          <div class="bg-slate-950/60 p-3 rounded-2xl border border-slate-800/60 flex justify-between items-center text-xs">
-            <div><p class="font-bold text-white">${h.type}</p><p class="text-[10px] text-gray-400">${h.time}</p></div>
-            <span class="font-mono font-bold text-blue-400">+$${h.amt.toFixed(2)}</span>
+      container.innerHTML = '';
+      transactions.forEach(tx => {
+        container.innerHTML += `
+          <div class="flex justify-between items-center bg-gray-900/60 p-3 rounded-xl border border-gray-800/80">
+            <div><p class="text-xs font-bold text-white">${tx.type}</p><p class="text-[10px] text-gray-400">${tx.date}</p></div>
+            <p class="text-xs font-mono font-bold text-emerald-400">$${tx.amount.toFixed(2)}</p>
           </div>`;
       });
     }
 
-    function updateUI() {
-      document.getElementById('total-balance').innerHTML = `${balance.toFixed(2)} <span class="text-xs font-normal text-blue-400">USDT</span>`;
+    function clearTransactions() {
+      transactions = [];
+      saveUserData();
+      renderTransactions();
     }
+
+    function approveDeposit(reqId) {
+      const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
+      if (reqIndex !== -1) {
+        const req = pendingDeposits[reqIndex];
+        let userBal = parseFloat(localStorage.getItem(`balance_${req.user}`) || '0') + req.amount;
+        localStorage.setItem(`balance_${req.user}`, userBal);
+
+        if (req.user === currentUserEmail) currentBalance = userBal;
+
+        pendingDeposits.splice(reqIndex, 1);
+        saveUserData();
+        updateBalanceUI();
+        renderAdminPendingList();
+        alert('تمت الموافقة على الإيداع بنجاح!');
+      }
+    }
+
+    function renderAdminPendingList() {
+      const container = document.getElementById('admin-pending-list');
+      if (!container) return;
+      if (pendingDeposits.length === 0) {
+        container.innerHTML = `<p class="text-[11px] text-gray-500 text-center">لا توجد طلبات إيداع معلقة</p>`;
+        return;
+      }
+      container.innerHTML = '';
+      pendingDeposits.forEach(req => {
+        container.innerHTML += `
+          <div class="flex justify-between items-center bg-gray-900/90 p-2.5 rounded-xl border border-gray-800 text-xs">
+            <div><p class="text-white font-bold">$${req.amount} USDT</p><p class="text-[10px] text-gray-400">${req.user}</p></div>
+            <button onclick="approveDeposit('${req.id}')" class="bg-emerald-500 text-gray-950 px-2.5 py-1 rounded font-bold">موافقة</button>
+          </div>`;
+      });
+    }
+
+    function updateBalanceUI() {
+      document.getElementById('balance').innerText = '$' + currentBalance.toFixed(2) + ' USDT';
+      renderVipList();
+    }
+
+    function renderVipList() {
+      const container = document.getElementById('vip-list');
+      container.innerHTML = '';
+      vipLevels.forEach(v => {
+        const isCurrent = userVipLevel === v.level;
+        container.innerHTML += `
+          <div class="glass-card p-4 rounded-2xl flex justify-between items-center ${isCurrent ? 'border-amber-500' : ''}">
+            <div>
+              <span class="font-bold text-white">${v.name}</span>
+              <p class="text-xs text-gray-400">الربح اليومي: $${v.dailyReward}</p>
+              <p class="text-[11px] text-gray-500">التكلفة: $${v.cost}</p>
+            </div>
+            ${isCurrent ? '<span class="text-xs text-gray-500">مُفعل</span>' : `<button onclick="upgradeVip(${v.level})" class="bg-amber-500 text-gray-950 text-xs font-bold px-4 py-2 rounded-xl">فتح المستوى</button>`}
+          </div>`;
+      });
+    }
+
+    function upgradeVip(targetLevel) {
+      const target = vipLevels.find(v => v.level === targetLevel);
+      if (currentBalance < target.cost) {
+        alert(`عذراً، رصيدك الحالي ($${currentBalance.toFixed(2)}) لا يكفي. يرجى الإيداع أولاً.`);
+        openModal('إيداع');
+        return;
+      }
+      currentBalance -= target.cost;
+      userVipLevel = targetLevel;
+      addTransaction('ترقية إلى ' + target.name, target.cost, false, 'مكتمل');
+      saveUserData();
+      updateBalanceUI();
+      alert('تم فتح المستوى بنجاح!');
+    }
+
+    function executeTask() {
+      if (userVipLevel === 0) {
+        alert('يجب الإيداع وفتح مستوى VIP2 على الأقل لبدء المهام!');
+        openModal('إيداع');
+        return;
+      }
+      const currentVipObj = vipLevels.find(v => v.level === userVipLevel);
+      currentBalance += currentVipObj.dailyReward;
+      addTransaction('أرباح مهمة كمية', currentVipObj.dailyReward, true, 'مكتمل');
+      saveUserData();
+      updateBalanceUI();
+      alert(`تم إكمال المهمة بنجاح! أضيف +$${currentVipObj.dailyReward} USDT`);
+    }
+
+    setInterval(() => {
+      document.getElementById('btc-price').innerText = '$' + (84600 + Math.random() * 200).toFixed(2);
+      document.getElementById('eth-price').innerText = '$' + (2690 + Math.random() * 10).toFixed(2);
+    }, 2000);
   </script>
 </body>
 </html>
