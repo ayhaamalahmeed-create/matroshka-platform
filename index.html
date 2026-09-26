@@ -25,7 +25,6 @@
       <p id="auth-subtitle" class="text-gray-400 text-sm mt-1">سجل دخولك لبدء متابعة المؤشرات</p>
     </div>
 
-    <!-- تبويب الاختيار بين الدخول وإنشاء حساب -->
     <div class="flex bg-gray-900/80 p-1 rounded-xl mb-4 border border-gray-800">
       <button id="btn-show-login" onclick="switchAuthMode('login')" class="w-1/2 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-gray-950 transition">تسجيل الدخول</button>
       <button id="btn-show-register" onclick="switchAuthMode('register')" class="w-1/2 py-2 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition">إنشاء حساب جديد</button>
@@ -41,18 +40,15 @@
         <input type="password" id="pass-input" placeholder="••••••••" class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white">
       </div>
       
-      <!-- حقل كود الدعوة عند التسجيل (يظهر فقط في حالة إنشاء حساب جديد) -->
       <div id="register-ref-container" class="hidden">
         <label class="block text-xs text-gray-400 mb-1">كود الدعوة (اختياري)</label>
         <input type="text" id="ref-input" placeholder="أدخل كود الدعوة إن وجد..." class="w-full bg-gray-900/90 border border-gray-700/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-white font-mono">
       </div>
 
-      <!-- زر تسجيل الدخول -->
       <button id="login-submit-btn" onclick="login()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2">
         تسجيل الدخول
       </button>
 
-      <!-- زر إنشاء حساب جديد -->
       <button id="register-submit-btn" onclick="register()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-gray-950 font-bold py-3 rounded-xl transition glow-btn mt-2 hidden">
         إنشاء الحساب الآن
       </button>
@@ -62,7 +58,6 @@
   <!-- ==================== 2. الواجهة الرئيسية والتنقل ==================== -->
   <div id="main-app" class="hidden max-w-md mx-auto p-4 space-y-4">
     
-    <!-- الهيدر العلوي -->
     <header class="flex justify-between items-center py-2 px-1">
       <div class="flex items-center space-x-3 space-x-reverse">
         <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
@@ -126,7 +121,6 @@
         </div>
       </div>
 
-      <!-- قسم الصورة المتحركة والإعلان عن موثوقية وعمل الشركة -->
       <div class="glass-card p-4 rounded-2xl space-y-3 border border-emerald-500/30 bg-gradient-to-b from-gray-900/90 to-emerald-950/20">
         <div class="relative w-full h-40 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
           <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80" alt="شركة التحديد الكمي" class="w-full h-full object-cover">
@@ -146,10 +140,9 @@
           </p>
         </div>
       </div>
-
     </div>
 
-    <!-- TAB 2: صفحة المهام اليومية (Daily Tasks) -->
+    <!-- TAB 2: صفحة المهام اليومية -->
     <div id="tab-tasks" class="hidden space-y-4">
       <div class="glass-card p-5 rounded-2xl text-center">
         <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3 border border-amber-500/30">
@@ -176,7 +169,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: صفحة مستويات VIP -->
+    <!-- TAB 3: مستويات VIP -->
     <div id="tab-vip" class="hidden space-y-4">
       <div class="text-center py-2">
         <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-crown text-amber-400 ml-1"></i> مستويات VIP</h2>
@@ -185,7 +178,7 @@
       <div class="space-y-3" id="vip-list"></div>
     </div>
 
-    <!-- TAB 4: صفحة دعوة الأصدقاء والعمولات (Referrals) -->
+    <!-- TAB 4: دعوة الأصدقاء -->
     <div id="tab-invite" class="hidden space-y-4">
       <div class="glass-card p-5 rounded-2xl text-center space-y-3">
         <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl mx-auto flex items-center justify-center text-xl border border-blue-500/30">
@@ -194,7 +187,6 @@
         <h2 class="text-lg font-bold text-white">دعوة الأصدقاء وربح العمولات</h2>
         <p class="text-xs text-gray-400">احصل على عمولات فورية عند انضمام أصدقائك وترقيتهم لمستويات VIP</p>
 
-        <!-- كود الدعوة -->
         <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
           <label class="block text-[11px] text-gray-400">كود الدعوة الخاص بك:</label>
           <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800">
@@ -203,7 +195,6 @@
           </div>
         </div>
 
-        <!-- رابط الإحالة الجديد -->
         <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-xl space-y-2 text-right">
           <label class="block text-[11px] text-gray-400">رابط دعوة التسجيل المباشر:</label>
           <div class="flex items-center justify-between bg-gray-950 p-2.5 rounded-lg border border-gray-800 gap-2">
@@ -227,7 +218,7 @@
       </div>
     </div>
 
-    <!-- TAB 5: سجل المعاملات (History) -->
+    <!-- TAB 5: السجل -->
     <div id="tab-history" class="hidden space-y-4">
       <div class="glass-card p-4 rounded-2xl">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-3">
@@ -240,14 +231,19 @@
       </div>
     </div>
 
-    <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
+    <!-- TAB 6: الملف الشخصي وإدارة الأدمن -->
     <div id="tab-profile" class="hidden space-y-4">
       
-      <!-- لوحة تحكم الإدارة (تظهر فقط للأدمن nnnnaaatttnanooo@gmail.com) -->
+      <!-- لوحة تحكم الإدارة (تظهر فقط للأدمن) -->
       <div id="admin-panel-container" class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5 hidden">
-        <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
-          <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (طلبات الأعضاء)
-        </h3>
+        <div class="flex justify-between items-center border-b border-amber-500/20 pb-2">
+          <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+            <i class="fa-solid fa-user-shield"></i> لوحة تحكم الأدمن (طلبات الأعضاء)
+          </h3>
+          <button onclick="loadAdminData(); alert('تم تحديث الطلبات بنجاح!');" class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-1 rounded-md hover:bg-amber-500/30">
+            <i class="fa-solid fa-rotate"></i> تحديث الطلبات
+          </button>
+        </div>
         
         <div>
           <h4 class="text-xs font-bold text-emerald-400 mb-2"><i class="fa-solid fa-arrow-down-left ml-1"></i> طلبات الإيداع المعلقة</h4>
@@ -439,6 +435,10 @@
       const fullRefLink = window.location.origin + window.location.pathname + '?ref=' + userReferralCode;
       document.getElementById('referral-link').innerText = fullRefLink;
 
+      loadAdminData();
+    }
+
+    function loadAdminData() {
       const savedDep = localStorage.getItem('global_pending_deposits');
       pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
 
@@ -561,7 +561,6 @@
       checkTaskStatus();
       renderTransactions();
 
-      // إظهار لوحة التحكم للأدمن فقط وإخفاؤها تماماً عن باقي الأعضاء
       const adminPanel = document.getElementById('admin-panel-container');
       if (currentUserEmail === ADMIN_EMAIL) {
         adminPanel.classList.remove('hidden');
@@ -666,6 +665,12 @@
           ? "flex flex-col items-center text-amber-400 text-[11px] gap-1"
           : "flex flex-col items-center text-emerald-400 text-[11px] gap-1";
       }
+
+      if (tab === 'profile' && currentUserEmail === ADMIN_EMAIL) {
+        loadAdminData();
+        renderAdminPendingList();
+        renderAdminPendingWithdrawalsList();
+      }
     }
 
     function openModal(action) {
@@ -700,6 +705,8 @@
     function processTransaction() {
       const val = parseFloat(document.getElementById('amount-input').value);
       if (val && val > 0) {
+        loadAdminData(); // جلب أحدث بيانات الطلبات المعلقة أولاً
+
         if (currentAction === 'إيداع') {
           const net = document.getElementById('deposit-network-select').value;
           const reqId = 'DEP-' + Math.floor(1000 + Math.random() * 9000);
@@ -713,10 +720,11 @@
           };
           
           pendingDeposits.push(depositRequest);
+          localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
+          
           addTransaction(`طلب إيداع (${net})`, val, true, 'قيد الانتظار', reqId);
           
           alert('تم إرسال طلب الإيداع بنجاح!\nسيتم إضافة الرصيد بعد التأكيد من الأدمن.');
-          if (currentUserEmail === ADMIN_EMAIL) renderAdminPendingList();
 
         } else if (currentAction === 'سحب') {
           const net = document.getElementById('withdraw-network-select').value;
@@ -746,10 +754,11 @@
           };
 
           pendingWithdrawals.push(withdrawRequest);
+          localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+
           addTransaction(`طلب سحب (${net})`, val, false, 'قيد الانتظار', reqId);
 
           alert('تم إرسال طلب السحب بنجاح وهو قيد المراجعة حالياً من قبل الإدارة.');
-          if (currentUserEmail === ADMIN_EMAIL) renderAdminPendingWithdrawalsList();
         }
 
         saveUserData();
@@ -766,6 +775,7 @@
         return;
       }
 
+      loadAdminData();
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
@@ -786,6 +796,7 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
+        localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
         saveUserData();
         
         updateBalanceUI();
@@ -802,6 +813,7 @@
         return;
       }
 
+      loadAdminData();
       const reqIndex = pendingDeposits.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
@@ -814,6 +826,7 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingDeposits.splice(reqIndex, 1);
+        localStorage.setItem('global_pending_deposits', JSON.stringify(pendingDeposits));
         saveUserData();
 
         renderTransactions();
@@ -828,6 +841,7 @@
         return;
       }
 
+      loadAdminData();
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
@@ -840,6 +854,7 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
+        localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
         saveUserData();
 
         renderTransactions();
@@ -855,6 +870,7 @@
         return;
       }
 
+      loadAdminData();
       const reqIndex = pendingWithdrawals.findIndex(r => r.id === reqId);
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
@@ -873,6 +889,7 @@
         if (req.user === currentUserEmail) transactions = userTx;
 
         pendingWithdrawals.splice(reqIndex, 1);
+        localStorage.setItem('global_pending_withdrawals', JSON.stringify(pendingWithdrawals));
         saveUserData();
 
         updateBalanceUI();
@@ -885,6 +902,7 @@
 
     function renderAdminPendingList() {
       if (currentUserEmail !== ADMIN_EMAIL) return;
+      loadAdminData();
       const container = document.getElementById('admin-pending-list');
       if (!container) return;
 
@@ -913,6 +931,7 @@
 
     function renderAdminPendingWithdrawalsList() {
       if (currentUserEmail !== ADMIN_EMAIL) return;
+      loadAdminData();
       const container = document.getElementById('admin-pending-withdrawals-list');
       if (!container) return;
 
