@@ -603,7 +603,10 @@
                 <h4 class="text-accent"><i class="fas fa-user-shield"></i> لوحة التحكم الإدارية</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('adminPanelModal')"></i>
             </div>
-            <p style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 12px;">مرحباً بالمدير (`nnnnaaatttnanooo@gmail.com`). يمكنك هنا تأكيد الإيداعات المعلقة للأعضاء وتفعيل VIP2.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات الإيداع المعلقة للأعضاء:</p>
+                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث القائمة</button>
+            </div>
             
             <div id="adminDepositsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 <!-- يتم تعبئتها ديناميكياً -->
@@ -750,7 +753,6 @@
     <script>
         const ADMIN_EMAIL = 'nnnnaaatttnanooo@gmail.com';
         let users = JSON.parse(localStorage.getItem('quant_users')) || {};
-        let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
         let currentUserEmail = localStorage.getItem('quant_current_user') || null;
         let currentSelectedDepNetwork = 'TRC20';
         let currentSelectedWdNetwork = 'TRC20';
@@ -811,7 +813,7 @@
             users[email] = {
                 email: email,
                 password: password,
-                balance: 0.0, // رصيد الحساب الجديد يبدأ من صفر تماماً
+                balance: 0.0,
                 profit: 0.0,
                 recharge: 0.0,
                 lastQuantTime: 0,
@@ -839,7 +841,7 @@
                     users[email] = {
                         email: email,
                         password: password,
-                        balance: 0.0, // رصيد صفر للأعضاء الجدد
+                        balance: 0.0,
                         profit: 0.0,
                         recharge: 0.0,
                         lastQuantTime: 0,
@@ -864,6 +866,9 @@
         }
 
         function showAppScreen() {
+            // تحديث بيانات المستخدمين من التخزين المشترك
+            users = JSON.parse(localStorage.getItem('quant_users')) || users;
+
             document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('appScreen').classList.remove('hidden');
             document.getElementById('bottomNav').classList.remove('hidden');
@@ -871,7 +876,6 @@
             const user = users[currentUserEmail];
             if (!user) return;
 
-            // إظهار زر لوحة الأدمن فقط للبريد الخاص بك
             if (user.email === ADMIN_EMAIL) {
                 document.getElementById('adminControlBtn').style.display = 'inline-flex';
             } else {
@@ -965,7 +969,8 @@
             const amount = parseFloat(document.getElementById('depositAmount').value);
             if (!amount || amount <= 0) { alert('أدخل مبلغ إيداع صحيح'); return; }
             
-            // إضافة الطلب لقائمة معلقة للأدمن لكي يؤكده يدوياً ويضيفه لرصيد المستخدم
+            // جلب القائمة المحدثة وحفظ الطلب مباشرة في التخزين المشترك
+            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             pendingDeposits.push({
                 id: Date.now(),
                 email: currentUserEmail,
@@ -979,8 +984,9 @@
             alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل باقة VIP2.`);
         }
 
-        // فتح لوحة الأدمن الخاصة بك لإدارة الإيداعات وتأكيدها
+        // فتح لوحة الأدمن الخاصة بك وجلب الطلبات المعلقة فوراً
         function openAdminPanel() {
+            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             const listContainer = document.getElementById('adminDepositsList');
             listContainer.innerHTML = '';
 
@@ -989,12 +995,12 @@
             } else {
                 pendingDeposits.forEach((dep, index) => {
                     listContainer.innerHTML += `
-                        <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                             <div>
                                 <div style="font-size: 0.75rem; color: var(--accent);">المستخدم: ${dep.email}</div>
                                 <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">المبلغ: ${dep.amount} USDT (${dep.network})</div>
                             </div>
-                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${index})">تأكيد الإيداع</button>
+                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${dep.id})">تأكيد الإيداع</button>
                         </div>
                     `;
                 });
@@ -1002,25 +1008,32 @@
             openModal('adminPanelModal');
         }
 
-        // تأكيد الأدمن لإيداع المستخدم وتحديث رصيده
-        function confirmDepositByAdmin(index) {
-            const dep = pendingDeposits[index];
+        // تأكيد الأدمن لإيداع المستخدم وتحديث رصيده بناءً على ID الطلب الفريد
+        function confirmDepositByAdmin(depositId) {
+            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
+            users = JSON.parse(localStorage.getItem('quant_users')) || users;
+
+            const depIndex = pendingDeposits.findIndex(d => d.id === depositId);
+            if (depIndex === -1) return;
+
+            const dep = pendingDeposits[depIndex];
+
             if (users[dep.email]) {
                 users[dep.email].balance += dep.amount;
                 users[dep.email].recharge += dep.amount;
                 
-                // إذا كان الإيداع كافياً لـ VIP2 (أو أكثر) يمكن ترقيته تلقائياً أو ترك رصيده يرتفع
+                // تفعيل VIP 2 تلقائياً عند تأكيد أول إيداع بـ 50 أو أكثر
                 if (dep.amount >= 50 && users[dep.email].vip < 2) {
-                    users[dep.email].vip = 2; // ترقية تلقائية لـ VIP 2 بعد تأكيد الإيداع بناءً على رغبتك
+                    users[dep.email].vip = 2;
                 }
 
                 localStorage.setItem('quant_users', JSON.stringify(users));
             }
 
-            pendingDeposits.splice(index, 1);
+            pendingDeposits.splice(depIndex, 1);
             localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
             
-            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح وإضافته إلى رصيد الحساب!`);
+            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح للمستخدم ${dep.email}!`);
             openAdminPanel();
             showAppScreen();
         }
@@ -1028,14 +1041,15 @@
         function submitWithdraw() {
             const walletAddress = document.getElementById('userWalletAddressInput').value.trim();
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
-            const user = users[currentUserEmail];
+            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
+            const user = usersData[currentUserEmail];
 
             if (!walletAddress) { alert('يرجى إدخال عنوان محفظتك للسحب'); return; }
             if (!amount || amount <= 0) { alert('أدخل مبلغ سحب صحيح'); return; }
             if (amount > user.balance) { alert('رصيدك غير كافي'); return; }
 
             user.balance -= amount;
-            localStorage.setItem('quant_users', JSON.stringify(users));
+            localStorage.setItem('quant_users', JSON.stringify(usersData));
 
             showAppScreen();
             closeModal('withdrawFormModal');
@@ -1043,7 +1057,8 @@
         }
 
         function upgradeVip(tierLevel, cost) {
-            const user = users[currentUserEmail];
+            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
+            const user = usersData[currentUserEmail];
             
             if (tierLevel === 2) {
                 if (user.balance < cost) {
@@ -1059,14 +1074,15 @@
 
             user.balance -= cost;
             user.vip = tierLevel;
-            localStorage.setItem('quant_users', JSON.stringify(users));
+            localStorage.setItem('quant_users', JSON.stringify(usersData));
 
             showAppScreen();
             alert(`تهانينا! تم ترقية حسابك إلى VIP ${tierLevel} بنجاح لصلاحية 30 يوماً.`);
         }
 
         function startQuantitativeTask() {
-            const user = users[currentUserEmail];
+            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
+            const user = usersData[currentUserEmail];
             const now = new Date().getTime();
 
             if (user.balance <= 0) {
@@ -1079,13 +1095,14 @@
             user.profit += earnedProfit;
             user.lastQuantTime = now;
 
-            localStorage.setItem('quant_users', JSON.stringify(users));
+            localStorage.setItem('quant_users', JSON.stringify(usersData));
             showAppScreen();
             alert(`تم إتمام جلسة التحديد الكمي لـ VIP ${user.vip} بنجاح وحقق ربح يومي بقيمة +${earnedProfit.toFixed(2)} USDT!`);
         }
 
         function checkQuantTimerState() {
-            const user = users[currentUserEmail];
+            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
+            const user = usersData[currentUserEmail];
             if(!user) return;
             const now = new Date().getTime();
             const cooldownTime = 24 * 60 * 60 * 1000;
