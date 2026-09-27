@@ -605,6 +605,22 @@
                     </div>
                 </div>
 
+                <!-- زر تحميل التطبيق المضاف حديثاً -->
+                <div class="card" style="text-align: center; background: linear-gradient(135deg, #121824, #1a2332);">
+                    <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; color: var(--accent);">
+                        <i class="fas fa-mobile-screen-button"></i> تطبيق المنصة للأندرويد
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 12px;">قم بتحميل تطبيق المنصة على هاتفك للوصول السريع وبدون متصفح.</p>
+                    
+                    <a href="app-release.apk" class="btn btn-primary btn-block" download style="text-decoration: none; margin-bottom: 8px;">
+                        <i class="fas fa-download"></i> تحميل تطبيق المنصة (APK)
+                    </a>
+                    
+                    <button id="installAppBtn" class="btn btn-success btn-block hidden" style="background-color: #0e8cb8;">
+                        <i class="fas fa-plus-circle"></i> تثبيت التطبيق على الشاشة الرئيسية
+                    </button>
+                </div>
+
                 <div style="margin-top: 20px;">
                     <button class="btn btn-danger btn-block" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i> تسجيل الخروج من الحساب
@@ -631,12 +647,17 @@
                 <h4 class="text-accent"><i class="fas fa-user-shield"></i> لوحة التحكم الإدارية</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('adminPanelModal')"></i>
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات الإيداع المعلقة للأعضاء:</p>
-                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث القائمة</button>
-            </div>
             
-            <div id="adminDepositsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات الإيداع المعلقة:</p>
+                <button class="btn btn-primary" style="padding: 2px 8px; font-size: 0.65rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث</button>
+            </div>
+            <div id="adminDepositsList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px;"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات السحب المعلقة:</p>
+            </div>
+            <div id="adminWithdrawalsList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;"></div>
         </div>
     </div>
 
@@ -734,7 +755,7 @@
                 <input type="number" id="withdrawAmount" class="form-control" placeholder="مثال: 20">
             </div>
 
-            <button class="btn btn-danger btn-block" onclick="submitWithdraw()">تأكيد طلب السحب</button>
+            <button class="btn btn-danger btn-block" onclick="submitWithdraw()">تقديم طلب السحب للأدمن</button>
         </div>
     </div>
 
@@ -784,6 +805,31 @@
         let currentSelectedWdNetwork = 'TRC20';
         let timerInterval = null;
 
+        // دعم PWA للتثبيت
+        let deferredPrompt;
+        const installBtn = document.getElementById('installAppBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(installBtn) installBtn.classList.remove('hidden');
+        });
+
+        if(installBtn) {
+            installBtn.addEventListener('click', () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        }
+                        deferredPrompt = null;
+                        installBtn.classList.add('hidden');
+                    });
+                }
+            });
+        }
+
         const networkAddresses = {
             'TRC20': 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb',
             'BEP20': '0x71C...B29a8f4c1e3590e82D',
@@ -793,7 +839,6 @@
         const vipRates = { 1: 0.20, 2: 0.216, 3: 0.23, 4: 0.245, 5: 0.26, 6: 0.28, 7: 0.30 };
 
         window.onload = function() {
-            // التقاط كود الإحالة من الرابط فور فتح الصفحة إن وجد
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             if (refCode) {
@@ -848,7 +893,7 @@
             users[email] = {
                 email: email,
                 password: password,
-                balance: 0.0, // الرصيد يبدأ من 0 عند فتح الحساب
+                balance: 0.0,
                 profit: 0.0,
                 recharge: 0.0,
                 lastQuantTime: 0,
@@ -879,7 +924,7 @@
                     users[email] = {
                         email: email,
                         password: password,
-                        balance: 0.0, // الرصيد يبدأ من 0 عند فتح الحساب
+                        balance: 0.0,
                         profit: 0.0,
                         recharge: 0.0,
                         lastQuantTime: 0,
@@ -927,7 +972,6 @@
             if (user.vip === undefined) user.vip = 1;
             if (!user.refCode) user.refCode = "MK" + Math.floor(100000 + Math.random() * 900000);
 
-            // توليد رابط الدعوة ديناميكياً استناداً إلى عنوان الموقع الحالي
             const currentDomain = window.location.origin + window.location.pathname;
             user.refLink = currentDomain + "?ref=" + user.refCode;
 
@@ -1023,58 +1067,7 @@
             
             closeModal('depositAddressModal');
             document.getElementById('depositAmount').value = '';
-            alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل باقة VIP2.`);
-        }
-
-        function openAdminPanel() {
-            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
-            const listContainer = document.getElementById('adminDepositsList');
-            listContainer.innerHTML = '';
-
-            if (pendingDeposits.length === 0) {
-                listContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.8rem; padding: 15px;">لا توجد طلبات إيداع معلقة حالياً.</p>';
-            } else {
-                pendingDeposits.forEach((dep, index) => {
-                    listContainer.innerHTML += `
-                        <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <div>
-                                <div style="font-size: 0.75rem; color: var(--accent);">المستخدم: ${dep.email}</div>
-                                <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">المبلغ: ${dep.amount} USDT (${dep.network})</div>
-                            </div>
-                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${dep.id})">تأكيد الإيداع</button>
-                        </div>
-                    `;
-                });
-            }
-            openModal('adminPanelModal');
-        }
-
-        function confirmDepositByAdmin(depositId) {
-            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
-            users = JSON.parse(localStorage.getItem('quant_users')) || users;
-
-            const depIndex = pendingDeposits.findIndex(d => d.id === depositId);
-            if (depIndex === -1) return;
-
-            const dep = pendingDeposits[depIndex];
-
-            if (users[dep.email]) {
-                users[dep.email].balance += dep.amount; // إضافة الإيداع إلى الرصيد عند تأكيد الأدمن
-                users[dep.email].recharge += dep.amount;
-                
-                if (dep.amount >= 50 && users[dep.email].vip < 2) {
-                    users[dep.email].vip = 2; // فتح مستوى VIP 2
-                }
-
-                localStorage.setItem('quant_users', JSON.stringify(users));
-            }
-
-            pendingDeposits.splice(depIndex, 1);
-            localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
-            
-            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح للمستخدم ${dep.email}!`);
-            openAdminPanel();
-            showAppScreen();
+            alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن.`);
         }
 
         function submitWithdraw() {
@@ -1087,12 +1080,133 @@
             if (!amount || amount <= 0) { alert('أدخل مبلغ سحب صحيح'); return; }
             if (amount > user.balance) { alert('رصيدك غير كافي'); return; }
 
+            // خصم المبلغ فوراً كحجز مؤقت حتى يتم تأكيد أو رفض الطلب من قبل الأدمن
             user.balance -= amount;
             localStorage.setItem('quant_users', JSON.stringify(usersData));
 
+            let pendingWithdrawals = JSON.parse(localStorage.getItem('quant_pending_withdrawals')) || [];
+            pendingWithdrawals.push({
+                id: Date.now(),
+                email: currentUserEmail,
+                amount: amount,
+                network: currentSelectedWdNetwork,
+                wallet: walletAddress
+            });
+            localStorage.setItem('quant_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+
             showAppScreen();
             closeModal('withdrawFormModal');
-            alert(`تم تقديم طلب سحب ${amount} USDT بنجاح إلى محفظتك عبر شبكة ${currentSelectedWdNetwork}!`);
+            alert(`تم تقديم طلب سحب ${amount} USDT بنجاح، بانتظار مراجعة وموافقة الأدمن.`);
+        }
+
+        function openAdminPanel() {
+            // عرض طلبات الإيداع
+            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
+            const depositsContainer = document.getElementById('adminDepositsList');
+            depositsContainer.innerHTML = '';
+
+            if (pendingDeposits.length === 0) {
+                depositsContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.75rem; padding: 5px;">لا توجد إيداعات معلقة.</p>';
+            } else {
+                pendingDeposits.forEach((dep) => {
+                    depositsContainer.innerHTML += `
+                        <div style="background: #121824; border: 1px solid var(--border); padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--accent);">${dep.email}</div>
+                                <div style="font-size: 0.8rem; font-weight: bold; color: #fff;">${dep.amount} USDT (${dep.network})</div>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="btn btn-success" style="padding: 3px 8px; font-size: 0.65rem;" onclick="handleDeposit(${dep.id}, 'approve')">قبول</button>
+                                <button class="btn btn-danger" style="padding: 3px 8px; font-size: 0.65rem;" onclick="handleDeposit(${dep.id}, 'reject')">رفض</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // عرض طلبات السحب
+            let pendingWithdrawals = JSON.parse(localStorage.getItem('quant_pending_withdrawals')) || [];
+            const withdrawalsContainer = document.getElementById('adminWithdrawalsList');
+            withdrawalsContainer.innerHTML = '';
+
+            if (pendingWithdrawals.length === 0) {
+                withdrawalsContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.75rem; padding: 5px;">لا توجد سحوبات معلقة.</p>';
+            } else {
+                pendingWithdrawals.forEach((wd) => {
+                    withdrawalsContainer.innerHTML += `
+                        <div style="background: #121824; border: 1px solid var(--border); padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--red);">${wd.email}</div>
+                                <div style="font-size: 0.8rem; font-weight: bold; color: #fff;">${wd.amount} USDT (${wd.network})</div>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="btn btn-success" style="padding: 3px 8px; font-size: 0.65rem;" onclick="handleWithdrawal(${wd.id}, 'approve')">قبول</button>
+                                <button class="btn btn-danger" style="padding: 3px 8px; font-size: 0.65rem;" onclick="handleWithdrawal(${wd.id}, 'reject')">رفض</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            openModal('adminPanelModal');
+        }
+
+        function handleDeposit(depositId, action) {
+            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
+            users = JSON.parse(localStorage.getItem('quant_users')) || users;
+
+            const depIndex = pendingDeposits.findIndex(d => d.id === depositId);
+            if (depIndex === -1) return;
+
+            const dep = pendingDeposits[depIndex];
+
+            if (action === 'approve') {
+                if (users[dep.email]) {
+                    users[dep.email].balance += dep.amount;
+                    users[dep.email].recharge += dep.amount;
+                    
+                    if (dep.amount >= 50 && users[dep.email].vip < 2) {
+                        users[dep.email].vip = 2;
+                    }
+                    localStorage.setItem('quant_users', JSON.stringify(users));
+                }
+                alert(`تم قبول إيداع ${dep.amount} USDT بنجاح.`);
+            } else {
+                alert(`تم رفض إيداع ${dep.amount} USDT.`);
+            }
+
+            pendingDeposits.splice(depIndex, 1);
+            localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
+            
+            openAdminPanel();
+            showAppScreen();
+        }
+
+        function handleWithdrawal(withdrawId, action) {
+            let pendingWithdrawals = JSON.parse(localStorage.getItem('quant_pending_withdrawals')) || [];
+            users = JSON.parse(localStorage.getItem('quant_users')) || users;
+
+            const wdIndex = pendingWithdrawals.findIndex(w => w.id === withdrawId);
+            if (wdIndex === -1) return;
+
+            const wd = pendingWithdrawals[wdIndex];
+
+            if (action === 'approve') {
+                alert(`تم تأكيد سحب ${wd.amount} USDT وإرساله لمحفظة المستخدم بنجاح.`);
+            } else {
+                // في حال الرفض، يُعاد المبلغ المحجوز إلى رصيد المستخدم
+                if (users[wd.email]) {
+                    users[wd.email].balance += wd.amount;
+                    localStorage.setItem('quant_users', JSON.stringify(users));
+                }
+                alert(`تم رفض السحب وإعادة المبلغ ${wd.amount} USDT لرصيد المستخدم.`);
+            }
+
+            pendingWithdrawals.splice(wdIndex, 1);
+            localStorage.setItem('quant_pending_withdrawals', JSON.stringify(pendingWithdrawals));
+            
+            openAdminPanel();
+            showAppScreen();
         }
 
         function upgradeVip(tierLevel, cost) {
