@@ -848,7 +848,7 @@
             users[email] = {
                 email: email,
                 password: password,
-                balance: 0.0,
+                balance: 0.0, // الرصيد يبدأ من 0 عند فتح الحساب
                 profit: 0.0,
                 recharge: 0.0,
                 lastQuantTime: 0,
@@ -879,7 +879,7 @@
                     users[email] = {
                         email: email,
                         password: password,
-                        balance: 0.0,
+                        balance: 0.0, // الرصيد يبدأ من 0 عند فتح الحساب
                         profit: 0.0,
                         recharge: 0.0,
                         lastQuantTime: 0,
@@ -1059,11 +1059,11 @@
             const dep = pendingDeposits[depIndex];
 
             if (users[dep.email]) {
-                users[dep.email].balance += dep.amount;
+                users[dep.email].balance += dep.amount; // إضافة الإيداع إلى الرصيد عند تأكيد الأدمن
                 users[dep.email].recharge += dep.amount;
                 
                 if (dep.amount >= 50 && users[dep.email].vip < 2) {
-                    users[dep.email].vip = 2;
+                    users[dep.email].vip = 2; // فتح مستوى VIP 2
                 }
 
                 localStorage.setItem('quant_users', JSON.stringify(users));
