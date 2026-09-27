@@ -25,7 +25,6 @@
         .main-container { max-width: 480px; margin: 0 auto; padding: 20px; }
         .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 15px; }
         
-        /* Top Navigation Bar inside App */
         .top-app-header {
             display: flex;
             justify-content: space-between;
@@ -34,7 +33,6 @@
             padding: 5px 0;
         }
 
-        /* Brand Header */
         .brand-header-top {
             display: flex;
             align-items: center;
@@ -57,7 +55,6 @@
         .brand-title { font-size: 1rem; font-weight: bold; color: var(--accent); letter-spacing: 0.5px; line-height: 1.1; }
         .brand-subtitle { font-size: 0.6rem; color: var(--text-sec); }
 
-        /* User Top Right Corner Profile */
         .user-top-right {
             display: flex;
             flex-direction: column;
@@ -77,7 +74,6 @@
         }
         .mini-action-btn:hover { background: var(--accent); color: #000; }
 
-        /* Floating Telegram Support Button */
         .floating-telegram {
             position: fixed;
             bottom: 85px;
@@ -102,7 +98,6 @@
             background-color: #0077b5;
         }
 
-        /* Financial Grid Layout */
         .financial-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
         .stat-box {
             background: #121824; border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: right; position: relative; overflow: hidden;
@@ -115,7 +110,6 @@
         .stat-title { font-size: 0.75rem; color: var(--text-sec); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
         .stat-value { font-size: 1.25rem; font-weight: bold; color: #fff; }
 
-        /* Medium Action Buttons */
         .mid-buttons-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .btn-mid {
             padding: 10px 5px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.2s;
@@ -126,7 +120,6 @@
         .btn-details-action { background: #122135; color: var(--blue-verified); border-color: rgba(29, 161, 242, 0.3); }
         .btn-mid:hover { opacity: 0.85; transform: translateY(-2px); }
 
-        /* Crypto Prices Ticker */
         .crypto-prices-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; margin-top: 15px; scrollbar-width: none; }
         .crypto-prices-container::-webkit-scrollbar { display: none; }
         .crypto-price-card {
@@ -137,19 +130,16 @@
         .crypto-val { font-size: 0.9rem; font-weight: bold; color: #fff; }
         .crypto-change { font-size: 0.65rem; font-weight: bold; }
 
-        /* Network Option Cards */
         .network-option-card {
             background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
         }
         .network-option-card:hover { border-color: var(--accent); background: #1a2332; }
 
-        /* Form & Inputs */
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; color: var(--text-sec); font-size: 0.85rem; }
         .form-control { width: 100%; padding: 12px; background: #121824; border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; font-size: 0.9rem; direction: ltr; text-align: left; }
         .form-control:focus { border-color: var(--accent); }
         
-        /* Buttons */
         .btn { padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background-color: var(--accent); color: #000; }
         .btn-success { background-color: var(--green); color: #fff; }
@@ -157,14 +147,12 @@
         .btn-block { width: 100%; }
         .btn:hover { opacity: 0.9; }
 
-        /* Withdrawals Ticker */
         .withdraw-ticker {
             background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 10px 15px; font-size: 0.85rem; color: var(--text-sec); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; overflow: hidden; white-space: nowrap;
         }
         .ticker-content { display: inline-block; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* Quantitative Page Styling */
         .quant-hero {
             background: linear-gradient(135deg, #121824, #1e293b); border: 1px solid var(--border); border-radius: 16px; padding: 25px 20px; text-align: center; margin-bottom: 15px;
         }
@@ -173,7 +161,6 @@
         }
         .quant-circle i { font-size: 2.2rem; color: var(--accent); margin-bottom: 5px; }
 
-        /* VIP Tier Cards Styling */
         .vip-card-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 15px; }
         .vip-tier-box {
             background: #121824; border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 10px; transition: 0.2s;
@@ -187,7 +174,6 @@
         .vip-stat-item { font-size: 0.75rem; color: var(--text-sec); }
         .vip-stat-item span { display: block; color: #fff; font-weight: bold; font-size: 0.85rem; margin-top: 2px; }
 
-        /* Team / Referral Page Styling */
         .team-box-hero {
             background: linear-gradient(135deg, #121824, #1a2332);
             border: 1px solid var(--border);
@@ -241,7 +227,6 @@
         .team-level-title { font-size: 0.7rem; color: var(--text-sec); margin-bottom: 4px; }
         .team-level-val { font-size: 1rem; font-weight: bold; color: var(--accent); }
 
-        /* Profile Page Styling */
         .profile-info-row {
             display: flex;
             justify-content: space-between;
@@ -255,7 +240,6 @@
         .profile-label { font-size: 0.8rem; color: var(--text-sec); display: flex; align-items: center; gap: 8px; }
         .profile-val { font-size: 0.85rem; font-weight: bold; color: #fff; direction: ltr; }
 
-        /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999;
         }
@@ -263,7 +247,6 @@
         .nav-item.active { color: var(--accent); }
         .nav-item i { display: block; font-size: 1.1rem; margin-bottom: 2px; }
 
-        /* Modals */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
         .modal-content { width: 100%; max-width: 400px; }
         
@@ -275,7 +258,6 @@
 </head>
 <body>
 
-    <!-- أيقونة خدمة العملاء على تيليجرام العائمة -->
     <a href="https://t.me/YourTelegramUsername" target="_blank" class="floating-telegram" title="خدمة العملاء تيليجرام">
         <i class="fab fa-telegram-plane"></i>
     </a>
@@ -309,7 +291,6 @@
         <!-- واجهة المنصة الرئيسية -->
         <div id="appScreen" class="hidden">
             
-            <!-- الهيدر العلوي -->
             <div class="top-app-header">
                 <div class="brand-header-top">
                     <div class="brand-logo-container">
@@ -338,7 +319,6 @@
                 </div>
             </div>
 
-            <!-- شريط السحوبات المتحرك -->
             <div class="withdraw-ticker">
                 <i class="fas fa-bullhorn text-accent"></i>
                 <div style="overflow: hidden; width: 100%;">
@@ -384,7 +364,6 @@
                         </button>
                     </div>
 
-                    <!-- أسعار العملات -->
                     <div class="crypto-prices-container">
                         <div class="crypto-price-card">
                             <div class="crypto-header"><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="BTC"> BTC/USDT</div>
@@ -410,7 +389,7 @@
                 </div>
             </div>
 
-            <!-- الصفحة 2: التحديد الكمي كل 24 ساعة -->
+            <!-- الصفحة 2: التحديد الكمي -->
             <div id="tabQuant" class="tab-content hidden">
                 <div class="quant-hero">
                     <div class="quant-circle">
@@ -636,7 +615,7 @@
         </div>
     </div>
 
-    <!-- نافذة كود ومحفظة الإيداع المحددة لكل شبكة -->
+    <!-- نافذة كود ومحفظة الإيداع -->
     <div id="depositAddressModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -690,7 +669,7 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال رابط محفظة المستخدم ومبلغ السحب -->
+    <!-- نافذة السحب -->
     <div id="withdrawFormModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -768,12 +747,26 @@
         window.onload = function() {
             const savedUser = localStorage.getItem('quant_current_user');
             
-            if (savedUser && users && users[savedUser]) {
+            if (savedUser && users[savedUser]) {
+                currentUserEmail = savedUser;
+                showAppScreen();
+            } else if (savedUser && !users[savedUser]) {
+                users[savedUser] = {
+                    email: savedUser,
+                    password: '123',
+                    balance: 0.0,
+                    profit: 0.0,
+                    recharge: 0.0,
+                    lastQuantTime: 0,
+                    vip: 1,
+                    refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
+                    refLink: "https://mk980.vip/register?ref=MK980"
+                };
+                localStorage.setItem('quant_users', JSON.stringify(users));
                 currentUserEmail = savedUser;
                 showAppScreen();
             } else {
                 currentUserEmail = null;
-                localStorage.removeItem('quant_current_user');
                 document.getElementById('authScreen').classList.remove('hidden');
                 document.getElementById('appScreen').classList.add('hidden');
                 document.getElementById('bottomNav').classList.add('hidden');
@@ -822,7 +815,25 @@
                 localStorage.setItem('quant_current_user', currentUserEmail);
                 showAppScreen();
             } else {
-                alert('بيانات الدخول غير صحيحة');
+                if (!users[email] && email.includes('@')) {
+                    users[email] = {
+                        email: email,
+                        password: password,
+                        balance: 0.0,
+                        profit: 0.0,
+                        recharge: 0.0,
+                        lastQuantTime: 0,
+                        vip: 1,
+                        refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
+                        refLink: "https://mk980.vip/register?ref=MK980"
+                    };
+                    localStorage.setItem('quant_users', JSON.stringify(users));
+                    currentUserEmail = email;
+                    localStorage.setItem('quant_current_user', currentUserEmail);
+                    showAppScreen();
+                } else {
+                    alert('بيانات الدخول غير صحيحة');
+                }
             }
         }
 
@@ -840,15 +851,11 @@
             const user = users[currentUserEmail];
             if (!user) return;
 
+            if (user.balance === undefined) user.balance = 0.0;
             if (user.profit === undefined) user.profit = 0.0;
             if (user.recharge === undefined) user.recharge = 0.0;
             if (user.lastQuantTime === undefined) user.lastQuantTime = 0;
             if (user.vip === undefined) user.vip = 1;
-            if (!user.refCode) {
-                user.refCode = "MK" + Math.floor(100000 + Math.random() * 900000);
-                user.refLink = "https://mk980.vip/register?ref=" + user.refCode;
-                localStorage.setItem('quant_users', JSON.stringify(users));
-            }
 
             const total = user.balance + user.profit;
 
@@ -863,8 +870,8 @@
             document.getElementById('recordRecharge').innerText = "+" + user.recharge.toFixed(2) + " USDT";
             document.getElementById('recordProfit').innerText = user.profit.toFixed(2) + " USDT";
 
-            document.getElementById('refLinkInput').value = user.refLink;
-            document.getElementById('refCodeInput').value = user.refCode;
+            document.getElementById('refLinkInput').value = user.refLink || "https://mk980.vip/register?ref=MK980";
+            document.getElementById('refCodeInput').value = user.refCode || "MK980";
 
             document.getElementById('profileEmailHeader').innerText = user.email;
             document.getElementById('profileEmailVal').innerText = user.email;
@@ -896,7 +903,7 @@
 
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
-            btnElem.classList.add('active');
+            if(btnElem) btnElem.classList.add('active');
         }
 
         function copyText(elementId) {
@@ -995,6 +1002,7 @@
 
         function checkQuantTimerState() {
             const user = users[currentUserEmail];
+            if(!user) return;
             const now = new Date().getTime();
             const cooldownTime = 24 * 60 * 60 * 1000;
             const elapsed = now - user.lastQuantTime;
