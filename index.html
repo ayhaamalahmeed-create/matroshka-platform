@@ -16,6 +16,7 @@
             --border: #232d3f;
             --green: #0ecb81;
             --red: #f6465d;
+            --blue-verified: #1da1f2;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; padding-bottom: 70px; }
@@ -23,19 +24,24 @@
         .main-container { max-width: 480px; margin: 0 auto; padding: 20px; }
         .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 15px; }
         
-        /* Brand Header Styles */
-        .brand-header {
+        /* Top Navigation Bar inside App */
+        .top-app-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-            padding-top: 10px;
+            margin-bottom: 15px;
+            padding: 5px 0;
+        }
+
+        /* Brand Header (Top Left Corner) */
+        .brand-header-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .brand-logo-container {
-            position: relative;
-            width: 65px;
-            height: 65px;
+            width: 40px;
+            height: 40px;
             background: #121824;
             border: 2px solid var(--accent);
             border-radius: 50%;
@@ -43,19 +49,168 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(240, 185, 11, 0.2);
-            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(240, 185, 11, 0.2);
         }
         .brand-logo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
         .brand-title {
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--accent);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+        .brand-subtitle {
+            font-size: 0.6rem;
+            color: var(--text-sec);
+        }
+
+        /* User Top Right Corner Profile */
+        .user-top-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            background: #121824;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+        .user-profile-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .user-name-tag {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .verified-icon {
+            color: var(--blue-verified);
+            font-size: 0.85rem;
+        }
+        
+        /* Action buttons under username */
+        .user-actions-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .mini-action-btn {
+            background: #232d3f;
+            border: none;
+            color: var(--text-sec);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: 0.2s;
+        }
+        .mini-action-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Geometric Financial Grid Layout */
+        .financial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .stat-box {
+            background: #121824;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: right;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+        }
+        .stat-box.green-accent::after { background: var(--green); }
+        .stat-box.blue-accent::after { background: var(--blue-verified); }
+        .stat-box.red-accent::after { background: var(--red); }
+        
+        .stat-title {
+            font-size: 0.75rem;
+            color: var(--text-sec);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Medium Action Buttons Row */
+        .mid-buttons-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-mid {
+            padding: 10px 5px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+        .btn-mid i { font-size: 1rem; }
+        .btn-deposit-action { background: #123524; color: var(--green); border-color: rgba(14, 203, 129, 0.3); }
+        .btn-withdraw-action { background: #351218; color: var(--red); border-color: rgba(246, 70, 93, 0.3); }
+        .btn-details-action { background: #122135; color: var(--blue-verified); border-color: rgba(29, 161, 242, 0.3); }
+        .btn-mid:hover { opacity: 0.85; transform: translateY(-2px); }
+
+        /* Network Options Cards inside Modals */
+        .network-option-card {
+            background: #121824;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .network-option-card:hover {
+            border-color: var(--accent);
+            background: #1a2332;
         }
 
         /* Form & Inputs */
@@ -133,18 +288,15 @@
 <body>
 
     <div class="main-container">
-        
-        <!-- شارة الشعار واسم المنصة الثابتة في الأعلى -->
-        <div class="brand-header">
-            <div class="brand-logo-container">
-                <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
-            </div>
-            <div class="brand-title">MK980</div>
-        </div>
 
         <!-- شاشة تسجيل الدخول / التسجيل -->
-        <div id="authScreen" class="card">
-            <h2 style="text-align: center; color: var(--accent); margin-bottom: 20px;">تسجيل الدخول إلى المنصة</h2>
+        <div id="authScreen" class="card" style="margin-top: 20px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div class="brand-logo-container" style="width: 65px; height: 65px; margin: 0 auto 10px auto;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
+                </div>
+                <h2 style="color: var(--accent);">MK980</h2>
+            </div>
             
             <div id="loginForm">
                 <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" class="form-control" placeholder="name@example.com"></div>
@@ -156,7 +308,6 @@
             <div id="registerForm" class="hidden">
                 <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="regEmail" class="form-control" placeholder="name@example.com"></div>
                 <div class="form-group"><label>كلمة المرور</label><input type="password" id="regPassword" class="form-control" placeholder="******"></div>
-                <!-- تم حذف عبارة برصيد 0 بناءً على طلبك -->
                 <button class="btn btn-primary btn-block" onclick="register()">إنشاء حساب جديد</button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; cursor: pointer; color: var(--accent);" onclick="toggleAuthMode()">لديك حساب بالفعل؟ سجل دخول</p>
             </div>
@@ -165,13 +316,38 @@
         <!-- واجهة المنصة الرئيسية (تظهر بعد الدخول) -->
         <div id="appScreen" class="hidden">
             
-            <!-- الهيدر العلوي -->
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
-                <div>
-                    <span style="font-size: 0.75rem; color: var(--text-sec);">مرحباً بك</span> (<span id="userVipBadge" class="text-accent">VIP 1</span>)
-                    <div id="userDisplayEmail" style="font-weight: bold; font-size: 0.85rem;" class="text-accent"></div>
+            <!-- الهيدر العلوي المحدث -->
+            <div class="top-app-header">
+                <div class="brand-header-top">
+                    <div class="brand-logo-container">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
+                    </div>
+                    <div class="brand-info">
+                        <div class="brand-title">MK980</div>
+                        <div class="brand-subtitle">التحديد الكمي</div>
+                    </div>
                 </div>
-                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.75rem;" onclick="logout()">خروج</button>
+
+                <div class="user-top-right">
+                    <div style="font-size: 0.6rem; color: var(--text-sec); width: 100%; text-align: left;" id="userVipBadge">VIP 1</div>
+                    <div class="user-profile-row">
+                        <div class="user-name-tag" id="userDisplayEmail">user@mail.com</div>
+                        <i class="fas fa-circle-check verified-icon" title="حساب موثق"></i>
+                    </div>
+                    <div class="user-actions-row">
+                        <button class="mini-action-btn" onclick="openModal('systemMsgsModal')">
+                            <i class="fas fa-bell text-accent"></i> رسائل النظام
+                        </button>
+                        <button class="mini-action-btn" onclick="openModal('langModal')">
+                            <i class="fas fa-globe text-accent"></i> اللغة
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- زر تسجيل الخروج السريع -->
+            <div style="text-align: left; margin-bottom: 10px;">
+                <button class="btn btn-danger" style="padding: 4px 10px; font-size: 0.7rem;" onclick="logout()">خروج <i class="fas fa-sign-out-alt"></i></button>
             </div>
 
             <!-- شريط السحوبات المتحرك -->
@@ -182,17 +358,45 @@
                 </div>
             </div>
 
-            <!-- بطاقة الرصيد الأساسية -->
-            <div class="card" style="text-align: center; padding: 35px 20px;">
-                <div style="color: var(--text-sec); font-size: 0.9rem; margin-bottom: 5px;">رصيد الحساب الحالي</div>
-                <h1 id="userBalance" style="font-size: 3rem; margin-bottom: 25px;" class="text-accent">0.00</h1>
+            <!-- بطاقة معلومات الحساب الهندسي (Grid Financial Statistics) -->
+            <div class="card" style="padding: 15px;">
+                <div style="font-size: 0.85rem; color: var(--text-sec); margin-bottom: 12px; font-weight: bold;">
+                    <i class="fas fa-chart-pie text-accent"></i> نظرة عامة على الأصول
+                </div>
                 
-                <div style="display: flex; gap: 15px;">
-                    <button class="btn btn-success btn-block" onclick="openModal('depositModal')">
+                <div class="financial-grid">
+                    <!-- إجمالي الأصول -->
+                    <div class="stat-box">
+                        <div class="stat-title">إجمالي الأصول <i class="fas fa-wallet text-accent"></i></div>
+                        <div class="stat-value" id="totalAssets">0.00</div>
+                    </div>
+                    <!-- الحساب الكمي -->
+                    <div class="stat-box green-accent">
+                        <div class="stat-title">الحساب الكمي <i class="fas fa-robot text-success"></i></div>
+                        <div class="stat-value" id="quantAccount">0.00</div>
+                    </div>
+                    <!-- أصول الربح -->
+                    <div class="stat-box blue-accent">
+                        <div class="stat-title">أصول الربح <i class="fas fa-chart-line" style="color: var(--blue-verified);"></i></div>
+                        <div class="stat-value" id="profitAssets">0.00</div>
+                    </div>
+                    <!-- مبلغ إعادة الشحن -->
+                    <div class="stat-box red-accent">
+                        <div class="stat-title">مبلغ إعادة الشحن <i class="fas fa-arrow-down" style="color: var(--red);"></i></div>
+                        <div class="stat-value" id="rechargeAmount">0.00</div>
+                    </div>
+                </div>
+
+                <!-- الأزرار المتوسطة الجديدة تحت الأصول -->
+                <div class="mid-buttons-container">
+                    <button class="btn-mid btn-deposit-action" onclick="openModal('depositNetworksModal')">
                         <i class="fas fa-wallet"></i> إيداع
                     </button>
-                    <button class="btn btn-danger btn-block" onclick="openModal('withdrawModal')">
+                    <button class="btn-mid btn-withdraw-action" onclick="openModal('withdrawDetailsModal')">
                         <i class="fas fa-money-bill-transfer"></i> سحب
+                    </button>
+                    <button class="btn-mid btn-details-action" onclick="openModal('financialRecordsModal')">
+                        <i class="fas fa-file-invoice-dollar"></i> التفاصيل
                     </button>
                 </div>
             </div>
@@ -216,34 +420,100 @@
         </button>
     </div>
 
-    <!-- نافذة الإيداع -->
-    <div id="depositModal" class="modal-overlay">
+    <!-- 1. قائمة شبكات الإيداع المنبثقة -->
+    <div id="depositNetworksModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4>طلب إيداع رصيد USDT</h4>
-                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('depositModal')"></i>
+                <h4><i class="fas fa-wallet text-success"></i> اختيار شبكة الإيداع</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('depositNetworksModal')"></i>
             </div>
-            <div class="form-group">
-                <label>اختر شبكة الإيداع</label>
-                <select class="form-select">
-                    <option value="TRC20">TRC20 (Tron)</option>
-                    <option value="BEP20">BEP20 (BSC)</option>
-                </select>
+            <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 15px;">يرجى تحديد الشبكة المناسبة لإتمام عملية شحن رصيد USDT:</div>
+            
+            <div class="network-option-card" onclick="selectDepositNetwork('TRC20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.9rem;">شبكة TRC20</div>
+                    <div style="font-size: 0.7rem; color: var(--text-sec);">رسوم منخفضة جداً (Tron Network)</div>
+                </div>
+                <i class="fas fa-chevron-left text-accent"></i>
             </div>
-            <div class="form-group">
-                <label>المبلغ (USDT)</label>
-                <input type="number" id="depositAmount" class="form-control" placeholder="10">
+
+            <div class="network-option-card" onclick="selectDepositNetwork('BEP20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.9rem;">شبكة BEP20</div>
+                    <div style="font-size: 0.7rem; color: var(--text-sec);">سريعة (Binance Smart Chain)</div>
+                </div>
+                <i class="fas fa-chevron-left text-accent"></i>
             </div>
-            <button class="btn btn-success btn-block" onclick="submitDeposit()">تأكيد طلب الإيداع</button>
+
+            <div class="network-option-card" onclick="selectDepositNetwork('ERC20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.9rem;">شبكة ERC20</div>
+                    <div style="font-size: 0.7rem; color: var(--text-sec);">أمان عالي (Ethereum Network)</div>
+                </div>
+                <i class="fas fa-chevron-left text-accent"></i>
+            </div>
         </div>
     </div>
 
-    <!-- نافذة السحب -->
-    <div id="withdrawModal" class="modal-overlay">
+    <!-- نافذة إدخال قيمة الإيداع الفعلية -->
+    <div id="depositAmountModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4>طلب سحب الأرباح USDT</h4>
-                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('withdrawModal')"></i>
+                <h4>إيداع عبر شبكة (<span id="selectedDepNetwork" class="text-accent"></span>)</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('depositAmountModal')"></i>
+            </div>
+            <div class="form-group">
+                <label>أدخل مبلغ الإيداع (USDT)</label>
+                <input type="number" id="depositAmount" class="form-control" placeholder="10">
+            </div>
+            <button class="btn btn-success btn-block" onclick="submitDeposit()">تأكيد وإتمام الشحن</button>
+        </div>
+    </div>
+
+    <!-- 2. قائمة تفاصيل السحب المنبثقة والشبكات -->
+    <div id="withdrawDetailsModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <h4><i class="fas fa-money-bill-transfer text-danger"></i> تفاصيل رصيد وسحب الأرباح</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('withdrawDetailsModal')"></i>
+            </div>
+            
+            <div style="background: #121824; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                <div style="font-size: 0.75rem; color: var(--text-sec);">الرصيد المتاح للسحب الفوري</div>
+                <div style="font-size: 1.5rem; font-weight: bold;" class="text-accent" id="modalWithdrawBalance">0.00 USDT</div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 10px;">اختر شبكة السحب:</div>
+            
+            <div class="network-option-card" onclick="openWithdrawForm('TRC20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.85rem;">سحب عبر شبكة TRC20</div>
+                </div>
+                <i class="fas fa-arrow-right-arrow-left text-danger"></i>
+            </div>
+
+            <div class="network-option-card" onclick="openWithdrawForm('BEP20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.85rem;">سحب عبر شبكة BEP20</div>
+                </div>
+                <i class="fas fa-arrow-right-arrow-left text-danger"></i>
+            </div>
+
+            <div class="network-option-card" onclick="openWithdrawForm('ERC20')">
+                <div>
+                    <div style="font-weight: bold; font-size: 0.85rem;">سحب عبر شبكة ERC20</div>
+                </div>
+                <i class="fas fa-arrow-right-arrow-left text-danger"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدخال تفاصيل السحب -->
+    <div id="withdrawFormModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <h4>سحب USDT (<span id="selectedWithNetwork" class="text-accent"></span>)</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('withdrawFormModal')"></i>
             </div>
             <div class="form-group">
                 <label>المبلغ المراد سحبه</label>
@@ -251,15 +521,80 @@
             </div>
             <div class="form-group">
                 <label>عنوان المحفظة المستقبلة</label>
-                <input type="text" class="form-control" placeholder="أدخل عنوان محفظتك...">
+                <input type="text" class="form-control" placeholder="أدخل عنوان المحفظة...">
             </div>
             <button class="btn btn-danger btn-block" onclick="submitWithdraw()">تأكيد طلب السحب</button>
+        </div>
+    </div>
+
+    <!-- 3. قائمة السجلات المالية والتفاصيل (أصول الإيداع والربح) -->
+    <div id="financialRecordsModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <h4><i class="fas fa-file-invoice-dollar" style="color: var(--blue-verified);"></i> السجلات المالية والأصول</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('financialRecordsModal')"></i>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;">
+                <div style="background: #121824; padding: 12px; border-radius: 8px; border-right: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold;">
+                        <span>أصول الإيداع والشحن</span>
+                        <span id="recordRecharge" class="text-success">+0.00 USDT</span>
+                    </div>
+                    <div style="font-size: 0.7rem; color: var(--text-sec); margin-top: 3px;">إجمالي المبالغ المودعة والمؤكدة في المنصة.</div>
+                </div>
+
+                <div style="background: #121824; padding: 12px; border-radius: 8px; border-right: 3px solid var(--blue-verified);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold;">
+                        <span>أصول الربح التراكمي</span>
+                        <span id="recordProfit" style="color: var(--blue-verified);">0.00 USDT</span>
+                    </div>
+                    <div style="font-size: 0.7rem; color: var(--text-sec); margin-top: 3px;">الأرباح الناتجة عن عمليات التحديد الكمي.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة رسائل النظام -->
+    <div id="systemMsgsModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <h4><i class="fas fa-bell text-accent"></i> رسائل النظام</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('systemMsgsModal')"></i>
+            </div>
+            <div style="background: #121824; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-right: 3px solid var(--accent);">
+                <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 4px;">تحديث المنصة الأخير</div>
+                <div style="font-size: 0.75rem; color: var(--text-sec);">تم إطلاق نظام التحديد الكمي الجديد النسخة MK980 بنجاح.</div>
+            </div>
+            <div style="background: #121824; padding: 12px; border-radius: 8px; border-right: 3px solid var(--green);">
+                <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 4px;">شروط رفع مستوى VIP</div>
+                <div style="font-size: 0.75rem; color: var(--text-sec);">يجب إتمام عملية الإيداع وتأكيدها يدوياً لفتح حساب الـ VIP بنجاح.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة اختيار اللغات -->
+    <div id="langModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <h4><i class="fas fa-globe text-accent"></i> اختر لغة المنصة</h4>
+                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('langModal')"></i>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('العربية')">🇸🇦 العربية (Arabic)</button>
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('الإنجليزية')">🇺🇸 English (English)</button>
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('الفرنسية')">🇫🇷 Français (French)</button>
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('الإسبانية')">🇪🇸 Español (Spanish)</button>
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('التركية')">🇹🇷 Türkçe (Turkish)</button>
+                <button class="btn" style="background: #121824; color: #fff; justify-content: flex-start;" onclick="changeLanguage('الصينية')">🇨🇳 中文 (Chinese)</button>
+            </div>
         </div>
     </div>
 
     <script>
         let users = JSON.parse(localStorage.getItem('quant_users')) || {};
         let currentUserEmail = localStorage.getItem('quant_current_user') || null;
+        let currentSelectedNetwork = 'TRC20';
 
         window.onload = function() {
             if (currentUserEmail && users[currentUserEmail]) {
@@ -283,6 +618,8 @@
                 email: email,
                 password: password,
                 balance: 0.0,
+                profit: 0.0,
+                recharge: 0.0,
                 vip: 1
             };
             currentUserEmail = email;
@@ -316,12 +653,44 @@
             document.getElementById('bottomNav').classList.remove('hidden');
             
             const user = users[currentUserEmail];
+            
+            if (user.profit === undefined) user.profit = 0.0;
+            if (user.recharge === undefined) user.recharge = 0.0;
+
+            const total = user.balance + user.profit;
+
             document.getElementById('userDisplayEmail').innerText = user.email;
-            document.getElementById('userBalance').innerText = user.balance.toFixed(2) + " USDT";
+            document.getElementById('totalAssets').innerText = total.toFixed(2) + " USDT";
+            document.getElementById('quantAccount').innerText = user.balance.toFixed(2) + " USDT";
+            document.getElementById('profitAssets').innerText = user.profit.toFixed(2) + " USDT";
+            document.getElementById('rechargeAmount').innerText = user.recharge.toFixed(2) + " USDT";
+            
+            // تحديث السجلات داخل نافذة التفاصيل
+            document.getElementById('modalWithdrawBalance').innerText = user.balance.toFixed(2) + " USDT";
+            document.getElementById('recordRecharge').innerText = "+" + user.recharge.toFixed(2) + " USDT";
+            document.getElementById('recordProfit').innerText = user.profit.toFixed(2) + " USDT";
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function selectDepositNetwork(net) {
+            currentSelectedNetwork = net;
+            closeModal('depositNetworksModal');
+            document.getElementById('selectedDepNetwork').innerText = net;
+            openModal('depositAmountModal');
+        }
+
+        function openWithdrawForm(net) {
+            closeModal('withdrawDetailsModal');
+            document.getElementById('selectedWithNetwork').innerText = net;
+            openModal('withdrawFormModal');
+        }
+
+        function changeLanguage(langName) {
+            alert(`تم تغيير لغة المنصة إلى: ${langName}`);
+            closeModal('langModal');
+        }
 
         function submitDeposit() {
             const amount = parseFloat(document.getElementById('depositAmount').value);
@@ -329,11 +698,12 @@
             
             const user = users[currentUserEmail];
             user.balance += amount;
+            user.recharge += amount;
             localStorage.setItem('quant_users', JSON.stringify(users));
             
             showAppScreen();
-            closeModal('depositModal');
-            alert(`تم إيداع ${amount} USDT بنجاح إلى رصيدك!`);
+            closeModal('depositAmountModal');
+            alert(`تم طلب إيداع ${amount} USDT عبر شبكة ${currentSelectedNetwork} بنجاح!`);
         }
 
         function submitWithdraw() {
@@ -347,7 +717,7 @@
             localStorage.setItem('quant_users', JSON.stringify(users));
 
             showAppScreen();
-            closeModal('withdrawModal');
+            closeModal('withdrawFormModal');
             alert(`تم سحب ${amount} USDT بنجاح!`);
         }
     </script>
