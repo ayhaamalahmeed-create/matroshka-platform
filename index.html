@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التحديد الكمي</title>
+    <title>منصة MK980 للتحديد الكمي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -23,6 +23,41 @@
         .main-container { max-width: 480px; margin: 0 auto; padding: 20px; }
         .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 15px; }
         
+        /* Brand Header Styles */
+        .brand-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        .brand-logo-container {
+            position: relative;
+            width: 65px;
+            height: 65px;
+            background: #121824;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(240, 185, 11, 0.2);
+            margin-bottom: 8px;
+        }
+        .brand-logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .brand-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
         /* Form & Inputs */
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; color: var(--text-sec); font-size: 0.85rem; }
@@ -98,9 +133,18 @@
 <body>
 
     <div class="main-container">
+        
+        <!-- شارة الشعار واسم المنصة الثابتة في الأعلى -->
+        <div class="brand-header">
+            <div class="brand-logo-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
+            </div>
+            <div class="brand-title">MK980</div>
+        </div>
+
         <!-- شاشة تسجيل الدخول / التسجيل -->
-        <div id="authScreen" class="card" style="margin-top: 50px;">
-            <h2 style="text-align: center; color: var(--accent); margin-bottom: 20px;">منصة التحديد الكمي</h2>
+        <div id="authScreen" class="card">
+            <h2 style="text-align: center; color: var(--accent); margin-bottom: 20px;">تسجيل الدخول إلى المنصة</h2>
             
             <div id="loginForm">
                 <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" class="form-control" placeholder="name@example.com"></div>
@@ -112,7 +156,8 @@
             <div id="registerForm" class="hidden">
                 <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="regEmail" class="form-control" placeholder="name@example.com"></div>
                 <div class="form-group"><label>كلمة المرور</label><input type="password" id="regPassword" class="form-control" placeholder="******"></div>
-                <button class="btn btn-primary btn-block" onclick="register()">إنشاء حساب جديد (برصيد 0)</button>
+                <!-- تم حذف عبارة برصيد 0 بناءً على طلبك -->
+                <button class="btn btn-primary btn-block" onclick="register()">إنشاء حساب جديد</button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; cursor: pointer; color: var(--accent);" onclick="toggleAuthMode()">لديك حساب بالفعل؟ سجل دخول</p>
             </div>
         </div>
@@ -283,7 +328,7 @@
             if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
             
             const user = users[currentUserEmail];
-            user.balance += amount; // إضافة الإيداع للرصيد
+            user.balance += amount;
             localStorage.setItem('quant_users', JSON.stringify(users));
             
             showAppScreen();
