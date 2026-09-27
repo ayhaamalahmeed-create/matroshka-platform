@@ -603,12 +603,20 @@
                 <h4 class="text-accent"><i class="fas fa-user-shield"></i> لوحة التحكم الإدارية</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('adminPanelModal')"></i>
             </div>
+            
+            <div style="background: #121824; padding: 10px; border-radius: 8px; margin-bottom: 12px;">
+                <div style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 6px;">إضافة إيداع يدوياً لأي عضو (حل بديل فوري):</div>
+                <input type="email" id="adminManualEmail" class="form-control" placeholder="البريد الإلكتروني للعضو" style="margin-bottom: 6px; font-size: 0.8rem; padding: 8px;">
+                <input type="number" id="adminManualAmount" class="form-control" placeholder="المبلغ (مثال: 50)" style="margin-bottom: 8px; font-size: 0.8rem; padding: 8px;">
+                <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem;" onclick="adminDirectAddBalance()">إضافة رصيد وتفعيل VIP2 فوراً</button>
+            </div>
+
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات الإيداع المعلقة للأعضاء:</p>
-                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث القائمة</button>
+                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث</button>
             </div>
             
-            <div id="adminDepositsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+            <div id="adminDepositsList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 <!-- يتم تعبئتها ديناميكياً -->
             </div>
         </div>
@@ -758,6 +766,15 @@
         let currentSelectedWdNetwork = 'TRC20';
         let timerInterval = null;
 
+        // قناة مزامنة فورية بين النوافذ والأجهزة (BroadcastChannel)
+        const syncChannel = new BroadcastChannel('mk980_sync_channel');
+        syncChannel.onmessage = function (event) {
+            if (event.data && event.data.type === 'UPDATE_DATA') {
+                users = JSON.parse(localStorage.getItem('quant_users')) || {};
+                if (currentUserEmail) showAppScreen();
+            }
+        };
+
         const networkAddresses = {
             'TRC20': 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb',
             'BEP20': '0x71C...B29a8f4c1e3590e82D',
@@ -825,6 +842,7 @@
             localStorage.setItem('quant_users', JSON.stringify(users));
             currentUserEmail = email;
             localStorage.setItem('quant_current_user', currentUserEmail);
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
             showAppScreen();
         }
 
@@ -866,7 +884,6 @@
         }
 
         function showAppScreen() {
-            // تحديث بيانات المستخدمين من التخزين المشترك
             users = JSON.parse(localStorage.getItem('quant_users')) || users;
 
             document.getElementById('authScreen').classList.add('hidden');
@@ -969,7 +986,6 @@
             const amount = parseFloat(document.getElementById('depositAmount').value);
             if (!amount || amount <= 0) { alert('أدخل مبلغ إيداع صحيح'); return; }
             
-            // جلب القائمة المحدثة وحفظ الطلب مباشرة في التخزين المشترك
             let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             pendingDeposits.push({
                 id: Date.now(),
@@ -978,13 +994,13 @@
                 network: currentSelectedDepNetwork
             });
             localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
             
             closeModal('depositAddressModal');
             document.getElementById('depositAmount').value = '';
             alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل باقة VIP2.`);
         }
 
-        // فتح لوحة الأدمن الخاصة بك وجلب الطلبات المعلقة فوراً
         function openAdminPanel() {
             let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             const listContainer = document.getElementById('adminDepositsList');
@@ -993,14 +1009,14 @@
             if (pendingDeposits.length === 0) {
                 listContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.8rem; padding: 15px;">لا توجد طلبات إيداع معلقة حالياً.</p>';
             } else {
-                pendingDeposits.forEach((dep, index) => {
+                pendingDeposits.forEach((dep) => {
                     listContainer.innerHTML += `
                         <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                             <div>
                                 <div style="font-size: 0.75rem; color: var(--accent);">المستخدم: ${dep.email}</div>
                                 <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">المبلغ: ${dep.amount} USDT (${dep.network})</div>
                             </div>
-                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${dep.id})">تأكيد الإيداع</button>
+                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${dep.id})">تأكيد</button>
                         </div>
                     `;
                 });
@@ -1008,7 +1024,31 @@
             openModal('adminPanelModal');
         }
 
-        // تأكيد الأدمن لإيداع المستخدم وتحديث رصيده بناءً على ID الطلب الفريد
+        // إضافة طريقة سريعة ومضمونة للأدمن لشحن رصيد أي عضو يدوياً إذا واجهتك مشكلة في متصفح آخر
+        function adminDirectAddBalance() {
+            const email = document.getElementById('adminManualEmail').value.trim().toLowerCase();
+            const amount = parseFloat(document.getElementById('adminManualAmount').value);
+
+            users = JSON.parse(localStorage.getItem('quant_users')) || {};
+
+            if (!email || !users[email]) { alert('البريد الإلكتروني غير موجود في النظام'); return; }
+            if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
+
+            users[email].balance += amount;
+            users[email].recharge += amount;
+            if (amount >= 50 && users[email].vip < 2) {
+                users[email].vip = 2;
+            }
+
+            localStorage.setItem('quant_users', JSON.stringify(users));
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
+
+            document.getElementById('adminManualEmail').value = '';
+            document.getElementById('adminManualAmount').value = '';
+            alert(`تم إضافة ${amount} USDT وتفعيل VIP2 بنجاح للمستخدم ${email}!`);
+            showAppScreen();
+        }
+
         function confirmDepositByAdmin(depositId) {
             let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             users = JSON.parse(localStorage.getItem('quant_users')) || users;
@@ -1022,7 +1062,6 @@
                 users[dep.email].balance += dep.amount;
                 users[dep.email].recharge += dep.amount;
                 
-                // تفعيل VIP 2 تلقائياً عند تأكيد أول إيداع بـ 50 أو أكثر
                 if (dep.amount >= 50 && users[dep.email].vip < 2) {
                     users[dep.email].vip = 2;
                 }
@@ -1033,6 +1072,7 @@
             pendingDeposits.splice(depIndex, 1);
             localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
             
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
             alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح للمستخدم ${dep.email}!`);
             openAdminPanel();
             showAppScreen();
@@ -1050,6 +1090,7 @@
 
             user.balance -= amount;
             localStorage.setItem('quant_users', JSON.stringify(usersData));
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
 
             showAppScreen();
             closeModal('withdrawFormModal');
@@ -1075,6 +1116,7 @@
             user.balance -= cost;
             user.vip = tierLevel;
             localStorage.setItem('quant_users', JSON.stringify(usersData));
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
 
             showAppScreen();
             alert(`تهانينا! تم ترقية حسابك إلى VIP ${tierLevel} بنجاح لصلاحية 30 يوماً.`);
@@ -1096,6 +1138,7 @@
             user.lastQuantTime = now;
 
             localStorage.setItem('quant_users', JSON.stringify(usersData));
+            syncChannel.postMessage({ type: 'UPDATE_DATA' });
             showAppScreen();
             alert(`تم إتمام جلسة التحديد الكمي لـ VIP ${user.vip} بنجاح وحقق ربح يومي بقيمة +${earnedProfit.toFixed(2)} USDT!`);
         }
