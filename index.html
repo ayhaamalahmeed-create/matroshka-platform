@@ -460,23 +460,23 @@
 
                 <div class="vip-card-grid">
                     <div class="vip-tier-box" id="vipBox1">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 1</div><div class="vip-price-tag">15 USDT</div></div>
+                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 1</div><div class="vip-price-tag">0 USDT</div></div>
                         <div class="vip-stats-row">
                             <div class="vip-stat-item">الربح اليومي: <span class="text-success">20%</span></div>
                             <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
                         </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~90.00$</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(1, 15)">ترقية المستوى</button>
+                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">المستوى المبدئي للحساب الجديد</div>
+                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(1, 0)">المستوى الحالي</button>
                     </div>
 
                     <div class="vip-tier-box" id="vipBox2">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 2</div><div class="vip-price-tag">50 USDT</div></div>
+                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 2</div><div class="vip-price-tag">تطلب إيداع</div></div>
                         <div class="vip-stats-row">
                             <div class="vip-stat-item">الربح اليومي: <span class="text-success">21.6%</span></div>
                             <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
                         </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">شروط VIP2: <span class="text-accent">يتطلب إيداع وتأكيد يدوي من الأدمن</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(2, 50)">ترقية المستوى</button>
+                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">الشروط: <span class="text-accent">إيداع رصيد وتأكيده يدويًا من قبل الأدمن</span></div>
+                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="openModal('depositNetworksModal')">طلب إيداع للتفعيل</button>
                     </div>
 
                     <div class="vip-tier-box" id="vipBox3">
@@ -793,7 +793,6 @@
         const vipRates = { 1: 0.20, 2: 0.216, 3: 0.23, 4: 0.245, 5: 0.26, 6: 0.28, 7: 0.30 };
 
         window.onload = function() {
-            // التقاط كود الإحالة من الرابط فور فتح الصفحة إن وجد
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             if (refCode) {
@@ -845,6 +844,7 @@
             const userCode = "MK" + Math.floor(100000 + Math.random() * 900000);
             const invitedBy = localStorage.getItem('quant_register_ref') || null;
 
+            // تم إرجاع الرصيد المبدئي إلى 0.00 بناءً على طلبك
             users[email] = {
                 email: email,
                 password: password,
@@ -927,7 +927,6 @@
             if (user.vip === undefined) user.vip = 1;
             if (!user.refCode) user.refCode = "MK" + Math.floor(100000 + Math.random() * 900000);
 
-            // توليد رابط الدعوة ديناميكياً استناداً إلى عنوان الموقع الحالي
             const currentDomain = window.location.origin + window.location.pathname;
             user.refLink = currentDomain + "?ref=" + user.refCode;
 
@@ -1023,7 +1022,7 @@
             
             closeModal('depositAddressModal');
             document.getElementById('depositAmount').value = '';
-            alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل باقة VIP2.`);
+            alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل مستوى VIP 2.`);
         }
 
         function openAdminPanel() {
@@ -1034,7 +1033,7 @@
             if (pendingDeposits.length === 0) {
                 listContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.8rem; padding: 15px;">لا توجد طلبات إيداع معلقة حالياً.</p>';
             } else {
-                pendingDeposits.forEach((dep, index) => {
+                pendingDeposits.forEach((dep) => {
                     listContainer.innerHTML += `
                         <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                             <div>
@@ -1049,6 +1048,7 @@
             openModal('adminPanelModal');
         }
 
+        // عند تأكيد الأدمن: يُضاف الإيداع لرصيد العضو ويفتح له مستوى VIP 2
         function confirmDepositByAdmin(depositId) {
             let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             users = JSON.parse(localStorage.getItem('quant_users')) || users;
@@ -1062,7 +1062,8 @@
                 users[dep.email].balance += dep.amount;
                 users[dep.email].recharge += dep.amount;
                 
-                if (dep.amount >= 50 && users[dep.email].vip < 2) {
+                // فتح مستوى VIP 2 عند التأكيد على الإيداع
+                if (users[dep.email].vip < 2) {
                     users[dep.email].vip = 2;
                 }
 
@@ -1072,7 +1073,7 @@
             pendingDeposits.splice(depIndex, 1);
             localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
             
-            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح للمستخدم ${dep.email}!`);
+            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح وحفظها لرصيد المستخدم ${dep.email} وتفعيل VIP 2!`);
             openAdminPanel();
             showAppScreen();
         }
@@ -1098,12 +1099,11 @@
         function upgradeVip(tierLevel, cost) {
             let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
             const user = usersData[currentUserEmail];
-            
+
             if (tierLevel === 2) {
-                if (user.balance < cost) {
-                    alert(`يتطلب الانتقال إلى VIP 2 إيداع بقيمة ${cost} USDT وتأكيد الإيداع من قبل الأدمن أولاً.`);
-                    return;
-                }
+                alert(`يتطلب تفعيل VIP 2 تقديم طلب إيداع وتأكيده من قبل الأدمن أولاً.`);
+                openModal('depositNetworksModal');
+                return;
             }
 
             if (user.balance < cost) {
