@@ -846,11 +846,11 @@
             <div class="network-selector">
                 <div class="network-btn active" id="netTRC" onclick="selectNetwork('TRC20')">TRC20</div>
                 <div class="network-btn" id="netERC" onclick="selectNetwork('ERC20')">ERC20</div>
+                <div class="network-btn" id="netBEP" onclick="selectNetwork('BEP20')">BEP20</div>
             </div>
 
             <div style="text-align: center;">
                 <div class="qr-code">
-                    <!-- Placeholder QR -->
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=T9yD14Nj9j7x2541852" id="depositQR" alt="QR" style="width: 100%;">
                 </div>
                 <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 5px;">عنوان المحفظة للإيداع:</p>
@@ -881,10 +881,17 @@
                 <h3>سحب الأرباح</h3>
                 <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal('withdrawModal')"></i>
             </div>
+            
+            <div class="network-selector">
+                <div class="network-btn active" id="netWithdrawTRC" onclick="selectWithdrawNetwork('TRC20')">TRC20</div>
+                <div class="network-btn" id="netWithdrawERC" onclick="selectWithdrawNetwork('ERC20')">ERC20</div>
+                <div class="network-btn" id="netWithdrawBEP" onclick="selectWithdrawNetwork('BEP20')">BEP20</div>
+            </div>
+
             <form onsubmit="handleWithdrawSubmit(event)">
                 <div class="form-group">
-                    <label>عنوان المحفظة (TRC20)</label>
-                    <input type="text" id="withdrawAddressInput" class="form-control" required placeholder="T...">
+                    <label>عنوان المحفظة (<span id="withdrawNetworkLabel">TRC20</span>)</label>
+                    <input type="text" id="withdrawAddressInput" class="form-control" required placeholder="أدخل عنوان المحفظة...">
                 </div>
                 <div class="form-group">
                     <label>المبلغ المراد سحبه (USDT)</label>
@@ -905,8 +912,8 @@
             </div>
             <form onsubmit="saveWalletAddress(event)">
                 <div class="form-group">
-                    <label>عنوان USDT - TRC20 الخاص بك</label>
-                    <input type="text" id="userSavedWallet" class="form-control" required placeholder="T...">
+                    <label>عنوان USDT الخاص بك</label>
+                    <input type="text" id="userSavedWallet" class="form-control" required placeholder="أدخل عنوان المحفظة...">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">حفظ المحفظة</button>
             </form>
@@ -968,9 +975,11 @@
             transactions: JSON.parse(localStorage.getItem('quant_txs')) || [],
             addresses: {
                 TRC20: "T9yD14Nj9j7x2541852XXXXXXXXXX",
-                ERC20: "0x0D4f7aeBCB66Ad8e8A2889C4E32c133234dAA32B"
+                ERC20: "0x0D4f7aeBCB66Ad8e8A2889C4E32c133234dAA32B",
+                BEP20: "0x0D4f7aeBCB66Ad8e8A2889C4E32c133234dAA32B"
             },
-            currentNetwork: 'TRC20'
+            currentNetwork: 'TRC20',
+            currentWithdrawNetwork: 'TRC20'
         };
 
         // VIP Configurations
@@ -1235,10 +1244,20 @@
             state.currentNetwork = net;
             document.getElementById('netTRC').classList.toggle('active', net === 'TRC20');
             document.getElementById('netERC').classList.toggle('active', net === 'ERC20');
+            document.getElementById('netBEP').classList.toggle('active', net === 'BEP20');
             
             const addr = state.addresses[net];
             document.getElementById('depositAddress').innerText = addr;
             document.getElementById('depositQR').src = `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${addr}`;
+        }
+
+        // Withdraw Network Selection
+        function selectWithdrawNetwork(net) {
+            state.currentWithdrawNetwork = net;
+            document.getElementById('netWithdrawTRC').classList.toggle('active', net === 'TRC20');
+            document.getElementById('netWithdrawERC').classList.toggle('active', net === 'ERC20');
+            document.getElementById('netWithdrawBEP').classList.toggle('active', net === 'BEP20');
+            document.getElementById('withdrawNetworkLabel').innerText = net;
         }
 
         function copyDepositAddress() {
@@ -1260,7 +1279,7 @@
             state.transactions.push({
                 id: Date.now(),
                 user: state.currentUser,
-                type: 'إيداع',
+                type: `إيداع (${state.currentNetwork})`,
                 amount: amount,
                 txid: txid,
                 status: 'قيد الانتظار',
@@ -1295,7 +1314,7 @@
             state.transactions.push({
                 id: Date.now(),
                 user: state.currentUser,
-                type: 'سحب',
+                type: `سحب (${state.currentWithdrawNetwork})`,
                 amount: amount,
                 address: address,
                 status: 'قيد الانتظار',
@@ -1384,7 +1403,7 @@
 
             tx.status = 'مكتمل';
             
-            if (tx.type === 'إيداع') {
+            if (tx.type.includes('إيداع')) {
                 state.users[tx.user].balance += tx.amount;
             }
 
@@ -1400,7 +1419,7 @@
             tx.status = 'مرفوض';
 
             // Return balance if withdrawal rejected
-            if (tx.type === 'سحب') {
+            if (tx.type.includes('سحب')) {
                 state.users[tx.user].balance += tx.amount;
             }
 
