@@ -98,7 +98,6 @@
             background-color: #0077b5;
         }
 
-        /* رابط الدعم الثاني (قناة التلجرام) */
         .floating-telegram-second {
             position: fixed;
             bottom: 145px;
@@ -283,7 +282,6 @@
 </head>
 <body>
 
-    <!-- رابط دعم التلجرام الثاني (قناة التلجرام مثلاً) -->
     <a href="https://t.me/boost/Tywjofwkjbqd" target="_blank" class="floating-telegram-second" title="قناة التليجرام الرسمية">
         <i class="fab fa-telegram"></i>
     </a>
@@ -545,7 +543,7 @@
                     <div class="form-group" style="margin-bottom: 12px;">
                         <label><i class="fas fa-link text-accent"></i> رابط الدعوة الخاص بك</label>
                         <div class="team-input-group">
-                            <input type="text" id="refLinkInput" readonly value="https://mk980.vip/register?ref=MK980USER">
+                            <input type="text" id="refLinkInput" readonly value="">
                             <button class="copy-btn" onclick="copyText('refLinkInput')">نسخ</button>
                         </div>
                     </div>
@@ -553,7 +551,7 @@
                     <div class="form-group" style="margin-bottom: 5px;">
                         <label><i class="fas fa-id-badge text-accent"></i> كود الدعوة</label>
                         <div class="team-input-group">
-                            <input type="text" id="refCodeInput" readonly value="MK980USER">
+                            <input type="text" id="refCodeInput" readonly value="">
                             <button class="copy-btn" onclick="copyText('refCodeInput')">نسخ</button>
                         </div>
                     </div>
@@ -626,7 +624,7 @@
         <button class="nav-item" onclick="switchTab(4, this)"><i class="fas fa-user"></i>الملف</button>
     </div>
 
-    <!-- نافذة لوحة تحكم الأدمن الخاصة بك -->
+    <!-- نافذة لوحة تحكم الأدمن -->
     <div id="adminPanelModal" class="modal-overlay">
         <div class="modal-content card" style="max-width: 450px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -638,9 +636,7 @@
                 <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث القائمة</button>
             </div>
             
-            <div id="adminDepositsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-                <!-- يتم تعبئتها ديناميكياً -->
-            </div>
+            <div id="adminDepositsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
         </div>
     </div>
 
@@ -797,6 +793,13 @@
         const vipRates = { 1: 0.20, 2: 0.216, 3: 0.23, 4: 0.245, 5: 0.26, 6: 0.28, 7: 0.30 };
 
         window.onload = function() {
+            // التقاط كود الإحالة من الرابط فور فتح الصفحة إن وجد
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) {
+                localStorage.setItem('quant_register_ref', refCode);
+            }
+
             const savedUser = localStorage.getItem('quant_current_user');
             
             if (savedUser && users[savedUser]) {
@@ -812,7 +815,8 @@
                     lastQuantTime: 0,
                     vip: 1,
                     refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
-                    refLink: "https://mk980.vip/register?ref=MK980"
+                    refLink: "",
+                    invitedBy: null
                 };
                 localStorage.setItem('quant_users', JSON.stringify(users));
                 currentUserEmail = savedUser;
@@ -839,6 +843,7 @@
             if (users[email]) { alert('البريد مسجل بالفعل'); return; }
 
             const userCode = "MK" + Math.floor(100000 + Math.random() * 900000);
+            const invitedBy = localStorage.getItem('quant_register_ref') || null;
 
             users[email] = {
                 email: email,
@@ -849,10 +854,13 @@
                 lastQuantTime: 0,
                 vip: 1,
                 refCode: userCode,
-                refLink: "https://mk980.vip/register?ref=" + userCode
+                refLink: "",
+                invitedBy: invitedBy
             };
             
             localStorage.setItem('quant_users', JSON.stringify(users));
+            localStorage.removeItem('quant_register_ref');
+            
             currentUserEmail = email;
             localStorage.setItem('quant_current_user', currentUserEmail);
             showAppScreen();
@@ -877,7 +885,8 @@
                         lastQuantTime: 0,
                         vip: 1,
                         refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
-                        refLink: "https://mk980.vip/register?ref=MK980"
+                        refLink: "",
+                        invitedBy: null
                     };
                     localStorage.setItem('quant_users', JSON.stringify(users));
                     currentUserEmail = email;
@@ -916,6 +925,11 @@
             if (user.recharge === undefined) user.recharge = 0.0;
             if (user.lastQuantTime === undefined) user.lastQuantTime = 0;
             if (user.vip === undefined) user.vip = 1;
+            if (!user.refCode) user.refCode = "MK" + Math.floor(100000 + Math.random() * 900000);
+
+            // توليد رابط الدعوة ديناميكياً استناداً إلى عنوان الموقع الحالي
+            const currentDomain = window.location.origin + window.location.pathname;
+            user.refLink = currentDomain + "?ref=" + user.refCode;
 
             const total = user.balance + user.profit;
 
@@ -930,8 +944,8 @@
             document.getElementById('recordRecharge').innerText = "+" + user.recharge.toFixed(2) + " USDT";
             document.getElementById('recordProfit').innerText = user.profit.toFixed(2) + " USDT";
 
-            document.getElementById('refLinkInput').value = user.refLink || "https://mk980.vip/register?ref=MK980";
-            document.getElementById('refCodeInput').value = user.refCode || "MK980";
+            document.getElementById('refLinkInput').value = user.refLink;
+            document.getElementById('refCodeInput').value = user.refCode;
 
             document.getElementById('profileEmailHeader').innerText = user.email;
             document.getElementById('profileEmailVal').innerText = user.email;
