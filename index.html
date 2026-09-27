@@ -33,21 +33,10 @@
             padding: 5px 0;
         }
 
-        .brand-header-top {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .brand-header-top { display: flex; align-items: center; gap: 8px; }
         .brand-logo-container {
-            width: 40px;
-            height: 40px;
-            background: #121824;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            width: 40px; height: 40px; background: #121824; border: 2px solid var(--accent); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; overflow: hidden;
             box-shadow: 0 2px 8px rgba(240, 185, 11, 0.2);
         }
         .brand-logo-container img { width: 100%; height: 100%; object-fit: cover; }
@@ -56,13 +45,8 @@
         .brand-subtitle { font-size: 0.6rem; color: var(--text-sec); }
 
         .user-top-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            background: #121824;
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 12px;
+            display: flex; flex-direction: column; align-items: flex-end; background: #121824;
+            border: 1px solid var(--border); padding: 6px 12px; border-radius: 12px;
         }
         .user-profile-row { display: flex; align-items: center; gap: 6px; }
         .user-name-tag { font-size: 0.8rem; font-weight: bold; color: #fff; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -75,27 +59,9 @@
         .mini-action-btn:hover { background: var(--accent); color: #000; }
 
         .floating-telegram {
-            position: fixed;
-            bottom: 85px;
-            left: 20px;
-            background-color: var(--telegram);
-            color: #fff;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-            z-index: 998;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            text-decoration: none;
-        }
-        .floating-telegram:hover {
-            transform: scale(1.1);
-            background-color: #0077b5;
+            position: fixed; bottom: 85px; left: 20px; background-color: var(--telegram); color: #fff;
+            width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4); z-index: 998; cursor: pointer; text-decoration: none;
         }
 
         .financial-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
@@ -112,13 +78,11 @@
 
         .mid-buttons-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .btn-mid {
-            padding: 10px 5px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.2s;
+            padding: 10px 5px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
-        .btn-mid i { font-size: 1rem; }
         .btn-deposit-action { background: #123524; color: var(--green); border-color: rgba(14, 203, 129, 0.3); }
         .btn-withdraw-action { background: #351218; color: var(--red); border-color: rgba(246, 70, 93, 0.3); }
         .btn-details-action { background: #122135; color: var(--blue-verified); border-color: rgba(29, 161, 242, 0.3); }
-        .btn-mid:hover { opacity: 0.85; transform: translateY(-2px); }
 
         .crypto-prices-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; margin-top: 15px; scrollbar-width: none; }
         .crypto-prices-container::-webkit-scrollbar { display: none; }
@@ -131,21 +95,19 @@
         .crypto-change { font-size: 0.65rem; font-weight: bold; }
 
         .network-option-card {
-            background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
+            background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
         }
         .network-option-card:hover { border-color: var(--accent); background: #1a2332; }
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; color: var(--text-sec); font-size: 0.85rem; }
         .form-control { width: 100%; padding: 12px; background: #121824; border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; font-size: 0.9rem; direction: ltr; text-align: left; }
-        .form-control:focus { border-color: var(--accent); }
         
-        .btn { padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn { padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background-color: var(--accent); color: #000; }
         .btn-success { background-color: var(--green); color: #fff; }
         .btn-danger { background-color: var(--red); color: #fff; }
         .btn-block { width: 100%; }
-        .btn:hover { opacity: 0.9; }
 
         .withdraw-ticker {
             background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 10px 15px; font-size: 0.85rem; color: var(--text-sec); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; overflow: hidden; white-space: nowrap;
@@ -157,16 +119,16 @@
             background: linear-gradient(135deg, #121824, #1e293b); border: 1px solid var(--border); border-radius: 16px; padding: 25px 20px; text-align: center; margin-bottom: 15px;
         }
         .quant-circle {
-            width: 120px; height: 120px; border-radius: 50%; background: rgba(240, 185, 11, 0.1); border: 3px solid var(--accent); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 auto 15px auto; box-shadow: 0 0 20px rgba(240, 185, 11, 0.2);
+            width: 120px; height: 120px; border-radius: 50%; background: rgba(240, 185, 11, 0.1); border: 3px solid var(--accent); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 auto 15px auto;
         }
         .quant-circle i { font-size: 2.2rem; color: var(--accent); margin-bottom: 5px; }
 
         .vip-card-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 15px; }
         .vip-tier-box {
-            background: #121824; border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 10px; transition: 0.2s;
+            background: #121824; border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 10px;
         }
         .vip-tier-box::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--accent); }
-        .vip-tier-box.active-vip { border-color: var(--accent); background: linear-gradient(135deg, #121824, #1f2b3e); box-shadow: 0 4px 15px rgba(240, 185, 11, 0.15); }
+        .vip-tier-box.active-vip { border-color: var(--accent); background: linear-gradient(135deg, #121824, #1f2b3e); }
         .vip-header-row { display: flex; justify-content: space-between; align-items: center; }
         .vip-title-badge { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 1rem; color: var(--accent); }
         .vip-price-tag { background: rgba(240, 185, 11, 0.1); color: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; }
@@ -174,75 +136,21 @@
         .vip-stat-item { font-size: 0.75rem; color: var(--text-sec); }
         .vip-stat-item span { display: block; color: #fff; font-weight: bold; font-size: 0.85rem; margin-top: 2px; }
 
-        .team-box-hero {
-            background: linear-gradient(135deg, #121824, #1a2332);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .team-input-group {
-            display: flex;
-            background: #0b0e14;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 8px;
-            margin-bottom: 12px;
-        }
-        .team-input-group input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            padding: 10px;
-            width: 100%;
-            font-size: 0.8rem;
-            outline: none;
-            text-align: left;
-            direction: ltr;
-        }
-        .copy-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 0 15px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        .team-levels-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .team-level-card {
-            background: #121824;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px 8px;
-            text-align: center;
-        }
+        .team-box-hero { background: linear-gradient(135deg, #121824, #1a2332); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 15px; text-align: center; }
+        .team-input-group { display: flex; background: #0b0e14; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 8px; margin-bottom: 12px; }
+        .team-input-group input { background: transparent; border: none; color: #fff; padding: 10px; width: 100%; font-size: 0.8rem; outline: none; text-align: left; direction: ltr; }
+        .copy-btn { background: var(--accent); color: #000; border: none; padding: 0 15px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+        
+        .team-levels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .team-level-card { background: #121824; border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px; text-align: center; }
         .team-level-title { font-size: 0.7rem; color: var(--text-sec); margin-bottom: 4px; }
         .team-level-val { font-size: 1rem; font-weight: bold; color: var(--accent); }
 
-        .profile-info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #121824;
-            border: 1px solid var(--border);
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
+        .profile-info-row { display: flex; justify-content: space-between; align-items: center; background: #121824; border: 1px solid var(--border); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; }
         .profile-label { font-size: 0.8rem; color: var(--text-sec); display: flex; align-items: center; gap: 8px; }
         .profile-val { font-size: 0.85rem; font-weight: bold; color: #fff; direction: ltr; }
 
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999;
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999; }
         .nav-item { text-align: center; color: var(--text-sec); cursor: pointer; font-size: 0.7rem; background: none; border: none; }
         .nav-item.active { color: var(--accent); }
         .nav-item i { display: block; font-size: 1.1rem; margin-bottom: 2px; }
@@ -258,17 +166,17 @@
 </head>
 <body>
 
-    <a href="https://t.me/YourTelegramUsername" target="_blank" class="floating-telegram" title="خدمة العملاء تيليجرام">
+    <a href="https://t.me/YourTelegramUsername" target="_blank" class="floating-telegram" title="خدمة العملاء">
         <i class="fab fa-telegram-plane"></i>
     </a>
 
     <div class="main-container">
 
-        <!-- شاشة تسجيل الدخول / التسجيل -->
+        <!-- شاشة الدخول والتسجيل -->
         <div id="authScreen" class="card" style="margin-top: 20px;">
             <div style="text-align: center; margin-bottom: 20px;">
                 <div class="brand-logo-container" style="width: 65px; height: 65px; margin: 0 auto 10px auto;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Logo">
                 </div>
                 <h2 style="color: var(--accent);">MK980</h2>
             </div>
@@ -288,14 +196,12 @@
             </div>
         </div>
 
-        <!-- واجهة المنصة الرئيسية -->
+        <!-- التطبيق الرئيسي -->
         <div id="appScreen" class="hidden">
             
             <div class="top-app-header">
                 <div class="brand-header-top">
-                    <div class="brand-logo-container">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="MK980 Logo">
-                    </div>
+                    <div class="brand-logo-container"><img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Logo"></div>
                     <div class="brand-info">
                         <div class="brand-title">MK980</div>
                         <div class="brand-subtitle">التحديد الكمي</div>
@@ -306,18 +212,13 @@
                     <div style="font-size: 0.6rem; color: var(--text-sec); width: 100%; text-align: left;" id="userVipBadge">VIP 1</div>
                     <div class="user-profile-row">
                         <div class="user-name-tag" id="userDisplayEmail">user@mail.com</div>
-                        <i class="fas fa-circle-check verified-icon" title="حساب موثق"></i>
+                        <i class="fas fa-circle-check verified-icon"></i>
                     </div>
                     <div class="user-actions-row">
                         <button class="mini-action-btn" id="adminControlBtn" onclick="openAdminPanel()" style="display: none; background: var(--accent); color: #000; font-weight: bold;">
                             <i class="fas fa-user-shield"></i> لوحة الأدمن
                         </button>
-                        <button class="mini-action-btn" onclick="openModal('systemMsgsModal')">
-                            <i class="fas fa-bell text-accent"></i> رسائل
-                        </button>
-                        <button class="mini-action-btn" onclick="openModal('langModal')">
-                            <i class="fas fa-globe text-accent"></i> اللغة
-                        </button>
+                        <button class="mini-action-btn" onclick="openModal('systemMsgsModal')"><i class="fas fa-bell text-accent"></i> رسائل</button>
                     </div>
                 </div>
             </div>
@@ -325,7 +226,7 @@
             <div class="withdraw-ticker">
                 <i class="fas fa-bullhorn text-accent"></i>
                 <div style="overflow: hidden; width: 100%;">
-                    <span class="ticker-content">تم سحب 150 USDT بنجاح • تم إيداع 50 USDT بنجاح • تم سحب 300 USDT بنجاح</span>
+                    <span class="ticker-content">تم إيداع 50 USDT بنجاح • تم سحب 150 USDT بنجاح • تفعيل باقات VIP تلقائياً</span>
                 </div>
             </div>
 
@@ -350,43 +251,32 @@
                             <div class="stat-value" id="profitAssets">0.00</div>
                         </div>
                         <div class="stat-box red-accent">
-                            <div class="stat-title">مبلغ إعادة الشحن <i class="fas fa-arrow-down" style="color: var(--red);"></i></div>
+                            <div class="stat-title">مبلغ الشحن <i class="fas fa-arrow-down" style="color: var(--red);"></i></div>
                             <div class="stat-value" id="rechargeAmount">0.00</div>
                         </div>
                     </div>
 
                     <div class="mid-buttons-container">
-                        <button class="btn-mid btn-deposit-action" onclick="openModal('depositNetworksModal')">
-                            <i class="fas fa-wallet"></i> إيداع
-                        </button>
-                        <button class="btn-mid btn-withdraw-action" onclick="openModal('withdrawNetworksModal')">
-                            <i class="fas fa-money-bill-transfer"></i> سحب
-                        </button>
-                        <button class="btn-mid btn-details-action" onclick="openModal('financialRecordsModal')">
-                            <i class="fas fa-file-invoice-dollar"></i> التفاصيل
-                        </button>
+                        <button class="btn-mid btn-deposit-action" onclick="openModal('depositNetworksModal')"><i class="fas fa-wallet"></i> إيداع</button>
+                        <button class="btn-mid btn-withdraw-action" onclick="openModal('withdrawNetworksModal')"><i class="fas fa-money-bill-transfer"></i> سحب</button>
+                        <button class="btn-mid btn-details-action" onclick="openModal('financialRecordsModal')"><i class="fas fa-file-invoice-dollar"></i> التفاصيل</button>
                     </div>
 
                     <div class="crypto-prices-container">
                         <div class="crypto-price-card">
                             <div class="crypto-header"><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="BTC"> BTC/USDT</div>
                             <div class="crypto-val" id="priceBTC">67,450.20</div>
-                            <div class="crypto-change text-success" id="changeBTC">+2.45%</div>
+                            <div class="crypto-change text-success">+2.45%</div>
                         </div>
                         <div class="crypto-price-card">
                             <div class="crypto-header"><img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="ETH"> ETH/USDT</div>
                             <div class="crypto-val" id="priceETH">3,520.10</div>
-                            <div class="crypto-change text-success" id="changeETH">+1.82%</div>
+                            <div class="crypto-change text-success">+1.82%</div>
                         </div>
                         <div class="crypto-price-card">
                             <div class="crypto-header"><img src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB"> BNB/USDT</div>
                             <div class="crypto-val" id="priceBNB">610.40</div>
-                            <div class="crypto-change text-danger" id="changeBNB">-0.35%</div>
-                        </div>
-                        <div class="crypto-price-card">
-                            <div class="crypto-header"><img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="SOL"> SOL/USDT</div>
-                            <div class="crypto-val" id="priceSOL">182.75</div>
-                            <div class="crypto-change text-success" id="changeSOL">+4.12%</div>
+                            <div class="crypto-change text-danger">-0.35%</div>
                         </div>
                     </div>
                 </div>
@@ -395,15 +285,13 @@
             <!-- الصفحة 2: التحديد الكمي -->
             <div id="tabQuant" class="tab-content hidden">
                 <div class="quant-hero">
-                    <div class="quant-circle">
-                        <i class="fas fa-robot"></i>
-                    </div>
+                    <div class="quant-circle"><i class="fas fa-robot"></i></div>
                     <h3 style="margin-bottom: 5px;">روبوت التحديد الكمي الذكي</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 20px;">قم بتشغيل التحديد الكمي اليومي الخاص بك وحقق أرباحاً تلقائية كل 24 ساعة.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 20px;">قم بتشغيل جلسة التحديد اليومية وحقق أرباحاً فورية.</p>
                     
                     <div id="quantActiveContainer">
                         <button id="startQuantBtn" class="btn btn-primary btn-block" onclick="startQuantitativeTask()">
-                            <i class="fas fa-play"></i> بدء التحديد الكمي (كل 24 ساعة)
+                            <i class="fas fa-play"></i> بدء التحديد الكمي الآن
                         </button>
                     </div>
                     
@@ -412,22 +300,13 @@
                         <div id="quantCountdown" style="font-size: 1.2rem; font-weight: bold;" class="text-accent">00:00:00</div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 10px; color: var(--accent);"><i class="fas fa-info-circle"></i> تعليمات التحديد</div>
-                    <ul style="font-size: 0.75rem; color: var(--text-sec); padding-right: 20px; line-height: 1.6;">
-                        <li>تتم دورة التحديد الكمي مرة واحدة كل 24 ساعة لكل مستخدم نشط.</li>
-                        <li>يتم احتساب الأرباح بنسبة مئوية تلقائية بناءً على رصيد الحساب الكمي ومستوى الـ VIP الخاص بك.</li>
-                    </ul>
-                </div>
             </div>
 
             <!-- الصفحة 3: VIP -->
             <div id="tabVip" class="tab-content hidden">
                 <div class="card" style="text-align: center; padding: 15px; margin-bottom: 15px;">
                     <i class="fas fa-crown text-accent" style="font-size: 2rem; margin-bottom: 5px;"></i>
-                    <h3 style="font-size: 1.1rem;">مستويات الـ VIP والأرباح اليومية</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-sec); margin-top: 3px;">صلاحية كل باقة 30 يوماً بأرباح يومية متجددة.</p>
+                    <h3 style="font-size: 1.1rem;">مستويات الـ VIP والأرباح</h3>
                 </div>
 
                 <div class="vip-card-grid">
@@ -435,9 +314,8 @@
                         <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 1</div><div class="vip-price-tag">15 USDT</div></div>
                         <div class="vip-stats-row">
                             <div class="vip-stat-item">الربح اليومي: <span class="text-success">20%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
+                            <div class="vip-stat-item">المدة: <span>30 يوم</span></div>
                         </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~90.00$</span></div>
                         <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(1, 15)">ترقية المستوى</button>
                     </div>
 
@@ -445,9 +323,9 @@
                         <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 2</div><div class="vip-price-tag">50 USDT</div></div>
                         <div class="vip-stats-row">
                             <div class="vip-stat-item">الربح اليومي: <span class="text-success">21.6%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
+                            <div class="vip-stat-item">المدة: <span>30 يوم</span></div>
                         </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">شروط VIP2: <span class="text-accent">يتطلب إيداع وتأكيد يدوي من الأدمن</span></div>
+                        <div style="font-size: 0.7rem; color: var(--text-sec); margin-top: 2px;">شروط VIP2: <span class="text-accent">يتطلب إيداع 50$ وتأكيد الأدمن</span></div>
                         <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(2, 50)">ترقية المستوى</button>
                     </div>
 
@@ -455,50 +333,9 @@
                         <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 3</div><div class="vip-price-tag">150 USDT</div></div>
                         <div class="vip-stats-row">
                             <div class="vip-stat-item">الربح اليومي: <span class="text-success">23%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
+                            <div class="vip-stat-item">المدة: <span>30 يوم</span></div>
                         </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~1,035.00$</span></div>
                         <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(3, 150)">ترقية المستوى</button>
-                    </div>
-
-                    <div class="vip-tier-box" id="vipBox4">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 4</div><div class="vip-price-tag">350 USDT</div></div>
-                        <div class="vip-stats-row">
-                            <div class="vip-stat-item">الربح اليومي: <span class="text-success">24.5%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~2,572.50$</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(4, 350)">ترقية المستوى</button>
-                    </div>
-
-                    <div class="vip-tier-box" id="vipBox5">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 5</div><div class="vip-price-tag">700 USDT</div></div>
-                        <div class="vip-stats-row">
-                            <div class="vip-stat-item">الربح اليومي: <span class="text-success">26%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~5,460.00$</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(5, 700)">ترقية المستوى</button>
-                    </div>
-
-                    <div class="vip-tier-box" id="vipBox6">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 6</div><div class="vip-price-tag">1200 USDT</div></div>
-                        <div class="vip-stats-row">
-                            <div class="vip-stat-item">الربح اليومي: <span class="text-success">28%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~10,080.00$</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(6, 1200)">ترقية المستوى</button>
-                    </div>
-
-                    <div class="vip-tier-box" id="vipBox7">
-                        <div class="vip-header-row"><div class="vip-title-badge"><i class="fas fa-star text-accent"></i> VIP 7</div><div class="vip-price-tag">2000 USDT</div></div>
-                        <div class="vip-stats-row">
-                            <div class="vip-stat-item">الربح اليومي: <span class="text-success">30%</span></div>
-                            <div class="vip-stat-item">مدة الباقة: <span>30 يوم</span></div>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-sec); margin-top: 2px;">إجمالي أرباح 30 يوم: <span class="text-accent">~18,000.00$</span></div>
-                        <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;" onclick="upgradeVip(7, 2000)">ترقية المستوى</button>
                     </div>
                 </div>
             </div>
@@ -508,86 +345,40 @@
                 <div class="team-box-hero">
                     <i class="fas fa-users text-accent" style="font-size: 2.2rem; margin-bottom: 8px;"></i>
                     <h3 style="font-size: 1.1rem; margin-bottom: 4px;">ترويج الفريق والأرباح</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-sec);">شارك رابط الدعوة الخاص بك وابدأ بتحقيق عمولات تصاعدية هائلة.</p>
                 </div>
-
                 <div class="card">
                     <div class="form-group" style="margin-bottom: 12px;">
-                        <label><i class="fas fa-link text-accent"></i> رابط الدعوة الخاص بك</label>
+                        <label><i class="fas fa-link text-accent"></i> رابط الدعوة</label>
                         <div class="team-input-group">
                             <input type="text" id="refLinkInput" readonly value="https://mk980.vip/register?ref=MK980USER">
                             <button class="copy-btn" onclick="copyText('refLinkInput')">نسخ</button>
                         </div>
                     </div>
-
-                    <div class="form-group" style="margin-bottom: 5px;">
-                        <label><i class="fas fa-id-badge text-accent"></i> كود الدعوة</label>
-                        <div class="team-input-group">
-                            <input type="text" id="refCodeInput" readonly value="MK980USER">
-                            <button class="copy-btn" onclick="copyText('refCodeInput')">نسخ</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--accent);">
-                        <i class="fas fa-percentage"></i> نظام توزيع الأرباح والعمولات
-                    </div>
-                    <div class="team-levels-grid">
-                        <div class="team-level-card"><div class="team-level-title">المستوى 1 (A)</div><div class="team-level-val">10%</div></div>
-                        <div class="team-level-card"><div class="team-level-title">المستوى 2 (B)</div><div class="team-level-val">5%</div></div>
-                        <div class="team-level-card"><div class="team-level-title">المستوى 3 (C)</div><div class="team-level-val">2%</div></div>
-                    </div>
                 </div>
             </div>
 
-            <!-- الصفحة 5: الملف الشخصي -->
+            <!-- الصفحة 5: الملف -->
             <div id="tabProfile" class="tab-content hidden">
                 <div class="team-box-hero" style="margin-bottom: 15px;">
-                    <div class="brand-logo-container" style="width: 60px; height: 60px; margin: 0 auto 10px auto;">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="User Avatar">
-                    </div>
                     <h3 style="font-size: 1rem; color: #fff;" id="profileEmailHeader">user@mail.com</h3>
-                    <p style="font-size: 0.75rem; color: var(--accent); margin-top: 2px;"><i class="fas fa-shield-alt"></i> حساب موثق وآمن</p>
                 </div>
-
                 <div class="card">
-                    <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 12px; color: var(--accent);">
-                        <i class="fas fa-id-card"></i> معلومات الحساب الشخصي
-                    </div>
                     <div class="profile-info-row">
-                        <div class="profile-label"><i class="fas fa-envelope text-accent"></i> البريد الإلكتروني</div>
+                        <div class="profile-label"><i class="fas fa-envelope text-accent"></i> البريد</div>
                         <div class="profile-val" id="profileEmailVal">user@mail.com</div>
                     </div>
                     <div class="profile-info-row">
-                        <div class="profile-label"><i class="fas fa-crown text-accent"></i> مستوى الحساب</div>
+                        <div class="profile-label"><i class="fas fa-crown text-accent"></i> المستوى</div>
                         <div class="profile-val text-accent" id="profileVipVal">VIP 1</div>
                     </div>
-                    <div class="profile-info-row">
-                        <div class="profile-label"><i class="fas fa-wallet text-success"></i> الحساب الكمي المتاح</div>
-                        <div class="profile-val text-success" id="profileBalanceVal">0.00 USDT</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-label"><i class="fas fa-chart-line text-accent"></i> أصول الأرباح</div>
-                        <div class="profile-val text-accent" id="profileProfitVal">0.00 USDT</div>
-                    </div>
-                    <div class="profile-info-row" style="margin-bottom: 0;">
-                        <div class="profile-label"><i class="fas fa-arrow-down text-danger"></i> إجمالي الإيداعات</div>
-                        <div class="profile-val text-danger" id="profileRechargeVal">0.00 USDT</div>
-                    </div>
                 </div>
-
-                <div style="margin-top: 20px;">
-                    <button class="btn btn-danger btn-block" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج من الحساب
-                    </button>
-                </div>
+                <button class="btn btn-danger btn-block" style="margin-top: 20px;" onclick="logout()">تسجيل الخروج</button>
             </div>
 
         </div>
     </div>
 
-    <!-- شريط التنقل السفلي -->
+    <!-- التنقل السفلي -->
     <div id="bottomNav" class="bottom-nav hidden">
         <button class="nav-item active" onclick="switchTab(0, this)"><i class="fas fa-home"></i>الرئيسية</button>
         <button class="nav-item" onclick="switchTab(1, this)"><i class="fas fa-robot"></i>التحديد</button>
@@ -596,221 +387,137 @@
         <button class="nav-item" onclick="switchTab(4, this)"><i class="fas fa-user"></i>الملف</button>
     </div>
 
-    <!-- نافذة لوحة تحكم الأدمن الخاصة بك -->
+    <!-- لوحة تحكم الأدمن -->
     <div id="adminPanelModal" class="modal-overlay">
         <div class="modal-content card" style="max-width: 450px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4 class="text-accent"><i class="fas fa-user-shield"></i> لوحة التحكم الإدارية</h4>
+                <h4 class="text-accent"><i class="fas fa-user-shield"></i> لوحة الأدمن الخاصة بك</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('adminPanelModal')"></i>
             </div>
             
-            <div style="background: #121824; padding: 10px; border-radius: 8px; margin-bottom: 12px;">
-                <div style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 6px;">إضافة إيداع يدوياً لأي عضو (حل بديل فوري):</div>
+            <div style="background: #121824; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                <div style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 6px; font-weight: bold;">شحن رصيد وتفعيل VIP2 فوراً لأي مستخدم:</div>
                 <input type="email" id="adminManualEmail" class="form-control" placeholder="البريد الإلكتروني للعضو" style="margin-bottom: 6px; font-size: 0.8rem; padding: 8px;">
                 <input type="number" id="adminManualAmount" class="form-control" placeholder="المبلغ (مثال: 50)" style="margin-bottom: 8px; font-size: 0.8rem; padding: 8px;">
-                <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem;" onclick="adminDirectAddBalance()">إضافة رصيد وتفعيل VIP2 فوراً</button>
+                <button class="btn btn-primary btn-block" style="padding: 8px; font-size: 0.8rem;" onclick="adminDirectAddBalance()">شحن وتفعيل VIP2 فوراً</button>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <p style="font-size: 0.75rem; color: var(--text-sec);">طلبات الإيداع المعلقة للأعضاء:</p>
-                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.7rem;" onclick="openAdminPanel()"><i class="fas fa-sync-alt"></i> تحديث</button>
-            </div>
-            
-            <div id="adminDepositsList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-                <!-- يتم تعبئتها ديناميكياً -->
-            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sec); margin-bottom: 8px;">طلبات الإيداع المرسلة من الأعضاء:</p>
+            <div id="adminDepositsList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
         </div>
     </div>
 
-    <!-- نافذة اختيار شبكات الإيداع -->
+    <!-- إيداع: اختيار الشبكة -->
     <div id="depositNetworksModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4><i class="fas fa-wallet text-success"></i> اختيار شبكة الإيداع</h4>
+                <h4>اختر شبكة الإيداع</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('depositNetworksModal')"></i>
             </div>
             <div class="network-option-card" onclick="selectDepositNetwork('TRC20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">شبكة TRC20</div><div style="font-size: 0.7rem; color: var(--text-sec);">إيداع عبر شبكة Tron</div></div>
+                <div><div style="font-weight: bold;">شبكة TRC20</div></div>
                 <i class="fas fa-chevron-left text-accent"></i>
             </div>
             <div class="network-option-card" onclick="selectDepositNetwork('BEP20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">شبكة BEP20</div><div style="font-size: 0.7rem; color: var(--text-sec);">إيداع عبر شبكة Binance Smart Chain</div></div>
-                <i class="fas fa-chevron-left text-accent"></i>
-            </div>
-            <div class="network-option-card" onclick="selectDepositNetwork('ERC20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">شبكة ERC20</div><div style="font-size: 0.7rem; color: var(--text-sec);">إيداع عبر شبكة Ethereum</div></div>
+                <div><div style="font-weight: bold;">شبكة BEP20</div></div>
                 <i class="fas fa-chevron-left text-accent"></i>
             </div>
         </div>
     </div>
 
-    <!-- نافذة كود ومحفظة الإيداع -->
+    <!-- إيداع: العنوان والمبلغ -->
     <div id="depositAddressModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                 <h4>إيداع عبر شبكة (<span id="selectedDepNetwork" class="text-accent"></span>)</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('depositAddressModal')"></i>
             </div>
-            
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label><i class="fas fa-qrcode text-accent"></i> عنوان محفظة الشحن المخصص</label>
+            <div class="form-group">
+                <label>عنوان المحفظة</label>
                 <div class="team-input-group">
-                    <input type="text" id="depositWalletAddress" readonly value="">
+                    <input type="text" id="depositWalletAddress" readonly value="T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb">
                     <button class="copy-btn" onclick="copyText('depositWalletAddress')">نسخ</button>
                 </div>
-                <p style="font-size: 0.65rem; color: var(--text-sec); margin-top: 4px;">يرجى إرسال العملات حصراً إلى العنوان أعلاه حسب الشبكة المختارة.</p>
             </div>
-
             <div class="form-group">
                 <label>أدخل مبلغ الإيداع (USDT)</label>
                 <input type="number" id="depositAmount" class="form-control" placeholder="مثال: 50">
             </div>
-
-            <button class="btn btn-success btn-block" onclick="submitDeposit()">إرسال طلب الإيداع للأدمن</button>
+            <button class="btn btn-success btn-block" onclick="submitDeposit()">تأكيد وإرسال للأدمن</button>
         </div>
     </div>
 
-    <!-- نافذة اختيار شبكات السحب -->
+    <!-- سحب: اختيار الشبكة -->
     <div id="withdrawNetworksModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4><i class="fas fa-money-bill-transfer text-danger"></i> اختيار شبكة السحب</h4>
+                <h4>اختر شبكة السحب</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('withdrawNetworksModal')"></i>
             </div>
-            
-            <div style="background: #121824; padding: 10px; border-radius: 8px; margin-bottom: 12px; text-align: center;">
-                <div style="font-size: 0.75rem; color: var(--text-sec);">الرصيد المتاح للسحب</div>
-                <div style="font-size: 1.2rem; font-weight: bold;" class="text-accent" id="modalWithdrawBalance">0.00 USDT</div>
-            </div>
-
             <div class="network-option-card" onclick="selectWithdrawNetwork('TRC20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">سحب عبر شبكة TRC20</div><div style="font-size: 0.7rem; color: var(--text-sec);">رسوم منخفضة وسريعة عبر Tron</div></div>
-                <i class="fas fa-chevron-left text-danger"></i>
-            </div>
-            <div class="network-option-card" onclick="selectWithdrawNetwork('BEP20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">سحب عبر شبكة BEP20</div><div style="font-size: 0.7rem; color: var(--text-sec);">عبر شبكة Binance Smart Chain</div></div>
-                <i class="fas fa-chevron-left text-danger"></i>
-            </div>
-            <div class="network-option-card" onclick="selectWithdrawNetwork('ERC20')">
-                <div><div style="font-weight: bold; font-size: 0.9rem;">سحب عبر شبكة ERC20</div><div style="font-size: 0.7rem; color: var(--text-sec);">عبر شبكة Ethereum</div></div>
+                <div><div style="font-weight: bold;">سحب TRC20</div></div>
                 <i class="fas fa-chevron-left text-danger"></i>
             </div>
         </div>
     </div>
 
-    <!-- نافذة السحب -->
+    <!-- سحب: النموذج -->
     <div id="withdrawFormModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4>طلب سحب (<span id="selectedWdNetwork" class="text-accent"></span>)</h4>
+                <h4>طلب سحب الرصيد</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('withdrawFormModal')"></i>
             </div>
-
             <div class="form-group">
-                <label><i class="fas fa-wallet text-accent"></i> رابط / عنوان محفظتك الخاصة للسحب</label>
-                <input type="text" id="userWalletAddressInput" class="form-control" placeholder="أدخل عنوان محفظتك هنا...">
+                <label>عنوان محفظتك</label>
+                <input type="text" id="userWalletAddressInput" class="form-control" placeholder="أدخل عنوان محفظتك...">
             </div>
-
             <div class="form-group">
-                <label><i class="fas fa-coins text-accent"></i> مبلغ السحب (USDT)</label>
+                <label>المبلغ (USDT)</label>
                 <input type="number" id="withdrawAmount" class="form-control" placeholder="مثال: 20">
             </div>
-
             <button class="btn btn-danger btn-block" onclick="submitWithdraw()">تأكيد طلب السحب</button>
         </div>
     </div>
 
-    <!-- السجلات -->
+    <!-- تفاصيل -->
     <div id="financialRecordsModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4><i class="fas fa-file-invoice-dollar"></i> السجلات المالية</h4>
+                <h4>السجلات المالية</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('financialRecordsModal')"></i>
             </div>
-            <div style="background: #121824; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
-                <div>الإيداعات: <span id="recordRecharge" class="text-success">0.00</span></div>
-            </div>
             <div style="background: #121824; padding: 12px; border-radius: 8px;">
-                <div>الأرباح: <span id="recordProfit" class="text-accent">0.00</span></div>
+                <div>إجمالي الشحن: <span id="recordRecharge" class="text-success">0.00</span></div>
+                <div style="margin-top: 5px;">الأرباح: <span id="recordProfit" class="text-accent">0.00</span></div>
             </div>
         </div>
     </div>
 
-    <!-- رسائل النظام -->
     <div id="systemMsgsModal" class="modal-overlay">
         <div class="modal-content card">
             <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                 <h4>رسائل النظام</h4>
                 <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('systemMsgsModal')"></i>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-sec);">أهلاً بك في منصة MK980 للتحديد الكمي المحدثة.</p>
-        </div>
-    </div>
-
-    <!-- اللغات -->
-    <div id="langModal" class="modal-overlay">
-        <div class="modal-content card">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <h4>اختر اللغة</h4>
-                <i class="fas fa-times" style="cursor: pointer; color: var(--text-sec)" onclick="closeModal('langModal')"></i>
-            </div>
-            <button class="btn" style="background: #121824; color: #fff; width: 100%;" onclick="closeModal('langModal')">🇸🇦 العربية</button>
+            <p style="font-size: 0.8rem; color: var(--text-sec);">أهلاً بك في نظام MK980 المحدث.</p>
         </div>
     </div>
 
     <script>
         const ADMIN_EMAIL = 'nnnnaaatttnanooo@gmail.com';
-        let users = JSON.parse(localStorage.getItem('quant_users')) || {};
-        let currentUserEmail = localStorage.getItem('quant_current_user') || null;
-        let currentSelectedDepNetwork = 'TRC20';
-        let currentSelectedWdNetwork = 'TRC20';
-        let timerInterval = null;
-
-        // قناة مزامنة فورية بين النوافذ والأجهزة (BroadcastChannel)
-        const syncChannel = new BroadcastChannel('mk980_sync_channel');
-        syncChannel.onmessage = function (event) {
-            if (event.data && event.data.type === 'UPDATE_DATA') {
-                users = JSON.parse(localStorage.getItem('quant_users')) || {};
-                if (currentUserEmail) showAppScreen();
-            }
-        };
-
-        const networkAddresses = {
-            'TRC20': 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb',
-            'BEP20': '0x71C...B29a8f4c1e3590e82D',
-            'ERC20': '0x88B...A14c7e289f6320b11C'
-        };
-
-        const vipRates = { 1: 0.20, 2: 0.216, 3: 0.23, 4: 0.245, 5: 0.26, 6: 0.28, 7: 0.30 };
+        let users = JSON.parse(localStorage.getItem('mk980_users')) || {};
+        let currentUserEmail = localStorage.getItem('mk980_current') || null;
+        let currentDepNet = 'TRC20';
 
         window.onload = function() {
-            const savedUser = localStorage.getItem('quant_current_user');
-            
-            if (savedUser && users[savedUser]) {
-                currentUserEmail = savedUser;
-                showAppScreen();
-            } else if (savedUser && !users[savedUser]) {
-                users[savedUser] = {
-                    email: savedUser,
-                    password: '123',
-                    balance: 0.0,
-                    profit: 0.0,
-                    recharge: 0.0,
-                    lastQuantTime: 0,
-                    vip: 1,
-                    refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
-                    refLink: "https://mk980.vip/register?ref=MK980"
-                };
-                localStorage.setItem('quant_users', JSON.stringify(users));
-                currentUserEmail = savedUser;
+            if (currentUserEmail && users[currentUserEmail]) {
                 showAppScreen();
             } else {
-                currentUserEmail = null;
                 document.getElementById('authScreen').classList.remove('hidden');
                 document.getElementById('appScreen').classList.add('hidden');
                 document.getElementById('bottomNav').classList.add('hidden');
             }
-            startLiveCryptoPrices();
         };
 
         function toggleAuthMode() {
@@ -818,78 +525,58 @@
             document.getElementById('registerForm').classList.toggle('hidden');
         }
 
+        function saveData() {
+            localStorage.setItem('mk980_users', JSON.stringify(users));
+            localStorage.setItem('mk980_current', currentUserEmail || '');
+        }
+
         function register() {
             const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const password = document.getElementById('regPassword').value.trim();
+            if (!email || !password) { alert('املأ الحقول من فضلك'); return; }
+            if (users[email]) { alert('البريد مسجل مسبقاً'); return; }
 
-            if (!email || !password) { alert('يرجى ملء الحقول'); return; }
-            if (users[email]) { alert('البريد مسجل بالفعل'); return; }
-
-            const userCode = "MK" + Math.floor(100000 + Math.random() * 900000);
-
-            users[email] = {
-                email: email,
-                password: password,
-                balance: 0.0,
-                profit: 0.0,
-                recharge: 0.0,
-                lastQuantTime: 0,
-                vip: 1,
-                refCode: userCode,
-                refLink: "https://mk980.vip/register?ref=" + userCode
-            };
-            
-            localStorage.setItem('quant_users', JSON.stringify(users));
+            users[email] = { email, password, balance: 0.0, profit: 0.0, recharge: 0.0, vip: 1, lastQuant: 0 };
             currentUserEmail = email;
-            localStorage.setItem('quant_current_user', currentUserEmail);
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
+            saveData();
             showAppScreen();
         }
 
         function login() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const password = document.getElementById('loginPassword').value.trim();
-
+            
             if (users[email] && users[email].password === password) {
                 currentUserEmail = email;
-                localStorage.setItem('quant_current_user', currentUserEmail);
+                saveData();
                 showAppScreen();
             } else {
-                if (!users[email] && email.includes('@')) {
-                    users[email] = {
-                        email: email,
-                        password: password,
-                        balance: 0.0,
-                        profit: 0.0,
-                        recharge: 0.0,
-                        lastQuantTime: 0,
-                        vip: 1,
-                        refCode: "MK" + Math.floor(100000 + Math.random() * 900000),
-                        refLink: "https://mk980.vip/register?ref=MK980"
-                    };
-                    localStorage.setItem('quant_users', JSON.stringify(users));
+                // تفعيل الدخول التلقائي أو إنشاء حساب مباشر لتسهيل الاختبار
+                if (email.includes('@')) {
+                    if (!users[email]) {
+                        users[email] = { email, password: password || '123', balance: 0.0, profit: 0.0, recharge: 0.0, vip: 1, lastQuant: 0 };
+                    }
                     currentUserEmail = email;
-                    localStorage.setItem('quant_current_user', currentUserEmail);
+                    saveData();
                     showAppScreen();
                 } else {
-                    alert('بيانات الدخول غير صحيحة');
+                    alert('بيانات غير صحيحة');
                 }
             }
         }
 
         function logout() {
             currentUserEmail = null;
-            localStorage.removeItem('quant_current_user');
+            localStorage.removeItem('mk980_current');
             location.reload();
         }
 
         function showAppScreen() {
-            users = JSON.parse(localStorage.getItem('quant_users')) || users;
-
+            users = JSON.parse(localStorage.getItem('mk980_users')) || users;
             document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('appScreen').classList.remove('hidden');
             document.getElementById('bottomNav').classList.remove('hidden');
-            
+
             const user = users[currentUserEmail];
             if (!user) return;
 
@@ -899,124 +586,87 @@
                 document.getElementById('adminControlBtn').style.display = 'none';
             }
 
-            if (user.balance === undefined) user.balance = 0.0;
-            if (user.profit === undefined) user.profit = 0.0;
-            if (user.recharge === undefined) user.recharge = 0.0;
-            if (user.lastQuantTime === undefined) user.lastQuantTime = 0;
-            if (user.vip === undefined) user.vip = 1;
-
-            const total = user.balance + user.profit;
-
+            const total = (user.balance || 0) + (user.profit || 0);
             document.getElementById('userDisplayEmail').innerText = user.email;
-            document.getElementById('userVipBadge').innerText = "VIP " + user.vip;
-            
+            document.getElementById('userVipBadge').innerText = "VIP " + (user.vip || 1);
             document.getElementById('totalAssets').innerText = total.toFixed(2) + " USDT";
-            document.getElementById('quantAccount').innerText = user.balance.toFixed(2) + " USDT";
-            document.getElementById('profitAssets').innerText = user.profit.toFixed(2) + " USDT";
-            document.getElementById('rechargeAmount').innerText = user.recharge.toFixed(2) + " USDT";
-            document.getElementById('modalWithdrawBalance').innerText = user.balance.toFixed(2) + " USDT";
-            document.getElementById('recordRecharge').innerText = "+" + user.recharge.toFixed(2) + " USDT";
-            document.getElementById('recordProfit').innerText = user.profit.toFixed(2) + " USDT";
-
-            document.getElementById('refLinkInput').value = user.refLink || "https://mk980.vip/register?ref=MK980";
-            document.getElementById('refCodeInput').value = user.refCode || "MK980";
-
+            document.getElementById('quantAccount').innerText = (user.balance || 0).toFixed(2) + " USDT";
+            document.getElementById('profitAssets').innerText = (user.profit || 0).toFixed(2) + " USDT";
+            document.getElementById('rechargeAmount').innerText = (user.recharge || 0).toFixed(2) + " USDT";
+            document.getElementById('recordRecharge').innerText = "+" + (user.recharge || 0).toFixed(2) + " USDT";
+            document.getElementById('recordProfit').innerText = (user.profit || 0).toFixed(2) + " USDT";
             document.getElementById('profileEmailHeader').innerText = user.email;
             document.getElementById('profileEmailVal').innerText = user.email;
-            document.getElementById('profileVipVal').innerText = "VIP " + user.vip;
-            document.getElementById('profileBalanceVal').innerText = user.balance.toFixed(2) + " USDT";
-            document.getElementById('profileProfitVal').innerText = user.profit.toFixed(2) + " USDT";
-            document.getElementById('profileRechargeVal').innerText = user.recharge.toFixed(2) + " USDT";
+            document.getElementById('profileVipVal').innerText = "VIP " + (user.vip || 1);
 
-            for (let i = 1; i <= 7; i++) {
+            for (let i = 1; i <= 3; i++) {
                 const box = document.getElementById('vipBox' + i);
                 if (box) {
                     if (i === user.vip) box.classList.add('active-vip');
                     else box.classList.remove('active-vip');
                 }
             }
-
-            checkQuantTimerState();
         }
 
-        function switchTab(index, btnElem) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.add('hidden'));
+        function switchTab(idx, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            if (idx === 0) document.getElementById('tabHome').classList.remove('hidden');
+            if (idx === 1) document.getElementById('tabQuant').classList.remove('hidden');
+            if (idx === 2) document.getElementById('tabVip').classList.remove('hidden');
+            if (idx === 3) document.getElementById('tabTeam').classList.remove('hidden');
+            if (idx === 4) document.getElementById('tabProfile').classList.remove('hidden');
 
-            if (index === 0) document.getElementById('tabHome').classList.remove('hidden');
-            if (index === 1) document.getElementById('tabQuant').classList.remove('hidden');
-            if (index === 2) document.getElementById('tabVip').classList.remove('hidden');
-            if (index === 3) document.getElementById('tabTeam').classList.remove('hidden');
-            if (index === 4) document.getElementById('tabProfile').classList.remove('hidden');
-
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            if(btnElem) btnElem.classList.add('active');
-        }
-
-        function copyText(elementId) {
-            const inputElem = document.getElementById(elementId);
-            inputElem.select();
-            inputElem.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(inputElem.value);
-            alert('تم نسخ النص بنجاح!');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            if (btn) btn.classList.add('active');
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function copyText(id) {
+            const el = document.getElementById(id);
+            el.select();
+            navigator.clipboard.writeText(el.value);
+            alert('تم النسخ بنجاح!');
+        }
 
         function selectDepositNetwork(net) {
-            currentSelectedDepNetwork = net;
+            currentDepNet = net;
             closeModal('depositNetworksModal');
             document.getElementById('selectedDepNetwork').innerText = net;
-            document.getElementById('depositWalletAddress').value = networkAddresses[net] || '';
             openModal('depositAddressModal');
         }
 
         function selectWithdrawNetwork(net) {
-            currentSelectedWdNetwork = net;
             closeModal('withdrawNetworksModal');
-            document.getElementById('selectedWdNetwork').innerText = net;
-            document.getElementById('userWalletAddressInput').value = '';
-            document.getElementById('withdrawAmount').value = '';
             openModal('withdrawFormModal');
         }
 
         function submitDeposit() {
-            const amount = parseFloat(document.getElementById('depositAmount').value);
-            if (!amount || amount <= 0) { alert('أدخل مبلغ إيداع صحيح'); return; }
-            
-            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
-            pendingDeposits.push({
-                id: Date.now(),
-                email: currentUserEmail,
-                amount: amount,
-                network: currentSelectedDepNetwork
-            });
-            localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
-            
+            const amt = parseFloat(document.getElementById('depositAmount').value);
+            if (!amt || amt <= 0) { alert('أدخل مبلغ صحيح'); return; }
+
+            let pending = JSON.parse(localStorage.getItem('mk980_pending')) || [];
+            pending.push({ id: Date.now(), email: currentUserEmail, amount: amt, net: currentDepNet });
+            localStorage.setItem('mk980_pending', JSON.stringify(pending));
+
             closeModal('depositAddressModal');
             document.getElementById('depositAmount').value = '';
-            alert(`تم إرسال طلب إيداع ${amount} USDT بنجاح. في انتظار تأكيد الأدمن لإضافته لرصيدك وتفعيل باقة VIP2.`);
+            alert('تم إرسال طلب الإيداع بنجاح للأدمن!');
         }
 
         function openAdminPanel() {
-            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
-            const listContainer = document.getElementById('adminDepositsList');
-            listContainer.innerHTML = '';
+            const pending = JSON.parse(localStorage.getItem('mk980_pending')) || [];
+            const list = document.getElementById('adminDepositsList');
+            list.innerHTML = '';
 
-            if (pendingDeposits.length === 0) {
-                listContainer.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.8rem; padding: 15px;">لا توجد طلبات إيداع معلقة حالياً.</p>';
+            if (pending.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: var(--text-sec); font-size: 0.8rem; padding: 10px;">لا توجد طلبات معلقة.</p>';
             } else {
-                pendingDeposits.forEach((dep) => {
-                    listContainer.innerHTML += `
-                        <div style="background: #121824; border: 1px solid var(--border); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <div>
-                                <div style="font-size: 0.75rem; color: var(--accent);">المستخدم: ${dep.email}</div>
-                                <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">المبلغ: ${dep.amount} USDT (${dep.network})</div>
-                            </div>
-                            <button class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;" onclick="confirmDepositByAdmin(${dep.id})">تأكيد</button>
+                pending.forEach(p => {
+                    list.innerHTML += `
+                        <div style="background: #121824; border: 1px solid var(--border); padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                            <div style="font-size: 0.75rem;">${p.email} - <b class="text-accent">${p.amount} USDT</b></div>
+                            <button class="btn btn-success" style="padding: 4px 8px; font-size: 0.7rem;" onclick="confirmDep(${p.id})">تأكيد</button>
                         </div>
                     `;
                 });
@@ -1024,175 +674,85 @@
             openModal('adminPanelModal');
         }
 
-        // إضافة طريقة سريعة ومضمونة للأدمن لشحن رصيد أي عضو يدوياً إذا واجهتك مشكلة في متصفح آخر
-        function adminDirectAddBalance() {
-            const email = document.getElementById('adminManualEmail').value.trim().toLowerCase();
-            const amount = parseFloat(document.getElementById('adminManualAmount').value);
+        function confirmDep(id) {
+            let pending = JSON.parse(localStorage.getItem('mk980_pending')) || [];
+            users = JSON.parse(localStorage.getItem('mk980_users')) || users;
+            const idx = pending.findIndex(p => p.id === id);
+            if (idx === -1) return;
 
-            users = JSON.parse(localStorage.getItem('quant_users')) || {};
-
-            if (!email || !users[email]) { alert('البريد الإلكتروني غير موجود في النظام'); return; }
-            if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
-
-            users[email].balance += amount;
-            users[email].recharge += amount;
-            if (amount >= 50 && users[email].vip < 2) {
-                users[email].vip = 2;
-            }
-
-            localStorage.setItem('quant_users', JSON.stringify(users));
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
-
-            document.getElementById('adminManualEmail').value = '';
-            document.getElementById('adminManualAmount').value = '';
-            alert(`تم إضافة ${amount} USDT وتفعيل VIP2 بنجاح للمستخدم ${email}!`);
-            showAppScreen();
-        }
-
-        function confirmDepositByAdmin(depositId) {
-            let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
-            users = JSON.parse(localStorage.getItem('quant_users')) || users;
-
-            const depIndex = pendingDeposits.findIndex(d => d.id === depositId);
-            if (depIndex === -1) return;
-
-            const dep = pendingDeposits[depIndex];
-
-            if (users[dep.email]) {
-                users[dep.email].balance += dep.amount;
-                users[dep.email].recharge += dep.amount;
-                
-                if (dep.amount >= 50 && users[dep.email].vip < 2) {
-                    users[dep.email].vip = 2;
+            const p = pending[idx];
+            if (users[p.email]) {
+                users[p.email].balance += p.amount;
+                users[p.email].recharge += p.amount;
+                if (p.amount >= 50 && users[p.email].vip < 2) {
+                    users[p.email].vip = 2; // تفعيل VIP2 تلقائياً عند إيداع 50
                 }
-
-                localStorage.setItem('quant_users', JSON.stringify(users));
             }
+            pending.splice(idx, 1);
+            localStorage.setItem('mk980_pending', JSON.stringify(pending));
+            localStorage.setItem('mk980_users', JSON.stringify(users));
 
-            pendingDeposits.splice(depIndex, 1);
-            localStorage.setItem('quant_pending_deposits', JSON.stringify(pendingDeposits));
-            
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
-            alert(`تم تأكيد إيداع ${dep.amount} USDT بنجاح للمستخدم ${dep.email}!`);
+            alert('تم تأكيد الإيداع وإضافة الرصيد بنجاح!');
             openAdminPanel();
             showAppScreen();
         }
 
-        function submitWithdraw() {
-            const walletAddress = document.getElementById('userWalletAddressInput').value.trim();
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
-            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
-            const user = usersData[currentUserEmail];
+        function adminDirectAddBalance() {
+            const email = document.getElementById('adminManualEmail').value.trim().toLowerCase();
+            const amt = parseFloat(document.getElementById('adminManualAmount').value);
+            users = JSON.parse(localStorage.getItem('mk980_users')) || {};
 
-            if (!walletAddress) { alert('يرجى إدخال عنوان محفظتك للسحب'); return; }
-            if (!amount || amount <= 0) { alert('أدخل مبلغ سحب صحيح'); return; }
-            if (amount > user.balance) { alert('رصيدك غير كافي'); return; }
+            if (!email || !users[email]) { alert('البريد غير موجود'); return; }
+            if (!amt || amt <= 0) { alert('أدخل مبلغ صحيح'); return; }
 
-            user.balance -= amount;
-            localStorage.setItem('quant_users', JSON.stringify(usersData));
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
+            users[email].balance += amt;
+            users[email].recharge += amt;
+            if (amt >= 50 && users[email].vip < 2) users[email].vip = 2;
 
+            localStorage.setItem('mk980_users', JSON.stringify(users));
+            alert(`تم شحن ${amt} USDT وتفعيل VIP2 للمستخدم ${email} بنجاح!`);
+            document.getElementById('adminManualEmail').value = '';
+            document.getElementById('adminManualAmount').value = '';
             showAppScreen();
-            closeModal('withdrawFormModal');
-            alert(`تم تقديم طلب سحب ${amount} USDT بنجاح إلى محفظتك عبر شبكة ${currentSelectedWdNetwork}!`);
         }
 
-        function upgradeVip(tierLevel, cost) {
-            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
-            const user = usersData[currentUserEmail];
-            
-            if (tierLevel === 2) {
-                if (user.balance < cost) {
-                    alert(`يتطلب الانتقال إلى VIP 2 إيداع بقيمة ${cost} USDT وتأكيد الإيداع من قبل الأدمن أولاً.`);
-                    return;
-                }
-            }
+        function submitWithdraw() {
+            const amt = parseFloat(document.getElementById('withdrawAmount').value);
+            const user = users[currentUserEmail];
+            if (!amt || amt <= 0 || amt > user.balance) { alert('المبلغ غير متاح أو غير صحيح'); return; }
 
-            if (user.balance < cost) {
-                alert(`رصيدك الحالي غير كافي للترقية إلى VIP ${tierLevel}. تحتاج إلى ${cost} USDT.`);
+            user.balance -= amt;
+            saveData();
+            closeModal('withdrawFormModal');
+            alert('تم تقديم طلب السحب بنجاح!');
+            showAppScreen();
+        }
+
+        function upgradeVip(lvl, cost) {
+            const user = users[currentUserEmail];
+            if (lvl === 2 && user.balance < cost) {
+                alert('يتطلب شحن 50 USDT وتأكيد الإيداع أولاً لترقية VIP2.');
                 return;
             }
+            if (user.balance < cost) { alert('رصيدك غير كافي'); return; }
 
             user.balance -= cost;
-            user.vip = tierLevel;
-            localStorage.setItem('quant_users', JSON.stringify(usersData));
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
-
+            user.vip = lvl;
+            saveData();
             showAppScreen();
-            alert(`تهانينا! تم ترقية حسابك إلى VIP ${tierLevel} بنجاح لصلاحية 30 يوماً.`);
+            alert(`تم الترقية إلى VIP ${lvl} بنجاح!`);
         }
 
         function startQuantitativeTask() {
-            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
-            const user = usersData[currentUserEmail];
-            const now = new Date().getTime();
+            const user = users[currentUserEmail];
+            if (user.balance <= 0) { alert('رصيدك 0، يجدر بك الإيداع أولاً'); return; }
 
-            if (user.balance <= 0) {
-                alert('عذراً، رصيدك الحالي هو 0. يجب عليك إيداع رصيد وتأكيده لبدء جلسة التحديد.');
-                return;
-            }
-
-            const rate = vipRates[user.vip] || 0.20;
-            const earnedProfit = user.balance * rate;
-            user.profit += earnedProfit;
-            user.lastQuantTime = now;
-
-            localStorage.setItem('quant_users', JSON.stringify(usersData));
-            syncChannel.postMessage({ type: 'UPDATE_DATA' });
+            const rate = user.vip === 2 ? 0.216 : (user.vip === 3 ? 0.23 : 0.20);
+            const profit = user.balance * rate;
+            user.profit += profit;
+            saveData();
             showAppScreen();
-            alert(`تم إتمام جلسة التحديد الكمي لـ VIP ${user.vip} بنجاح وحقق ربح يومي بقيمة +${earnedProfit.toFixed(2)} USDT!`);
-        }
-
-        function checkQuantTimerState() {
-            let usersData = JSON.parse(localStorage.getItem('quant_users')) || users;
-            const user = usersData[currentUserEmail];
-            if(!user) return;
-            const now = new Date().getTime();
-            const cooldownTime = 24 * 60 * 60 * 1000;
-            const elapsed = now - user.lastQuantTime;
-
-            if (elapsed < cooldownTime) {
-                document.getElementById('startQuantBtn').parentElement.classList.add('hidden');
-                document.getElementById('quantTimerContainer').classList.remove('hidden');
-                
-                if (timerInterval) clearInterval(timerInterval);
-                
-                timerInterval = setInterval(() => {
-                    const currentTime = new Date().getTime();
-                    const timeLeft = cooldownTime - (currentTime - user.lastQuantTime);
-
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        document.getElementById('startQuantBtn').parentElement.classList.remove('hidden');
-                        document.getElementById('quantTimerContainer').classList.add('hidden');
-                    } else {
-                        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                        
-                        document.getElementById('quantCountdown').innerText = 
-                            String(hours).padStart(2, '0') + ":" + 
-                            String(minutes).padStart(2, '0') + ":" + 
-                            String(seconds).padStart(2, '0');
-                    }
-                }, 1000);
-            } else {
-                document.getElementById('startQuantBtn').parentElement.classList.remove('hidden');
-                document.getElementById('quantTimerContainer').classList.add('hidden');
-            }
-        }
-
-        function startLiveCryptoPrices() {
-            setInterval(() => {
-                const btcElem = document.getElementById('priceBTC');
-                const ethElem = document.getElementById('priceETH');
-                const bnbElem = document.getElementById('priceBNB');
-                const solElem = document.getElementById('priceSOL');
-                if(btcElem) btcElem.innerText = (67450 + (Math.random() * 40 - 20)).toFixed(2);
-                if(ethElem) ethElem.innerText = (3520 + (Math.random() * 10 - 5)).toFixed(2);
-                if(bnbElem) bnbElem.innerText = (610 + (Math.random() * 4 - 2)).toFixed(2);
-                if(solElem) solElem.innerText = (182 + (Math.random() * 2 - 1)).toFixed(2);
-            }, 3000);
+            alert(`تمت الجلسة بنجاح! حققت أرباح بقيمة +${profit.toFixed(2)} USDT`);
         }
     </script>
 </body>
