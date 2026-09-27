@@ -70,16 +70,9 @@
           <p class="text-xs text-gray-400">مرحباً بك في المنصة</p>
         </div>
       </div>
-      
-      <div class="flex items-center gap-2">
-        <!-- زر خدمة العملاء تلجرام في الهيدر -->
-        <a href="https://t.me/your_telegram_support" target="_blank" class="text-sky-400 hover:text-sky-300 bg-sky-500/10 border border-sky-500/20 p-2 rounded-xl text-xs flex items-center gap-1 font-bold">
-          <i class="fa-brands fa-telegram text-base"></i>
-        </a>
-        <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </div>
+      <button onclick="logout()" class="text-gray-400 hover:text-red-400 text-sm p-2">
+        <i class="fa-solid fa-right-from-bracket"></i> خروج
+      </button>
     </header>
 
     <!-- TAB 1: الصفحة الرئيسية (Dashboard) -->
@@ -223,23 +216,6 @@
     <!-- TAB 6: الملف الشخصي وإدارة الأدمن (Profile & Admin Panel) -->
     <div id="tab-profile" class="hidden space-y-4">
       
-      <!-- قسم خدمة العملاء عبر تلجرام -->
-      <div class="glass-card p-4 rounded-2xl flex justify-between items-center bg-gradient-to-r from-sky-950/40 to-gray-900 border border-sky-500/30">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl border border-sky-500/30">
-            <i class="fa-brands fa-telegram"></i>
-          </div>
-          <div>
-            <h4 class="text-xs font-bold text-white">خدمة العملاء الرسمية</h4>
-            <p class="text-[10px] text-gray-400">متواجدون على مدار 24 ساعة للإجابة عن أسئلتكم</p>
-          </div>
-        </div>
-        <!-- استبدل رابط تلجرام بالرابط الخاص برابط دعمك -->
-        <a href="https://t.me/your_telegram_support" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1">
-          تواصل معنا
-        </a>
-      </div>
-
       <!-- لوحة تحكم الإدارة (الأدمن للموافقة على الإيداعات والسحوبات) -->
       <div class="glass-card p-4 rounded-2xl space-y-4 border-2 border-amber-500/30 bg-amber-500/5">
         <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 border-b border-amber-500/20 pb-2">
@@ -417,15 +393,18 @@
     function loadStoredData() {
       if (!currentUserEmail) return;
 
+      // جلب بيانات الحساب
       const balanceVal = localStorage.getItem(`balance_${currentUserEmail}`);
       currentBalance = balanceVal ? parseFloat(balanceVal) : 0.00;
 
       const vipVal = localStorage.getItem(`vip_${currentUserEmail}`);
       userVipLevel = vipVal ? parseInt(vipVal) : 0;
 
+      // جلب سجل المعاملات
       const savedTx = localStorage.getItem(`tx_${currentUserEmail}`);
       transactions = savedTx ? JSON.parse(savedTx) : [];
 
+      // جلب الطلبات المعلقة للأدمن
       const savedDep = localStorage.getItem('global_pending_deposits');
       pendingDeposits = savedDep ? JSON.parse(savedDep) : [];
 
@@ -527,7 +506,7 @@
       currentUserEmail = email;
       localStorage.setItem('app_active_user', email);
 
-      loadStoredData();
+      loadStoredData(); // تحميل البيانات المحفوظة للمستخدم
 
       document.getElementById('user-display').innerText = email.split('@')[0];
       document.getElementById('auth-page').classList.add('hidden');
@@ -735,6 +714,7 @@
       if (reqIndex !== -1) {
         const req = pendingDeposits[reqIndex];
         
+        // تعديل رصيد المستخدم المعني
         let userBal = parseFloat(localStorage.getItem(`balance_${req.user}`) || '0');
         userBal += req.amount;
         localStorage.setItem(`balance_${req.user}`, userBal);
@@ -743,6 +723,7 @@
           currentBalance = userBal;
         }
 
+        // تعديل الحالة في سجل المعاملات للمستخدم المعني
         let userTx = JSON.parse(localStorage.getItem(`tx_${req.user}`) || '[]');
         let tx = userTx.find(t => t.id === reqId);
         if (tx) tx.status = 'مكتمل';
@@ -809,6 +790,7 @@
       if (reqIndex !== -1) {
         const req = pendingWithdrawals[reqIndex];
         
+        // إعادة المبلغ المخصوم إلى رصيد المستخدم
         let userBal = parseFloat(localStorage.getItem(`balance_${req.user}`) || '0');
         userBal += req.amount;
         localStorage.setItem(`balance_${req.user}`, userBal);
