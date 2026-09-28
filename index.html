@@ -805,7 +805,6 @@
         let currentSelectedWdNetwork = 'TRC20';
         let timerInterval = null;
 
-        // دعم PWA للتثبيت
         let deferredPrompt;
         const installBtn = document.getElementById('installAppBtn');
 
@@ -820,9 +819,6 @@
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('User accepted the install prompt');
-                        }
                         deferredPrompt = null;
                         installBtn.classList.add('hidden');
                     });
@@ -851,6 +847,7 @@
                 currentUserEmail = savedUser;
                 showAppScreen();
             } else if (savedUser && !users[savedUser]) {
+                // تعديل هنا: الرصيد يبدأ بـ 0 عند فتح حساب جديد
                 users[savedUser] = {
                     email: savedUser,
                     password: '123',
@@ -890,6 +887,7 @@
             const userCode = "MK" + Math.floor(100000 + Math.random() * 900000);
             const invitedBy = localStorage.getItem('quant_register_ref') || null;
 
+            // التأكد من أن الرصيد يضبط على 0 عند تسجيل حساب جديد
             users[email] = {
                 email: email,
                 password: password,
@@ -1080,7 +1078,6 @@
             if (!amount || amount <= 0) { alert('أدخل مبلغ سحب صحيح'); return; }
             if (amount > user.balance) { alert('رصيدك غير كافي'); return; }
 
-            // خصم المبلغ فوراً كحجز مؤقت حتى يتم تأكيد أو رفض الطلب من قبل الأدمن
             user.balance -= amount;
             localStorage.setItem('quant_users', JSON.stringify(usersData));
 
@@ -1100,7 +1097,6 @@
         }
 
         function openAdminPanel() {
-            // عرض طلبات الإيداع
             let pendingDeposits = JSON.parse(localStorage.getItem('quant_pending_deposits')) || [];
             const depositsContainer = document.getElementById('adminDepositsList');
             depositsContainer.innerHTML = '';
@@ -1124,7 +1120,6 @@
                 });
             }
 
-            // عرض طلبات السحب
             let pendingWithdrawals = JSON.parse(localStorage.getItem('quant_pending_withdrawals')) || [];
             const withdrawalsContainer = document.getElementById('adminWithdrawalsList');
             withdrawalsContainer.innerHTML = '';
@@ -1162,15 +1157,17 @@
 
             if (action === 'approve') {
                 if (users[dep.email]) {
+                    // إضافة الإيداع مباشرة إلى رصيد المستخدم وإجمالي الشحن عند تأكيد الأدمن
                     users[dep.email].balance += dep.amount;
                     users[dep.email].recharge += dep.amount;
                     
+                    // فتح مستوى VIP 2 تلقائياً عند أول إيداع أو شروط محددة
                     if (dep.amount >= 50 && users[dep.email].vip < 2) {
                         users[dep.email].vip = 2;
                     }
                     localStorage.setItem('quant_users', JSON.stringify(users));
                 }
-                alert(`تم قبول إيداع ${dep.amount} USDT بنجاح.`);
+                alert(`تم قبول إيداع ${dep.amount} USDT وإضافته لرصيد المستخدم بنجاح.`);
             } else {
                 alert(`تم رفض إيداع ${dep.amount} USDT.`);
             }
@@ -1194,7 +1191,6 @@
             if (action === 'approve') {
                 alert(`تم تأكيد سحب ${wd.amount} USDT وإرساله لمحفظة المستخدم بنجاح.`);
             } else {
-                // في حال الرفض، يُعاد المبلغ المحجوز إلى رصيد المستخدم
                 if (users[wd.email]) {
                     users[wd.email].balance += wd.amount;
                     localStorage.setItem('quant_users', JSON.stringify(users));
