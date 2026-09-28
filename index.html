@@ -847,7 +847,6 @@
                 currentUserEmail = savedUser;
                 showAppScreen();
             } else if (savedUser && !users[savedUser]) {
-                // الرصيد يبدأ بـ 0 تماماً عند فتح حساب جديد
                 users[savedUser] = {
                     email: savedUser,
                     password: '123',
@@ -887,7 +886,6 @@
             const userCode = "MK" + Math.floor(100000 + Math.random() * 900000);
             const invitedBy = localStorage.getItem('quant_register_ref') || null;
 
-            // ضبط الرصيد الافتراضي على 0 بدقة
             users[email] = {
                 email: email,
                 password: password,
